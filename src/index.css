@@ -1,0 +1,405 @@
+body {
+  background: #2d9c3a;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  background: #282c34;
+  color: white;
+}
+
+button {
+  margin: 23%;
+}
+
+input {
+  #position: absolute;
+  width: 100%;
+}
+
+th {
+  width:60vh;
+}
+
+td {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+  font-size: small;
+  align-content: center;
+  border: 3px solid black;
+  position: relative;
+  top: -11vh;
+}
+
+table {
+    font-size: small;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    width: 50rem;
+}
+
+thead, tr, th, td {
+  align-items: center;
+  border: 1px solid black;
+  #background-color: grey;
+}
+
+titre1 {
+    font-family: Cheveuxdange;
+}
+
+titre2 {
+    font-family: "Bradley Hand";
+}
+
+titre3 {
+    font-family: Skia;
+}
+
+tr b contrat {
+    font-family: Nasalization ;
+}
+
+tr b cb {
+    color: blue;
+}
+
+tr b cr {
+    color: red;
+}
+
+tr b cg {
+    color: green;
+}
+
+.App {
+  position: absolute;
+  align-items: center;
+  text-align: center;
+  #padding: 1rem;
+  bottom: 2vh;
+}
+
+.App-logo {
+  position: relative;
+  bottom: -35vh;
+  height: 40vmin;
+  pointer-events: none;
+  animation: App-logo-spin infinite 20s linear;
+}
+
+.App-logo2 {
+  position: relative;
+  bottom: 20vh;
+  height: 40vmin;
+  pointer-events: none;
+  animation: App-logo-spin infinite 20s linear;
+}
+
+.game {
+  position: absolute;
+  background-color: ivory;
+  border : 3px solid black;
+  width: 75%;
+  height: 100%;
+}
+
+.chat {
+  position: absolute;
+  background-color: ivory;
+  border : 3px solid #d33c40 ;
+  width: 25%;
+  height: 100%;
+  top: 0;
+  right: 0;
+}
+
+.typetext {
+  position: fixed;
+  width: 24.5%;
+  right: 0.5vh;
+  bottom: 3px;
+}
+
+.messages {
+  font-family: Courier;
+  position: fixed;
+  padding-bottom: 3vh;
+  top: 10px;
+  right: 100px;
+}
+
+.msg {
+  position: absolute;
+  font-size: 15px;
+  padding-left: 1vh;
+  top: 60px;
+  left: 3px;
+  bottom: 50px;
+  #height: 92%;
+  overflow-y: scroll;
+}
+
+.contractor-east {
+  position: absolute;
+  top: 44.3vh;
+  right: 29.5vh;
+  color: white;
+}
+
+.contractor-south {
+  position: absolute;
+  bottom: 0.8vh;
+  right: 66.5vh;
+  color: white;
+}
+
+.contractor-west {
+  position: absolute;
+  top: 43vh;
+  right: 116.8vh;
+  color: white;
+}
+
+.contractor-north {
+  position: absolute;
+  top: 0.2vh;
+  right: 63vh;
+  color: white;
+}
+
+.App-arrow-east {
+  position: relative;
+  top: -3vh;
+  right: -53vh;
+  transform: rotate(0deg);
+}
+
+.App-arrow-south {
+  position: relative;
+  bottom: -18vh;
+  right: 1vh;
+  transform: rotate(90deg);
+}
+
+.App-arrow-west {
+  position: relative;
+  top: -8vh;
+  right: 51vh;
+  transform: rotate(180deg);
+}
+
+.App-arrow-north {
+  position: relative;
+  right: -2vh;
+  bottom: 25vh;
+  transform: rotate(270deg);
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes contract-move {
+  0%{
+    transform: translateX(0);
+    opacity: 0;
+  }
+  25%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 1;
+  }
+  75%{
+    opacity: 1;
+  }
+  100%{
+    transform: translateX(80vh);
+    opacity: 0;
+  }
+}
+
+.marge {
+    margin-left: 5em;
+}
+
+.nav-links {
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
+ul.topnav {
+  margin: 5px;
+  overflow: auto;
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+ul.topnav li {
+  color: white;
+  display: block;
+}
+
+ul.topnav li b {
+  color: whitesmoke;
+  text-align: left;
+}
+
+ul.topnav li button {
+  position: relative;
+  align-items: right;
+  left: 99vh;
+  margin-left: 3vh;
+}
+
+ul.topnav li a {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  right: 12vh;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #58709b;}
+
+ul.topnav li a.active {background-color: #4CAF50;}
+
+ul.topnav li.right a {float: right;}
+
+
+.splitLine {
+    background-color: black;
+    font-size: xx-small;
+    height: 0.001%;
+    color: black;
+}
+
+.currentContract {
+  position: absolute;
+  font-family: fantasy;
+  font-size: large;
+  top: 1.5vh;
+  right: 110vh;
+  color: white;
+  #transform: rotate(-20deg);
+  pointer-events: none;
+  animation: contract-move infinite 7s linear;
+}
+
+.buttonrules {
+  position: absolute;
+  top: -1vh;
+  left: 8vh;
+}
+
+.rules {
+  font-size: small;
+}
+
+.playerNameN {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  top: 11.5vh;
+  right: -5vh;
+  color: black;
+  transform: rotate(-180deg);
+}
+
+.playerNameS {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  bottom: 6vh;
+  right: -5vh;
+  color: black;
+  transform: rotate(0deg);
+}
+
+.playerNameW {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  bottom: 28vh;
+  right: -5vh;
+  color: black;
+  transform: rotate(-90deg);
+}
+
+.playerNameE {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  bottom: 1vh;
+  right: -6.2vh;
+  color: black;
+  transform: rotate(-90deg);
+}
+
+.LoadPosition {
+  color: white;
+  font-family: Cheveuxdange;
+  font-size: larger;
+  position: absolute;
+  align-items: center;
+  text-align: center;
+  bottom: 23vh;
+}
+
+.panelChoice {
+  display: flex;
+  background: black;
+  align-items: center;
+  color: white;
+}
+
+.gameplay{
+  align-items: center;
+  text-align: center;
+  #background: black;
+  color: white;
+}
+
+.PanelPosition {
+    color: white;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: -5vh;
+}
+
+.PanelChoice {
+  color: white;
+  position: relative;
+  top: -1vh;
+}
