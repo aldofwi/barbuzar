@@ -6,9 +6,12 @@
     <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
 </a>
 
-<a href="http://aldofwi.github.io/barbuzar/">
+<a href="https://aldofwi.github.io/barbuzar/">
     <img src="https://img.shields.io/cocoapods/v/Kingfisher.svg?style=flat">
 </a>
+
+[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](http://aldofwi.github.io/barbuzar)
+
 
 ## Description
 
