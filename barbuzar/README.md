@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
 </a>
 
-[![Doc°](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](http://aldofwi.github.io/barbuzar)
+[![Doc](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](http://aldofwi.github.io/barbuzar)
 
 
 ## Description
