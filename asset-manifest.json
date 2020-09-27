@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/barbuzar/static/css/main.1075a402.chunk.css",
-    "main.js": "/barbuzar/static/js/main.13f7fe79.chunk.js",
-    "main.js.map": "/barbuzar/static/js/main.13f7fe79.chunk.js.map",
-    "runtime-main.js": "/barbuzar/static/js/runtime-main.8a3d299c.js",
-    "runtime-main.js.map": "/barbuzar/static/js/runtime-main.8a3d299c.js.map",
-    "static/js/2.042c64e7.chunk.js": "/barbuzar/static/js/2.042c64e7.chunk.js",
-    "static/js/2.042c64e7.chunk.js.map": "/barbuzar/static/js/2.042c64e7.chunk.js.map",
-    "index.html": "/barbuzar/index.html",
-    "precache-manifest.5b19812c1b3620cfad11a9e781584874.js": "/barbuzar/precache-manifest.5b19812c1b3620cfad11a9e781584874.js",
-    "service-worker.js": "/barbuzar/service-worker.js",
-    "static/css/main.1075a402.chunk.css.map": "/barbuzar/static/css/main.1075a402.chunk.css.map",
-    "static/js/2.042c64e7.chunk.js.LICENSE.txt": "/barbuzar/static/js/2.042c64e7.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/barbuzar/static/media/logo.5d5d9eef.svg"
+    "main.css": "/barbuzar/public/static/css/main.1075a402.chunk.css",
+    "main.js": "/barbuzar/public/static/js/main.8aaedd90.chunk.js",
+    "main.js.map": "/barbuzar/public/static/js/main.8aaedd90.chunk.js.map",
+    "runtime-main.js": "/barbuzar/public/static/js/runtime-main.4d706d0d.js",
+    "runtime-main.js.map": "/barbuzar/public/static/js/runtime-main.4d706d0d.js.map",
+    "static/js/2.042c64e7.chunk.js": "/barbuzar/public/static/js/2.042c64e7.chunk.js",
+    "static/js/2.042c64e7.chunk.js.map": "/barbuzar/public/static/js/2.042c64e7.chunk.js.map",
+    "index.html": "/barbuzar/public/index.html",
+    "precache-manifest.8f1093fac6104543737fe792e5acf362.js": "/barbuzar/public/precache-manifest.8f1093fac6104543737fe792e5acf362.js",
+    "service-worker.js": "/barbuzar/public/service-worker.js",
+    "static/css/main.1075a402.chunk.css.map": "/barbuzar/public/static/css/main.1075a402.chunk.css.map",
+    "static/js/2.042c64e7.chunk.js.LICENSE.txt": "/barbuzar/public/static/js/2.042c64e7.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/barbuzar/public/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.8a3d299c.js",
+    "static/js/runtime-main.4d706d0d.js",
     "static/js/2.042c64e7.chunk.js",
     "static/css/main.1075a402.chunk.css",
-    "static/js/main.13f7fe79.chunk.js"
+    "static/js/main.8aaedd90.chunk.js"
   ]
 }
