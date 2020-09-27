@@ -2,16 +2,12 @@
   <img src="https://img.shields.io/badge/code_style-standardjs-cccc44.svg?style=flat-square" alt="code style: standardjs">
 </a>
 
-<a href="https://github.com/aldofwi/barbuzar/actions?query=workflow%3Abuild">
-    <img src="https://github.com/aldofwi/barbuzar/workflows/build/badge.svg?branch=master">
+<a href="https://npmcharts.com">
+    <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
 </a>
 
 <a href="http://aldofwi.github.io/barbuzar/">
     <img src="https://img.shields.io/cocoapods/v/Kingfisher.svg?style=flat">
-</a>
-
-<a href="https://npmcharts.com">
-    <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
 </a>
 
 This project was bootstrapped with 
