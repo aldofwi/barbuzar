@@ -1,12 +1,14 @@
+
+<a href="https://npmcharts.com">
+    <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
+</a>
+
 <a href="https://standardjs.com">
   <img src="https://img.shields.io/badge/code_style-standardjs-cccc44.svg?style=flat-square" alt="code style: standardjs">
 </a>
 
 [![Doc](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](http://aldofwi.github.io/barbuzar)
 
-<a href="https://npmcharts.com">
-    <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
-</a>
 
 ## Description
 
