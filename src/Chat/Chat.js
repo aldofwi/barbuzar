@@ -80,35 +80,33 @@ const Chat = props => {
 
             </div>
 
-                <div className="typetext">
+            <div className="typetext">
 
-                    <form onSubmit={submit} id="form">
-                        <div className="input-group">
+                <form onSubmit={submit} id="form">
+                    <div className="input-group">
 
-                            <input
-                                type="text"
-                                className="col-sm"
-                                aria-label="Default"
-                                onChange={e => setMessage(e.currentTarget.value)}
-                                placeholder="Type your text here."
-                                value={message}
-                                id="text"
-                            />
+                        <input
+                            type="text"
+                            className="col-sm"
+                            aria-label="Default"
+                            onChange={e => setMessage(e.currentTarget.value)}
+                            placeholder="Type your text here."
+                            value={message}
+                            id="text"
+                        />
 
-                            <span className="input-group-btn">
-                                <button id="submit" type="submit" className="btn btn-dark">
+                        <span className="input-group-btn">
+                            <button id="submit" type="submit" className="btn btn-dark">
 
-                                    Send
+                                Send
 
-                                </button>
-                            </span>
+                            </button>
+                        </span>
 
-                        </div>
-                    </form>
+                    </div>
+                </form>
 
-                </div>
-
-
+            </div>
 
         </div>
 

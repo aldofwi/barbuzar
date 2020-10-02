@@ -52,7 +52,7 @@ const Rules = () => {
 
         <div>
 
-            <h1 align="center"> <titre1>Les Règles du Barbu</titre1> </h1>
+            <h1 align="center"> <tit1>Les Règles du Barbu</tit1> </h1>
 
                 <table>Chaque joueur doit effectuer <b>7 contrats</b>.</table>
                 <table>Celui qui démarre est désigné par le tirage au sort.</table>
@@ -2637,21 +2637,14 @@ class Barbu extends Component {
 
             <div className="game">
 
-                <ul className="topnav">
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
-                    <li>
+                    <a class="navbar-brand" href="https://github.com/aldofwi/barbuzar">Barbuz@r</a>
 
-                        <b>{ this.props.barbuser.name }</b>
+                
+                    <div class="collapse navbar-collapse" id="navbarColor02">
 
-                        {
-                            this.inProgress
-                                ?
-                                <PanelDisplay
-                                    nameofclass={"currentContract"}
-                                    content={this.currentChoice}
-                                /> : null
-                        }
-
+                        
                         <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setModalRIsOpen(true)}>Rules</button>
 
                             <Modal
@@ -2697,9 +2690,9 @@ class Barbu extends Component {
 
                             </Modal>
 
-                    </li>
-
-                </ul>
+                        
+                    </div>
+                </nav>
 
             <div className='Card-table' style={this.props.style}>
 
