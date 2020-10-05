@@ -76,6 +76,10 @@ tr b cg {
     color: green;
 }
 
+.navbar {
+  min-height: 10px;
+}
+
 .App {
   position: absolute;
   align-items: center;
@@ -328,6 +332,16 @@ ul.topnav li.right a {float: right;}
   width:50%;
 }
 
+.contractorNameN {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  top: 11.5vh;
+  right: -5vh;
+  color: red;
+  transform: rotate(-180deg);
+}
+
 .playerNameN {
   position: absolute;
   font-family: Nasalization;
@@ -338,14 +352,34 @@ ul.topnav li.right a {float: right;}
   transform: rotate(-180deg);
 }
 
+.contractorNameS {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  bottom: 6vh;
+  right: -9vh;
+  color: red;
+  transform: rotate(0deg);
+}
+
 .playerNameS {
   position: absolute;
   font-family: Nasalization;
   font-size: large;
   bottom: 6vh;
-  right: -5vh;
+  right: -9vh;
   color: black;
   transform: rotate(0deg);
+}
+
+.contractorNameW {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  bottom: 28vh;
+  right: -5vh;
+  color: red;
+  transform: rotate(-90deg);
 }
 
 .playerNameW {
@@ -355,6 +389,16 @@ ul.topnav li.right a {float: right;}
   bottom: 28vh;
   right: -5vh;
   color: black;
+  transform: rotate(-90deg);
+}
+
+.contractorNameE {
+  position: absolute;
+  font-family: Nasalization;
+  font-size: large;
+  bottom: 1vh;
+  right: -6.2vh;
+  color: red;
   transform: rotate(-90deg);
 }
 

@@ -10,7 +10,7 @@ import Chat from "./Chat/Chat";
 import Arrow from "./Tools/Arrow";
 import Loading from "./Tools/Loading";
 import Deck from './PlayingCard/Deck';
-import Contractor from "./Tools/Contractor";
+// import Contractor from "./Tools/Contractor";
 import Board from "./PlayingCard/Board";
 import PanelChoice from "./Panel/PanelChoice";
 import PanelDisplay from "./Panel/PanelDisplay";
@@ -56,7 +56,8 @@ const Rules = () => {
 
                 <table>Chaque joueur doit effectuer <b>7 contrats</b>.</table>
                 <table>Celui qui démarre est désigné par le tirage au sort.</table>
-                <table>La carte la plus forte commence à faire ses contrats. <b>ⓒ</b></table>
+                <table>La carte la plus forte commence à faire ses contrats.</table>
+                <table>Celui qui effectue ses contrats apparaît en <contractorNameS>ROUGE</contractorNameS>.</table>
 
             <br></br>
 
@@ -269,11 +270,11 @@ class Barbu extends Component {
             eightHand: function () {
                 return {
                     handE : {
+                        'bottom': '-80%',
                         'east': '0',
                         'right': '-65%',
-                        'bottom': '-80%',
                         'position': 'absolute',
-                        // FULLSCREEN 'transform' : 'translateY(-80%) translateX(-80%) rotate(90deg)',
+                        // FULLSCR33N 'transform' : 'translateY(-80%) translateX(-80%) rotate(90deg)',
                         'transform' : 'translateY(10%) translateX(-80%) rotate(90deg)',
                         'transformOrigin' : ' 0px -' + window.innerWidth / 2 + 'px'
                     },
@@ -2713,7 +2714,7 @@ class Barbu extends Component {
                     />
 
                 <PanelDisplay
-                    nameofclass={"playerNameN"}
+                    nameofclass={this.contractor === "NORTH" ? "contractorNameN" : "playerNameN"}
                     content={this.getNameByCardinal("NORTH")}
                 />
 
@@ -2736,7 +2737,7 @@ class Barbu extends Component {
                     />
 
                     <PanelDisplay
-                        nameofclass={"playerNameE"}
+                        nameofclass={this.contractor === "EAST" ? "contractorNameE" : "playerNameE"}
                         content={this.getNameByCardinal("EAST")}
                     />
 
@@ -2759,7 +2760,7 @@ class Barbu extends Component {
                     />
 
                     <PanelDisplay
-                        nameofclass={"playerNameW"}
+                        nameofclass={this.contractor === "WEST" ? "contractorNameW" : "playerNameW"}
                         content={this.getNameByCardinal("WEST")}
                     />
 
@@ -2783,7 +2784,7 @@ class Barbu extends Component {
                     />
 
                     <PanelDisplay
-                        nameofclass={"playerNameS"}
+                        nameofclass={this.contractor === "SOUTH" ? "contractorNameS" : "playerNameS"}
                         content={this.getNameByCardinal("SOUTH")}
                     />
 
@@ -2816,15 +2817,6 @@ class Barbu extends Component {
                             width={100}
                             height={100}
                         />
-                }
-
-                {
-                    this.state.positionPicked
-                        ?
-                    <Contractor
-                        contractor={this.contractor}
-                    /> : null
-
                 }
 
                 {

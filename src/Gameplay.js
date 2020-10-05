@@ -109,7 +109,7 @@ class Gameplay extends Component {
 
             <Barbu
                 cardSize={Math.min(window.innerHeight / 5.5, window.innerWidth / 5.5, 70)}
-                style={{'height':window.innerHeight-74+'px'}} // FULL PAGE -54
+                style={{'height':window.innerHeight-62+'px'}} // FULL PAGE -54
                 barbuser={this.barbuser}
                 websocket={this.state.ws}
                 port={port}
