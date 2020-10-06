@@ -182,30 +182,31 @@ tr b cg {
 
 .App-arrow-east {
   position: relative;
-  top: -3vh;
+  top: -7vh;
   right: -53vh;
-  transform: rotate(0deg);
+  font-size: xx-large;
 }
 
 .App-arrow-south {
   position: relative;
-  bottom: -18vh;
-  right: 1vh;
-  transform: rotate(90deg);
+  bottom: -24vh;
+  right: 8vh;
+  font-size: xx-large;
 }
 
 .App-arrow-west {
   position: relative;
   top: -8vh;
-  right: 51vh;
-  transform: rotate(180deg);
+  right: 52vh;
+  font-size: xx-large;
 }
 
 .App-arrow-north {
   position: relative;
-  right: -2vh;
-  bottom: 25vh;
-  transform: rotate(270deg);
+  right: -12vh;
+  bottom: 30vh;
+  font-size: xx-large;
+
 }
 
 .App-header {
@@ -336,7 +337,7 @@ ul.topnav li.right a {float: right;}
   position: absolute;
   font-family: Nasalization;
   font-size: large;
-  top: 11.5vh;
+  top: -5vh;
   right: -5vh;
   color: red;
   transform: rotate(-180deg);
@@ -346,7 +347,7 @@ ul.topnav li.right a {float: right;}
   position: absolute;
   font-family: Nasalization;
   font-size: large;
-  top: 11.5vh;
+  top: -5vh;
   right: -5vh;
   color: black;
   transform: rotate(-180deg);
@@ -356,17 +357,18 @@ ul.topnav li.right a {float: right;}
   position: absolute;
   font-family: Nasalization;
   font-size: large;
-  bottom: 6vh;
+  bottom: 28vh;
   right: -9vh;
   color: red;
   transform: rotate(0deg);
+
 }
 
 .playerNameS {
   position: absolute;
   font-family: Nasalization;
   font-size: large;
-  bottom: 6vh;
+  bottom: 28vh;
   right: -9vh;
   color: black;
   transform: rotate(0deg);
@@ -412,6 +414,12 @@ ul.topnav li.right a {float: right;}
   transform: rotate(-90deg);
 }
 
+.badgeContract {
+  position: fixed;
+  right: 8vh;
+  transform: rotate(-90deg);
+}
+
 .LoadPosition {
   color: white;
   font-family: Krungthep;
@@ -440,7 +448,8 @@ ul.topnav li.right a {float: right;}
     align-items: center;
     text-align: center;
     position: relative;
-    top: -5vh;
+    top: -3vh;
+    right: -2vh;
 }
 
 .PanelChoice {

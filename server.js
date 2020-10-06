@@ -46,6 +46,15 @@ bio.on("connection", function(socket) {
         console.log('Server.js --- Received Msg : ', message[0], ' from ', message[1]);
     });
 
+    socket.on("sendtxtjarvis", msg => {
+        bio.emit("messagetxt", {
+            text: msg,
+            date: new Date().toISOString(),
+            user: "J@rvis",
+        });
+        console.log('Server.js --- Received Msg : ', msg, ' from J@rvis');
+    });
+
     socket.on("click", value => {
         bio.emit("user", value.name);
         bio.emit("onclick", value);

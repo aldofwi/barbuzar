@@ -274,7 +274,7 @@ class Barbu extends Component {
                         'east': '0',
                         'right': '-65%',
                         'position': 'absolute',
-                        // FULLSCR33N 'transform' : 'translateY(-80%) translateX(-80%) rotate(90deg)',
+                        // FULLSCREEN 'transform' : 'translateY(-80%) translateX(-80%) rotate(90deg)',
                         'transform' : 'translateY(10%) translateX(-80%) rotate(90deg)',
                         'transformOrigin' : ' 0px -' + window.innerWidth / 2 + 'px'
                     },
@@ -282,20 +282,20 @@ class Barbu extends Component {
                         'bottom': '-80%',
                         'right': '23%',
                         'position': 'absolute',
-                        // FULLSCREEN 'transform' : 'translateY(-110%) translateX(80%) rotate(90deg)',
+                        // FULLSCR33N 'transform' : 'translateY(-110%) translateX(80%) rotate(90deg)',
                         'transform' : 'translateY(10%) translateX(80%) rotate(90deg)',
                         'transformOrigin' : ' 0px -' + window.innerWidth / 2 + 'px'
                     },
                     handN: {
                         'height' : '20%',
-                        'top': '3%',
+                        'top': '-1%',
                         'right': '50%',
                         'position': 'absolute',
                         'transform' : 'translateY(-30%) translateX(-80%) rotate(180deg)'
                     },
                     handS: {
                         'height' : '30%',
-                        'bottom': '3%',
+                        'bottom': '-2%',
                         'right': '50%',
                         'position': 'absolute',
                         'transform' : 'translateY(30%) translateX(-80%) rotate(0deg)'
@@ -469,6 +469,73 @@ class Barbu extends Component {
                 this.setState({ positionPicked: true });
             }
         }
+    }
+
+    getCardName(name){
+        console.log('01 - BARBU - getCardName()');
+
+        switch(name) {
+
+            case "7h": return "7 de ♥️"; 
+            case "7c": return "7 de ♣️"; 
+            case "7d": return "7 de ♦️"; 
+            case "7s": return "7 de ♠️"; 
+
+            case "8h": return "8 de ♥️"; 
+            case "8c": return "8 de ♣️"; 
+            case "8d": return "8 de ♦️"; 
+            case "8s": return "8 de ♠️"; 
+
+            case "9h": return "9 de ♥️"; 
+            case "9c": return "9 de ♣️"; 
+            case "9d": return "9 de ♦️"; 
+            case "9s": return "9 de ♠️";
+
+            case "th": return "10 de ♥️"; 
+            case "tc": return "10 de ♣️"; 
+            case "td": return "10 de ♦️"; 
+            case "ts": return "10 de ♠️";
+
+            case "jh": return "valet de ♥️"; 
+            case "jc": return "valet de ♣️"; 
+            case "jd": return "valet de ♦️"; 
+            case "js": return "valet de ♠️";
+
+            case "qh": return "dame de ♥️"; 
+            case "qc": return "dame de ♣️"; 
+            case "qd": return "dame de ♦️"; 
+            case "qs": return "dame de ♠️";
+
+            case "kh": return "roi de ♥️"; 
+            case "kc": return "roi de ♣️"; 
+            case "kd": return "roi de ♦️"; 
+            case "ks": return "roi de ♠️";
+
+            case "1h": return "as de ♥️"; 
+            case "1c": return "as de ♣️"; 
+            case "1d": return "as de ♦️"; 
+            case "1s": return "as de ♠️";
+
+            default: break;
+        }
+    };
+
+    getBadgeCC(choice) {
+        console.log('01 - BARBU - getBadgeCC() - check during choice');
+
+        switch(choice) {
+
+            case "RATA": return "R"; 
+            case "Barbu": return "B"; 
+            case "Domino": return "D"; 
+            case "Coeur": return "♥️";
+            case "Dames": return "Q";
+            case "Pli": return "P";
+            case "Dernier Pli": return "DP";
+
+            default: if(this.nbClic === 0 || this.nbClic === 32) return "💬" ;
+        }
+
     }
 
     getCardinal(name) {
@@ -791,6 +858,12 @@ class Barbu extends Component {
         // WEBSOCKET ON CLICK EVENT LISTENER
         barbuWS.on("onclick", value => {
             console.log('01 - BARBU - check() - onclick() - ', value);
+
+            if(!this.state.positionPicked) {
+                // Message Général délivré par JARVIS.
+                barbuWS.emit("sendtxtjarvis", value.key+" a retourné : "+this.getCardName(value.key) );
+            }
+        
             /*
             console.log('01 - BARBU - check() - onclick() C1 - ', this.myPosition !== this.gameStarted);
             console.log('01 - BARBU - check() - onclick() C2 - ', this.gameContracts.indexOf(value.key)>-1);
@@ -802,6 +875,7 @@ class Barbu extends Component {
 
                 this.ranks.push(value);
                 this.setPosition(value.key);
+
             }
             else if(this.state.positionPicked && value.name !== this.props.barbuser.name) {
 
@@ -2641,8 +2715,7 @@ class Barbu extends Component {
                 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
                     <a class="navbar-brand" href="https://github.com/aldofwi/barbuzar">Barbuz@r</a>
-
-                
+           
                     <div class="collapse navbar-collapse" id="navbarColor02">
 
                         
@@ -2691,7 +2764,19 @@ class Barbu extends Component {
 
                             </Modal>
 
-                        
+                            {
+
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-danger btn-sm ml-auto" 
+                                        data-toggle="tooltip" 
+                                        data-placement="right" 
+                                        title={this.inProgress ? this.currentChoice : "Wait 4 IT.."}>
+                                        {this.getBadgeCC(this.currentChoice)} 
+                                    </button> 
+
+                            }
+
                     </div>
                 </nav>
 
