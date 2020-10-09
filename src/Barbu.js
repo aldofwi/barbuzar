@@ -2722,7 +2722,7 @@ class Barbu extends Component {
                                         className="btn btn-danger btn-sm ml-auto" 
                                         data-toggle="tooltip" 
                                         data-placement="right" 
-                                        title={"Connecting People"}>
+                                        title={"Connecting People "+this.state.nbPeopleConnected+"/4"}>
                                         {this.getBadgeConnected(this.state.nbPeopleConnected)} 
                                     </button> 
                                     :
@@ -2748,6 +2748,7 @@ class Barbu extends Component {
                     width={100}
                     height={100}
                     message={" Welcome"}
+                    name={this.props.barbuser.name}
                     style={this.props.style}
                 />
                 : 

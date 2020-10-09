@@ -41,8 +41,20 @@ msgh {
   align-self: center;
   position: relative;
   top: 5vh;
-  left: 9vh;
+  left: 19vh;
 }
+
+.msgh {
+  color: antiquewhite;
+  text-align: center;
+  font-size: medium;
+  font-family: Karmatic Arcade;
+  align-self: center;
+  position: relative;
+  top: 9vh;
+  left: -4vh;
+}
+
 
 table {
     font-size: small;
@@ -114,7 +126,7 @@ tr b cg {
 .App-logo2 {
   position: relative;
   top: -12vh;
-  left: -14vh;
+  left: -19vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;
 }

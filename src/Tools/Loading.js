@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from "../Pictures/loadCard.png";
+import PanelDisplay from "../Panel/PanelDisplay";
 
 class Loading extends Component {
 
@@ -11,7 +12,7 @@ class Loading extends Component {
             height: this.props.height,
             width: this.props.width,
             message: this.props.message,
-
+            name: this.props.name,
         };
     }
 
@@ -21,6 +22,16 @@ class Loading extends Component {
             <div className={ this.props.nameofclass } style={this.props.style}>
                     
                     <msgh> { this.props.message } </msgh>
+
+                    {
+                        this.props.nameofclass === "Card-table" ?
+
+                        <PanelDisplay
+                            nameofclass={"msgh"}
+                            content={this.props.name}
+                        />
+                    : null
+                    }
 
                     <img
                         src={logo}
