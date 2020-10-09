@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from "../Pictures/logo.svg";
+import logo from "../Pictures/loadCard.png";
 
 class Loading extends Component {
 
@@ -18,17 +18,20 @@ class Loading extends Component {
     render() {
 
         return (
-            <div className={ this.props.nameofclass }>
+            <div className={ this.props.nameofclass } style={this.props.style}>
+                    
+                    <msgh> { this.props.message } </msgh>
 
-                <p> { this.props.message } </p>
+                    <img
+                        src={logo}
+                        alt="logo"
+                        className={ this.props.nameofclass === "LoadPosition" ? "App-logo" : this.props.nameofclass === "Card-table" ? "App-logo2" : "App-logo3" }
+                        width={ this.props.width }
+                        height={ this.props.height }
+                    />
+                
+               
 
-                <img
-                    src={logo}
-                    alt="logo"
-                    className={ this.props.nameofclass === "LoadPosition" ? "App-logo" : "App-logo2" }
-                    width={ this.props.width }
-                    height={ this.props.height }
-                />
             </div>
         );
 

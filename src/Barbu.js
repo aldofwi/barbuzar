@@ -5,6 +5,7 @@ import SocketIO from "socket.io-client";
 
 import './PlayingCard/Table/Table.css';
 import "bootstrap/dist/css/bootstrap.css";
+import gitLogo from "./Pictures/gitLogo.png";
 
 import Chat from "./Chat/Chat";
 import Arrow from "./Tools/Arrow";
@@ -24,7 +25,7 @@ const customStylesR = {
     content : {
         top                   : '30%',
         left                  : '38%',
-        bottom                : '-23%',
+        bottom                : '-25%',
         right                 : 'auto',
         marginRight           : '-50%',
         overflow              : 'scroll',
@@ -57,7 +58,7 @@ const Rules = () => {
                 <table>Chaque joueur doit effectuer <b>7 contrats</b>.</table>
                 <table>Celui qui démarre est désigné par le tirage au sort.</table>
                 <table>La carte la plus forte commence à faire ses contrats.</table>
-                <table>Celui qui effectue ses contrats apparaît en <contractorNameS>ROUGE</contractorNameS>.</table>
+                <table>Celui qui effectue ses contrats apparaît en <b><crr>ROUGE</crr></b>.</table>
 
             <br></br>
 
@@ -122,7 +123,6 @@ class Barbu extends Component {
         super(props);
 
         this.players = {};
-
         this.deck = new Deck();
         this.deck.shuffle();
 
@@ -206,6 +206,7 @@ class Barbu extends Component {
         this.lastContract = false;
         this.displayLoadingBasic = false;
         this.displayLoadingPosition = true;
+        this.displayLoadingPlayers = true;
 
         this.panelVisible = true;
         this.hidePlayersCards = true;
@@ -219,6 +220,8 @@ class Barbu extends Component {
         this.state = {
             modalSCIsOpen: false,
             modalRIsOpen: false,
+
+            nbPeopleConnected: 0,
 
             contractor : this.contractor,
             positionPicked : this.positionPicked,
@@ -520,6 +523,22 @@ class Barbu extends Component {
         }
     };
 
+    getBadgeConnected(num) {
+        console.log('01 - BARBU - getBadgeConnected() - State nb people connected = '+num);
+        console.log('01 - BARBU - getBadgeConnected() - displayLoadingPlayers is '+this.displayLoadingPlayers);
+
+        switch(num) {
+
+            case 1: return "1️⃣"; 
+            case 2: return "2️⃣"; 
+            case 3: return "3️⃣";
+            case 4: return "4️⃣";
+
+            default: return "💬" ;
+        }
+
+    }
+
     getBadgeCC(choice) {
         console.log('01 - BARBU - getBadgeCC() - check during choice');
 
@@ -533,7 +552,7 @@ class Barbu extends Component {
             case "Pli": return "P";
             case "Dernier Pli": return "DP";
 
-            default: if(this.nbClic === 0 || this.nbClic === 32) return "💬" ;
+            default: if(!this.inProgress) return "💬" ;
         }
 
     }
@@ -736,23 +755,6 @@ class Barbu extends Component {
 
     }
 
-    /**
-     * @function sendScore
-     * This function establishes the connect with the websocket
-     * and informs the server about other payers scores.
-     */
-    sendScore(data) {
-        console.log('O1 - BARBU - sendScore()');
-
-        // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, {
-            transports: ["websocket"]
-        });
-
-        // WEBSOCKET TO SERVER
-        barbuWS.emit("score", data);
-    };
-
      /**
      * @function sendHands
      * This function establishes the connect with the websocket
@@ -762,9 +764,8 @@ class Barbu extends Component {
         console.log('O1 - BARBU - sendHands()');
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, {
-            transports: ["websocket"]
-        });
+        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = this.websocket;
 
         let cardinalFirst = this.getCardinalByPos(1);
 
@@ -820,9 +821,8 @@ class Barbu extends Component {
         console.log('O1 - BARBU - click()');
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, {
-            transports: ["websocket"]
-        });
+        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = this.websocket;
 
         let valeur = {
             key  : cle,
@@ -843,33 +843,33 @@ class Barbu extends Component {
     check = () => {
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, {
-            transports: ["websocket"]
-        });
+        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = this.websocket;
 
         // WEBSOCKET ON USERS EVENT LISTENER
         barbuWS.on("users", users => {
             this.players = users;
-            if( this.players.length === 4) {
+            this.setState({nbPeopleConnected: users.length}) ;
+
+            if( users.length > 3) {
+                // Ne plus afficher le Loader Players.
+                this.displayLoadingPlayers = false;
+
                 console.log('01 - BARBU - check() - USERS : ', users);
             }
+
+            this.setState(this.state);            
         });
 
         // WEBSOCKET ON CLICK EVENT LISTENER
         barbuWS.on("onclick", value => {
-            console.log('01 - BARBU - check() - onclick() - ', value);
+            console.log('01 - BARBU - check() - onClick() - ', value);
 
             if(!this.state.positionPicked) {
                 // Message Général délivré par JARVIS.
-                barbuWS.emit("sendtxtjarvis", value.key+" a retourné : "+this.getCardName(value.key) );
+                this.barbuWS.emit("sendtxt", [value.name+" a retourné : "+this.getCardName(value.key), "J@rvis"]);
             }
         
-            /*
-            console.log('01 - BARBU - check() - onclick() C1 - ', this.myPosition !== this.gameStarted);
-            console.log('01 - BARBU - check() - onclick() C2 - ', this.gameContracts.indexOf(value.key)>-1);
-            console.log('01 - BARBU - check() - onclick() this.isMaster - ', this.isMaster);
-            console.log('01 - BARBU - check() - onclick() this.getCardinal(value.name) - ', this.getCardinal(value.name));
-            */
             // Si on tire les positions, Retourne les cartes des autres joueurs.
             if(!this.state.positionPicked && value.name !== this.props.barbuser.name) {
 
@@ -1107,6 +1107,10 @@ class Barbu extends Component {
     checkEndof28() {
         console.log('O1 - BARBU - checkEndof28()');
 
+        // let barbuWS = this.websocket;
+        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+
+
         // TODO : Afficher un panel END OF GAME dans PanelChoice.
 
         if(    this.gameStarted === 4 && this.lastContract
@@ -1119,73 +1123,10 @@ class Barbu extends Component {
             console.log('O1 - BARBU - checkEndof28() : joueur3 - ', this.getNamePosition(2), ' : ', this.gamePoints[2],' points.');
             console.log('O1 - BARBU - checkEndof28() : joueur4 - ', this.getNamePosition(3), ' : ', this.gamePoints[3],' points.');
 
+            // Message Général délivré par JARVIS.
+            barbuWS.emit("sendtxt", [this.getNamePosition(this.calculateWinner())+ ' REMPORTE LA PARTIE !', "J@rvis"]);
+
             console.log('O1 - BARBU - checkEndof28() : ', this.getNamePosition(this.calculateWinner()), ' REMPORTE LA PARTIE !!!');
-
-
-            /*
-            let cardinalFirst = this.getCardinalByPos(1);
-
-            switch(cardinalFirst) {
-
-                case "NORTH" :
-
-                    switch(this.calculateWinner()) {
-
-                        case 0 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("NORTH"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 1 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("EAST"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 2 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("SOUTH"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 3 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("WEST"), ' REMPORTE LA PARTIE !!!'); break;
-
-                        default: break;
-                    }
-
-                    break;
-
-                case "SOUTH" :
-
-                    switch(this.calculateWinner()) {
-
-                        case 0 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("SOUTH"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 1 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("WEST"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 2 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("NORTH"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 3 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("EAST"), ' REMPORTE LA PARTIE !!!'); break;
-
-                        default: break;
-                    }
-
-                    break;
-
-                case "EAST" :
-
-                    switch(this.calculateWinner()) {
-
-                        case 0 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("EAST"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 1 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("SOUTH"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 2 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("WEST"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 3 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("NORTH"), ' REMPORTE LA PARTIE !!!'); break;
-
-                        default: break;
-                    }
-
-                    break;
-
-                case "WEST" :
-
-                    switch(this.calculateWinner()) {
-
-                        case 0 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("WEST"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 1 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("NORTH"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 2 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("EAST"), ' REMPORTE LA PARTIE !!!'); break;
-                        case 3 : console.log('O1 - BARBU - checkEndof28() : ', this.getNameByCardinal("SOUTH"), ' REMPORTE LA PARTIE !!!'); break;
-
-                        default: break;
-                    }
-
-                    break;
-
-                default: break;
-            }
-             */
 
             this.partyIsOver = true;
         }
@@ -2314,7 +2255,10 @@ class Barbu extends Component {
             this.flopped = key;
         }
 
-        if(this.tempoPli.length<4) this.tempoPli.push(key);
+        if(this.tempoPli.length<4) {
+            
+            this.tempoPli.push(key);
+        }
 
         this.setState(this.state);
     };
@@ -2662,7 +2606,7 @@ class Barbu extends Component {
 
     render() {
 
-        console.log("0001 - BARBU - PROPS - WEBSOCKET : ", this.props.websocket);
+        console.log("0001 - BARBU - THIS - PROPS - WEBSOCKET : ", this.props.websocket);
         // console.log("000 - BARBU - PROPS - BARBUSER : ", this.props.barbuser.name);
 
         if(this.nbClic === 32) {
@@ -2712,11 +2656,18 @@ class Barbu extends Component {
 
             <div className="game">
 
-                <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
 
-                    <a class="navbar-brand" href="https://github.com/aldofwi/barbuzar">Barbuz@r</a>
+                    <a className="navbar-brand" href="https://github.com/aldofwi/barbuzar">
+                    <img
+                        src={gitLogo}
+                        alt="logo"
+                        width={30}
+                        height={30}
+                        />
+                    </a>
            
-                    <div class="collapse navbar-collapse" id="navbarColor02">
+                    <div className="collapse navbar-collapse" id="navbarColor02">
 
                         
                         <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setModalRIsOpen(true)}>Rules</button>
@@ -2765,20 +2716,41 @@ class Barbu extends Component {
                             </Modal>
 
                             {
-
+                                this.displayLoadingPlayers ?
+                                <button 
+                                        type="button" 
+                                        className="btn btn-danger btn-sm ml-auto" 
+                                        data-toggle="tooltip" 
+                                        data-placement="right" 
+                                        title={"Connecting People"}>
+                                        {this.getBadgeConnected(this.state.nbPeopleConnected)} 
+                                    </button> 
+                                    :
                                     <button 
                                         type="button" 
                                         class="btn btn-danger btn-sm ml-auto" 
                                         data-toggle="tooltip" 
                                         data-placement="right" 
-                                        title={this.inProgress ? this.currentChoice : "Wait 4 IT.."}>
+                                        title={this.inProgress ? this.currentChoice : "Incoming"}>
                                         {this.getBadgeCC(this.currentChoice)} 
                                     </button> 
-
                             }
 
                     </div>
                 </nav>
+
+
+        {
+            this.state.nbPeopleConnected !== 4 && this.displayLoadingPlayers
+            ?
+                <Loading
+                    nameofclass={"Card-table"}
+                    width={100}
+                    height={100}
+                    message={" Welcome"}
+                    style={this.props.style}
+                />
+                : 
 
             <div className='Card-table' style={this.props.style}>
 
@@ -2880,8 +2852,8 @@ class Barbu extends Component {
                         ?
                         <Loading
                         nameofclass={"App"}
-                        width={200}
-                        height={300}
+                        width={100}
+                        height={100}
                         message={"Waiting for Contractor"}
                         />
                         : this.state.panelVisible
@@ -2924,8 +2896,8 @@ class Barbu extends Component {
                     ?
                         <Loading
                             nameofclass={"LoadPosition"}
-                            width={140}
-                            height={120}
+                            width={100}
+                            height={100}
                             message={" Pick Your Position "}
                         />
                         : null
@@ -2948,6 +2920,8 @@ class Barbu extends Component {
                 }
 
             </div>
+
+        }
 
          </div>
 

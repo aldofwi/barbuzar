@@ -84,7 +84,7 @@ class Gameplay extends Component {
 
         // WEBSOCKET ON DISCONNECT EVENT LISTENER
         barbuWS.on("disconnect", () => {
-            console.log('O1 - GAMEPLAY - Disconnect() | barbuzer : ', this.props.websocket.username);
+            console.log('O1 - GAMEPLAY - Disconnect() | barbuzer : ', username);
         });
 
     };

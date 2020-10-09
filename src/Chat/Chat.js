@@ -17,8 +17,6 @@ const Chat = props => {
 
     useEffect(() => {
 
-        //socket.on("connect", () => { socket.emit("username", username); });
-
         socket.on("users", users => { console.log("CHAT --- Users ConnecteD : ", users); setUsers(users); });
 
         socket.on("messagetxt", message => { setMessages( messages => [...messages, message]) });
@@ -29,7 +27,6 @@ const Chat = props => {
         });
 
         socket.on("disconnected", data => {
-
             setUsers(users => { return users.filter(user => user.id !== data[0]); });
             socket.emit("sendtxt", ["--- USER OUT ---", data[1]]);
             console.log("CHAT --- Logged OUT = ", data[1]);
@@ -121,26 +118,3 @@ ReactDOM.render(<Chat />, document.getElementById("root"));
 // ========================================
 
 export default Chat;
-
-/*
-
-            <div className="row">
-                <div className="col-md-12 mt-4 mb-4">
-
-                    <h6>Hello {username}</h6>
-
-                </div>
-            </div>
-
- <div className="col-md-4">
-
-                    <h6> Users </h6>
-
-                    <ul id="users">
-
-                        { users.map(({ name, id }) => ( <li key={id}> {name} </li> )) }
-
-                    </ul>
-
-                </div>
- */

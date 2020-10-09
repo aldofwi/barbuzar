@@ -33,6 +33,17 @@ p {
   top: -11vh;
 }
 
+msgh {
+  color: antiquewhite;
+  text-align: center;
+  font-size: xx-large;
+  font-family: Karmatic Arcade;
+  align-self: center;
+  position: relative;
+  top: 5vh;
+  left: 9vh;
+}
+
 table {
     font-size: small;
     justify-content: center;
@@ -59,6 +70,10 @@ tit3 {
     font-family: Skia;
 }
 
+crr {
+  color: red;
+}
+
 tr b contrat {
     font-family: Nasalization ;
     font-size: large;
@@ -82,23 +97,32 @@ tr b cg {
 
 .App {
   position: absolute;
+  top: 10vh;
   align-items: center;
   text-align: center;
-  bottom: 2vh;
+  bottom: 22vh;
 }
 
 .App-logo {
   position: relative;
-  bottom: -35vh;
-  height: 40vmin;
+  bottom: -77vh;
+  left: -33vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;
 }
 
 .App-logo2 {
   position: relative;
-  bottom: 20vh;
-  height: 40vmin;
+  top: -12vh;
+  left: -14vh;
+  pointer-events: none;
+  animation: App-logo-spin infinite 20s linear;
+}
+
+.App-logo3 {
+  position: relative;
+  top: 28vh;
+  left: -39vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;
 }
@@ -420,6 +444,15 @@ ul.topnav li.right a {float: right;}
   transform: rotate(-90deg);
 }
 
+.LoadPlayers {
+  position: absolute;
+  color: white;
+  font-family: Impact;
+  font-size: xx-large;
+  align-items: center;
+  text-align: center;
+}
+
 .LoadPosition {
   color: white;
   font-family: Krungthep;
@@ -427,8 +460,9 @@ ul.topnav li.right a {float: right;}
   position: absolute;
   align-items: center;
   text-align: center;
-  bottom: 23vh;
+  top: -6vh;
 }
+
 
 .panelChoice {
   display: flex;

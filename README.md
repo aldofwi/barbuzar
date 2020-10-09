@@ -6,7 +6,7 @@
 </a>
 
 <a href="https://standardjs.com">
-  <img src="https://img.shields.io/badge/code_style-standardjs-cccc44.svg?style=flat-square" alt="code style: standardjs">
+  <img src="https://img.shields.io/badge/code_style-standardjs-cccc44.svg" alt="code style: standardjs">
 </a>
 
 [![Doc](https://img.shields.io/badge/App-Barbuzar-green)](http://aldofwi.github.io/barbuzar)
