@@ -869,7 +869,7 @@ class Barbu extends Component {
 
             if(!this.state.positionPicked) {
                 // Message Général délivré par JARVIS.
-                this.barbuWS.emit("sendtxt", [value.name+" a retourné : "+this.getCardName(value.key), "J@rvis"]);
+                barbuWS.emit("sendtxt", [value.name+" a retourné : "+this.getCardName(value.key), "J@rvis"]);
             }
         
             // Si on tire les positions, Retourne les cartes des autres joueurs.

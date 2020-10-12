@@ -36,12 +36,12 @@ p {
 .msgho {
   color: antiquewhite;
   text-align: center;
-  font-size: xx-large;
+  font-size: large;
   font-family: Karmatic Arcade;
   align-self: center;
-  position: relative;
-  top: 5vh;
-  left: 19vh;
+  position: absolute;
+  top: 15vh;
+  left: -11vh;
 }
 
 .msgh {
@@ -136,10 +136,10 @@ tr b cg {
   bottom: 22vh;
 }
 
-.App-logo {
-  position: relative;
-  bottom: -77vh;
-  left: -33vh;
+.App-logo3 {
+  position: absolute;
+  top: 28vh;
+  left: -7vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;
 }
@@ -148,14 +148,6 @@ tr b cg {
   position: relative;
   top: -12vh;
   left: -19vh;
-  pointer-events: none;
-  animation: App-logo-spin infinite 20s linear;
-}
-
-.App-logo3 {
-  position: relative;
-  top: 28vh;
-  left: -39vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;
 }
@@ -493,7 +485,16 @@ ul.topnav li.right a {float: right;}
   position: absolute;
   align-items: center;
   text-align: center;
-  top: -6vh;
+  top: 2vh;
+  left: 23vh;
+}
+
+.App-logo {
+  position: absolute;
+  bottom: -77vh;
+  left: 44vh;
+  pointer-events: none;
+  animation: App-logo-spin infinite 20s linear;
 }
 
 .panelChoice {
