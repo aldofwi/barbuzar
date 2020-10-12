@@ -44,15 +44,37 @@ p {
   left: -11vh;
 }
 
-.msgh {
+.msghome {
+  color: antiquewhite;
+  text-align: center;
+  font-size: xx-large;
+  font-family: Karmatic Arcade;
+  align-self: center;
+  position: absolute;
+  top: 46vh;
+  left: 58vh;
+}
+
+.msgpos {
+  color: antiquewhite;
+  text-align: center;
+  font-size: large;
+  font-family: Karmatic Arcade;
+  align-self: center;
+  position: absolute;
+  top: 2vh;
+  left: 44vh;
+}
+
+.msgname {
   color: antiquewhite;
   text-align: center;
   font-size: medium;
   font-family: Karmatic Arcade;
   align-self: center;
-  position: relative;
-  top: 9vh;
-  left: -4vh;
+  position: absolute;
+  top: 53vh;
+  left: 64vh;
 }
 
 table {
@@ -147,7 +169,7 @@ tr b cg {
 .App-logo2 {
   position: relative;
   top: -12vh;
-  left: -19vh;
+  left: -1vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;
 }
@@ -491,7 +513,7 @@ ul.topnav li.right a {float: right;}
 
 .App-logo {
   position: absolute;
-  bottom: -77vh;
+  bottom: -85vh;
   left: 44vh;
   pointer-events: none;
   animation: App-logo-spin infinite 20s linear;

@@ -21,13 +21,17 @@ class Loading extends Component {
         return (
             <div className={ this.props.nameofclass } style={this.props.style}>
                     
-                    <div className="msgho"> { this.props.message } </div>
+                    <div className={    this.props.nameofclass === "Card-table" ? "msghome" : 
+                                        this.props.nameofclass === "LoadPosition" ? "msgpos" : "msgho"}> 
+
+                                { this.props.message } 
+                    </div>
 
                     {
                         this.props.nameofclass === "Card-table" ?
 
                         <PanelDisplay
-                            nameofclass={"msgh"}
+                            nameofclass={"msgname"}
                             content={this.props.name}
                         />
                     : null
@@ -41,8 +45,6 @@ class Loading extends Component {
                         height={ this.props.height }
                     />
                 
-               
-
             </div>
         );
 
