@@ -18,6 +18,7 @@ import PanelDisplay from "./Panel/PanelDisplay";
 import ScoreSheet from "./Score/ScoreSheet";
 import HandBarbu from "./PlayingCard/Hand/HandBarbu";
 import BoardDomino from "./PlayingCard/BoardDomino";
+import PanelVictory from './Panel/PanelVictory';
 
 const { Map } = require('immutable');
 
@@ -199,6 +200,7 @@ class Barbu extends Component {
 
         this.contractor = "Px";
         this.display = "Position";
+        this.winner = "Tartenpion";
         this.currentChoice = "";
         this.currentScore = [];
 
@@ -765,8 +767,7 @@ class Barbu extends Component {
 
         // WEBSOCKET DEFINITION
         let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
-        // let barbuWS = this.websocket;
-
+        
         let cardinalFirst = this.getCardinalByPos(1);
 
         let deck = {};
@@ -844,7 +845,8 @@ class Barbu extends Component {
 
         // WEBSOCKET DEFINITION
         let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
-        // let barbuWS = this.websocket;
+        // let barbuWS = this.props.websocket;
+
 
         // WEBSOCKET ON USERS EVENT LISTENER
         barbuWS.on("users", users => {
@@ -1088,28 +1090,48 @@ class Barbu extends Component {
     }
 
     calculateWinner() {
+        console.log('O1 - BARBU - calculateWinner()');
 
-        let winner;
+        // let barbuWS = this.websocket;
+        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
 
-        // TODO : VERIFY DRAW
-
+        let winner, winner2;
+        let draw = false;
+        
+        // CHECK WINNER
         for (let h = 0; h < this.gamePoints.length - 1; h++) {
 
             if (this.gamePoints[h] > this.gamePoints[h + 1]) winner = h;
             else winner = h + 1;
 
         }
-        console.log('O1 - BARBU - calculateWinner() : ', winner+1, 'e joueur.');
 
-        return winner;
+        // VERIFY DRAW
+        for(let k=0; k < this.gamePoints.length; k++) {
+
+            if(winner !== k && this.gamePoints[winner] === this.gamePoints[k]) {
+                draw = true; winner2 = k;
+            }
+        }
+
+        if(draw) {
+            // Message Général délivré par JARVIS.
+            barbuWS.emit("sendtxt", [this.getNamePosition(winner), ' & ', this.getNamePosition(winner2), ' REMPORTENT LA PARTIE !', "J@rvis"]);
+            console.log('O1 - BARBU - calculateWinner() : DRAW | ', this.getNamePosition(winner), ' & ', this.getNamePosition(winner2), ' REMPORTENT LA PARTIE !!!');
+            this.winner = this.getNamePosition(winner) + " & " + this.getNamePosition(winner2) ;
+
+        } else {
+            // Message Général délivré par JARVIS.
+            barbuWS.emit("sendtxt", [this.getNamePosition(winner) + ' REMPORTE LA PARTIE !', "J@rvis"]);
+            console.log('O1 - BARBU - calculateWinner() : ', this.getNamePosition(winner), ' REMPORTE LA PARTIE !!!');
+            this.winner = this.getNamePosition(winner) ;
+        }
+
+        this.setState(this.state);
     }
 
     checkEndof28() {
         console.log('O1 - BARBU - checkEndof28()');
-
-        // let barbuWS = this.websocket;
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
-
 
         // TODO : Afficher un panel END OF GAME dans PanelChoice.
 
@@ -1123,12 +1145,11 @@ class Barbu extends Component {
             console.log('O1 - BARBU - checkEndof28() : joueur3 - ', this.getNamePosition(2), ' : ', this.gamePoints[2],' points.');
             console.log('O1 - BARBU - checkEndof28() : joueur4 - ', this.getNamePosition(3), ' : ', this.gamePoints[3],' points.');
 
-            // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", [this.getNamePosition(this.calculateWinner())+ ' REMPORTE LA PARTIE !', "J@rvis"]);
-
-            console.log('O1 - BARBU - checkEndof28() : ', this.getNamePosition(this.calculateWinner()), ' REMPORTE LA PARTIE !!!');
+            this.calculateWinner();
 
             this.partyIsOver = true;
+
+            this.setState(this.state);
         }
 
     }
@@ -2604,10 +2625,25 @@ class Barbu extends Component {
         console.log('01 - BARBU - onClickBoard() - CurrentChoice : ', this.currentChoice);
     };
 
+    onClickReplay() {
+        
+        if(this.partyIsOver) {
+
+            this.displayLoadingPlayers = true;
+            this.partyIsOver = false;
+        } 
+
+        this.setState(this.state);
+        
+        // console.log('0101 - BARBU - onClickReplay() - displayLoadingPlayers : ', this.displayLoadingPlayers);
+        // console.log('0101 - BARBU - onClickReplay() - partyIsOver : ', this.partyIsOver);
+        console.log('0101 - BARBU - onClickReplay()');
+
+    }
+
     render() {
 
-        console.log("0001 - BARBU - THIS - PROPS - WEBSOCKET : ", this.props.websocket);
-        // console.log("000 - BARBU - PROPS - BARBUSER : ", this.props.barbuser.name);
+        console.log("0001 - BARBU - THIS.PROPS.WEBSOCKET : ", this.props.websocket);
 
         if(this.nbClic === 32) {
 
@@ -2709,6 +2745,8 @@ class Barbu extends Component {
                                     totals={this.gamePoints}
                                 />
 
+                                <br></br>
+
                                 <div align="center">
                                     <button className="btn btn-dark" onClick={() => this.setModalSCIsOpen(false)}>Fermer</button>
                                 </div>
@@ -2728,7 +2766,7 @@ class Barbu extends Component {
                                     :
                                     <button 
                                         type="button" 
-                                        class="btn btn-danger btn-sm ml-auto" 
+                                        className="btn btn-danger btn-sm ml-auto" 
                                         data-toggle="tooltip" 
                                         data-placement="right" 
                                         title={this.inProgress ? this.currentChoice : "Incoming"}>
@@ -2739,10 +2777,10 @@ class Barbu extends Component {
                     </div>
                 </nav>
 
-
         {
             this.state.nbPeopleConnected !== 4 && this.displayLoadingPlayers
             ?
+                // Switch between Loading & PanelVictory.
                 <Loading
                     nameofclass={"Card-table"}
                     width={100}
@@ -2752,7 +2790,16 @@ class Barbu extends Component {
                     style={this.props.style}
                 />
                 : 
-
+                !this.displayLoadingPlayers && this.partyIsOver
+                    ?
+                    <PanelVictory
+                        names={this.playersName}
+                        totals={this.gamePoints}
+                        style={this.props.style}
+                        winner={this.winner}
+                        onClickReplayies={this.onClickReplay.bind(this)}
+                    />
+                :
             <div className='Card-table' style={this.props.style}>
 
                 <div id='top'

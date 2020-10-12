@@ -4,13 +4,15 @@ const TableHeader = names => {
 
         return(
             <thead>
-                <tr>
+            <tr>
+                <React.Fragment>
                     <th><tit3>CONTRACTS</tit3></th>
                     <th><tit1>{names.nameData[0]}</tit1></th>
                     <th><tit1>{names.nameData[1]}</tit1></th>
                     <th><tit1>{names.nameData[2]}</tit1></th>
                     <th><tit1>{names.nameData[3]}</tit1></th>
-                </tr>
+                </React.Fragment>
+            </tr>
             </thead>
         )
 };
@@ -127,9 +129,8 @@ class ScoreSheet extends Component {
                 <TableHeader nameData={names} />
                 <TableBody scoreData={this.props.scores}/>
                 <TableFooter totalData={this.props.totals} />
-                <br></br>
             </table>
-
+            
 
         )
     }

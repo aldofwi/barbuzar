@@ -44,9 +44,7 @@ class Gameplay extends Component {
     connect = () => {
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+port, {
-            transports: ["websocket"]
-        });
+        let barbuWS = SocketIO("http://localhost:"+port, { transports: ["websocket"] });
 
         // let that = this; // Cache the This
         // let connectInterval;
@@ -83,7 +81,9 @@ class Gameplay extends Component {
         });
 
         // WEBSOCKET ON DISCONNECT EVENT LISTENER
-        barbuWS.on("disconnect", () => {
+        barbuWS.on("disconnect", reason => {
+
+            if ( reason !== 'transport close ') { barbuWS.connect(); }
             console.log('O1 - GAMEPLAY - Disconnect() | barbuzer : ', username);
         });
 
@@ -97,11 +97,12 @@ class Gameplay extends Component {
     check = () => {
 
         const { ws } = this.state ;
-        console.log('O1 - GAMEPLAY - render() -  readyState : ', ws.readyState);
-
+        console.log('O1 - GAMEPLAY - check() - readyState : ', ws.readyState);
     };
 
     render() {
+
+        console.log('O1 - GAMEPLAY - render() - SOCKET : ', this.state.ws);
 
         return (
 

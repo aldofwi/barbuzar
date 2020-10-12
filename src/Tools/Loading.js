@@ -21,7 +21,7 @@ class Loading extends Component {
         return (
             <div className={ this.props.nameofclass } style={this.props.style}>
                     
-                    <msgh> { this.props.message } </msgh>
+                    <div className="msgho"> { this.props.message } </div>
 
                     {
                         this.props.nameofclass === "Card-table" ?

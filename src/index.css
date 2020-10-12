@@ -33,7 +33,7 @@ p {
   top: -11vh;
 }
 
-msgh {
+.msgho {
   color: antiquewhite;
   text-align: center;
   font-size: xx-large;
@@ -55,13 +55,22 @@ msgh {
   left: -4vh;
 }
 
-
 table {
     font-size: small;
     justify-content: center;
     text-align: center;
     align-content: center;
     width: 50rem;
+}
+
+.tabvic {
+  color: black;
+  position: absolute;
+  background-color: ivory;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  width: 35rem;
 }
 
 thead, tr, th, td {
@@ -80,6 +89,18 @@ tit2 {
 
 tit3 {
     font-family: Skia;
+}
+
+.tit1 {
+  font-family: Cheveuxdange;
+}
+
+.tit2 {
+  font-family: "Bradley Hand";
+}
+
+.tit3 {
+  font-family: Skia;
 }
 
 crr {
@@ -475,7 +496,6 @@ ul.topnav li.right a {float: right;}
   top: -6vh;
 }
 
-
 .panelChoice {
   display: flex;
   background: black;
@@ -502,4 +522,29 @@ ul.topnav li.right a {float: right;}
   color: white;
   position: relative;
   top: -1vh;
+}
+
+.PanelVictory {
+  color: white;
+  font-family: Skia;
+  position: fixed;
+  font-size: medium;
+  top: 42vh;
+  left: 60vh;
+}
+
+.PanelVictory input {
+  position: fixed;
+  width: 8%;
+  top: 65vh;
+  left: 68vh;
+}
+.Card-table table {
+  color: black;
+  position: absolute;
+  background-color: ivory;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  width: 35rem;
 }
