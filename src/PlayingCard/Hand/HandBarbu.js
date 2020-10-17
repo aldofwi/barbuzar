@@ -214,22 +214,24 @@ class HandBarbu extends Component {
         }
 
     }
+    
     onDrag(key) {
-        // console.log("draggin: ");
-        // // add a dup card into the hand?
-        // let newIndexToSpliceInto = this.state.cards[this.indexToInsertInto(key) + 1]
-        // if(this.previousIndexToSpliceInto !== newIndexToSpliceInto) {
-        //     this.previousIndexToSpliceInto = newIndexToSpliceInto
-        //     this.state.cards.splice(this.previousIndexToSpliceInto, 1);
-        //     this.state.cards.splice(this.previousIndexToSpliceInto, 0, key);
-        //     this.setState(this.state);
-        // }
-
+        console.log("draggin: ");
+        // add a dup card into the hand?
+        let newIndexToSpliceInto = this.state.cards[this.indexToInsertInto(key) + 1]
+        
+        if(this.previousIndexToSpliceInto !== newIndexToSpliceInto) {
+             this.previousIndexToSpliceInto = newIndexToSpliceInto
+             this.state.cards.splice(this.previousIndexToSpliceInto, 1);
+             this.state.cards.splice(this.previousIndexToSpliceInto, 0, key);
+             this.setState(this.state);
+        }
 
     }
     onDragStart(key) {
         this.removeCard(key, this.refs[key].state.style);
     }
+
     indexToInsertInto(key) {
         let indexToInsertInto = 0;
         let xPositionOfKey = this.refs[key].getBindingClientRect().x;

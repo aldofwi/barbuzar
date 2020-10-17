@@ -757,6 +757,78 @@ class Barbu extends Component {
 
     }
 
+    sortHands(obj) {
+        console.log('O1 - BARBU - sortHands() ------ Cards array : ', obj);
+
+        let range = []; // sorted out cards to return. D | C | H | S
+        let color = ["d", "c", "h", "s"];
+        
+        // Boucle pour trier les valeurs par couleur
+        for(let y=0; y<color.length; y++) {
+
+            let bigger;
+            let temp = [];
+
+            // Boucle pour récupérer les 8 cartes
+            for(let x=0; x<obj.length; x++) {
+
+                // Details on each of 8 cards
+                // let cardvalue = obj[x].charAt(0);
+                let cardcolor = obj[x].charAt(1);
+
+                // Récupération Carreaux | Trèfles | Coeurs | Piques
+                if(cardcolor === color[y]) temp.push(obj[x]);
+            }
+
+            // console.log("O1 - BARBU --- sortHands() - TEMP : ", temp);
+
+            let nbSame = temp.length;
+
+            // console.log("O1 - BARBU --- sortHands() - nbSame : ", nbSame);
+
+            for(let z=0; z<nbSame; z++) {
+
+                // Index of Bigger Card
+                bigger = this.isBigger(temp);
+    
+                // console.log("O1 - BARBU --- sortHands() - BIGGER : ", temp[bigger]);
+    
+                // Fill Range with Bigger.
+                range.push(temp[bigger]);
+
+                // Remove IT from temp.
+                temp.splice(bigger, 1);
+            }
+
+            console.log("O1 - BARBU --- sortHands() - ACTUAL RANGE : ", range);
+
+        }
+
+        console.log("O1 - BARBU - ----------------------- - sortHands()");
+
+        return range;
+    }
+
+    isBigger(tmp) {
+
+        let higherCard = 0 ;
+
+        // If not only One IN.
+        if(tmp.length > 1) {
+
+            // Return index of Bigger Card.
+            for (let x=1; x<tmp.length; x++) {
+
+                if ( this.orderValue.indexOf(tmp[x].charAt(0)) > this.orderValue.indexOf(tmp[higherCard].charAt(0)) ) { higherCard = x; }
+
+            }
+
+        }
+
+        return higherCard;
+
+    }
+
      /**
      * @function sendHands
      * This function establishes the connect with the websocket
@@ -773,6 +845,9 @@ class Barbu extends Component {
         let deck = {};
 
         console.log('O1 - BARBU - sendHands() | positionFirst : ', cardinalFirst);
+
+        // Ranger les cartes des joueurs.
+        // this.sortHands();
 
         switch(cardinalFirst) {
 
@@ -981,10 +1056,10 @@ class Barbu extends Component {
 
             this.setState({
 
-                handN : this.deck.deal(8),
-                handS : this.deck.deal(8),
-                handE : this.deck.deal(8),
-                handW : this.deck.deal(8),
+                handN : this.sortHands(this.deck.deal(8)),
+                handS : this.sortHands(this.deck.deal(8)),
+                handE : this.sortHands(this.deck.deal(8)),
+                handW : this.sortHands(this.deck.deal(8)),
             });
 
             this.fullHandN = [...this.state.handN];
@@ -1213,7 +1288,6 @@ class Barbu extends Component {
             this.hidePlayersCards = true;
 
             this.cleanBoardEnd();
-            //setTimeout(() => this.cleanBoardEnd(), 1000);
 
             // IF IM CONTRACTOR, I SHUFFLE 1 DEAL NU DECK
             if(this.myPosition === this.gameStarted && !this.partyIsOver) {
@@ -1222,14 +1296,13 @@ class Barbu extends Component {
                 this.deck.shuffle();
 
                 this.setState({
-                    handN : this.deck.deal(8),
-                    handS : this.deck.deal(8),
-                    handE : this.deck.deal(8),
-                    handW : this.deck.deal(8),
+                    handN : this.sortHands(this.deck.deal(8)),
+                    handS : this.sortHands(this.deck.deal(8)),
+                    handE : this.sortHands(this.deck.deal(8)),
+                    handW : this.sortHands(this.deck.deal(8)),
                 });
 
                 // PLAYERS CARDS
-                // this.sendHands();
                 setTimeout(() => this.sendHands(), 1500);
             }
 
