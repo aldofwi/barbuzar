@@ -5,11 +5,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { useEffect, useState } from "react";
-import SocketIO from "socket.io-client";
+// import SocketIO from "socket.io-client";
+import barbuWS from '../socketConfig';
 
 const Chat = props => {
 
-    const socket = SocketIO("http://localhost:"+props.port, { transports: ["websocket"] }); // , "polling"
+    //const socket = SocketIO("http://localhost:"+props.port, { transports: ["websocket"] }); // , "polling"
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
@@ -17,28 +18,28 @@ const Chat = props => {
 
     useEffect(() => {
 
-        socket.on("users", users => { console.log("CHAT --- Users ConnecteD : ", users); setUsers(users); });
+        barbuWS.on("users", users => { console.log("CHAT --- Users ConnecteD : ", users); setUsers(users); });
 
-        socket.on("messagetxt", message => { setMessages( messages => [...messages, message]) });
+        barbuWS.on("messagetxt", message => { setMessages( messages => [...messages, message]) });
 
-        socket.on("connected", user => {
-            socket.emit("sendtxt", ["--- USER IN ---", user.name]);
+        barbuWS.on("connected", user => {
+            barbuWS.emit("sendtxt", ["--- USER IN ---", user.name]);
             setUsers(users => [...users, user]);
         });
 
-        socket.on("disconnected", data => {
+        barbuWS.on("disconnected", data => {
             setUsers(users => { return users.filter(user => user.id !== data[0]); });
-            socket.emit("sendtxt", ["--- USER OUT ---", data[1]]);
+            // barbuWS.emit("sendtxt", ["--- USER OUT ---", data[1]]);
             console.log("CHAT --- Logged OUT = ", data[1]);
-
         });
+        
 // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const submit = event => {
         event.preventDefault();
         console.log("CHAT --- USERS : ", users);
-        socket.emit("sendtxt", [message, props.barbuser]);
+        barbuWS.emit("sendtxt", [message, props.barbuser]);
         setMessage("");
     };
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import Modal from "react-modal";
-import SocketIO from "socket.io-client";
+// import SocketIO from "socket.io-client";
+import barbuWS from './socketConfig';
 
 import './PlayingCard/Table/Table.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -185,9 +186,6 @@ class Barbu extends Component {
             this.gamePointsN, this.gamePointsS,
             this.gamePointsE, this.gamePointsW];
 
-        // CONTRACTS
-        // this.contractsN = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; this.contractsS = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
-        // this.contractsE = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; this.contractsW = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
         this.contractsN = []; this.contractsS = [];
         this.contractsE = []; this.contractsW = [];
 
@@ -217,7 +215,6 @@ class Barbu extends Component {
         this.gameContracts = ["Barbu", "RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
 
         this.cardSize = this.props.cardSize;
-        this.websocket = this.props.websocket;
 
         this.state = {
             modalSCIsOpen: false,
@@ -554,7 +551,7 @@ class Barbu extends Component {
             case "Pli": return "P";
             case "Dernier Pli": return "DP";
 
-            default: if(!this.inProgress) return "💬" ;
+            default: return "💬" ;
         }
 
     }
@@ -758,7 +755,7 @@ class Barbu extends Component {
     }
 
     sortHands(obj) {
-        console.log('O1 - BARBU - sortHands() ------ Cards array : ', obj);
+        console.log('O1 - BARBU - sortHands() ------ CARDS ARRAY : ', obj);
 
         let range = []; // sorted out cards to return. D | C | H | S
         let color = ["d", "c", "h", "s"];
@@ -838,7 +835,7 @@ class Barbu extends Component {
         console.log('O1 - BARBU - sendHands()');
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
         
         let cardinalFirst = this.getCardinalByPos(1);
 
@@ -894,10 +891,10 @@ class Barbu extends Component {
      * and informs the server about the value & the clicker.
      */
     click = (cle) => {
-        console.log('O1 - BARBU - click()');
+        console.log('O1 - BARBU - click() on ', cle);
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
         // let barbuWS = this.websocket;
 
         let valeur = {
@@ -919,9 +916,8 @@ class Barbu extends Component {
     check = () => {
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
         // let barbuWS = this.props.websocket;
-
 
         // WEBSOCKET ON USERS EVENT LISTENER
         barbuWS.on("users", users => {
@@ -1168,7 +1164,7 @@ class Barbu extends Component {
         console.log('O1 - BARBU - calculateWinner()');
 
         // let barbuWS = this.websocket;
-        let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
+        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
 
         let winner, winner2;
         let draw = false;
@@ -1267,6 +1263,7 @@ class Barbu extends Component {
             console.log('01 - BARBU - checkEndOfContract() ----- END OF ', this.currentChoice);
 
             this.inProgress = false;
+            this.currentChoice = "";
             this.nbContracts++;
 
             this.checkEndof7(this.contractor);

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Barbu from "./Barbu";
-import SocketIO from 'socket.io-client';
+//import SocketIO from 'socket.io-client';
+import barbuWS from './socketConfig';
 
 // const username = prompt("What is your username");
 const username = "Player" + Math.floor(Math.random() * (101));
 
 const port = 3000;
-
-// const [modalIsOpen, setModalIsOpen] = useState(false);
 
 class Gameplay extends Component {
 
@@ -44,19 +43,12 @@ class Gameplay extends Component {
     connect = () => {
 
         // WEBSOCKET DEFINITION
-        let barbuWS = SocketIO("http://localhost:"+port, { transports: ["websocket"] });
-
-        // let that = this; // Cache the This
-        // let connectInterval;
+        // let barbuWS = SocketIO("http://localhost:"+port, { transports: ["websocket"] });
 
         // WEBSOCKET ON CONNECT EVENT LISTENER
         barbuWS.on("connect", () => {
 
             barbuWS.emit("username",    username);
-            //barbuWS.emit("port", port);
-            
-            //barbuWS.emit("send", "NU CHALLENGER : " + username);
-            //barbuWS.emit("sendtxt", ["--- USER IN ---", username]);
 
             this.setState({ws: barbuWS});
             this.barbuser.id = barbuWS.id;
