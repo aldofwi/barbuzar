@@ -64,7 +64,7 @@ const Chat = props => {
 
                                     <b className="col-"> [{[user]}] </b>
 
-                                    <em className="col-"> {text} </em>
+                                    <abbr className="col-"> {text} </abbr>
 
                                 </div>
 

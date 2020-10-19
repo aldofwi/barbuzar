@@ -6,11 +6,11 @@ const TableHeader = names => {
             <thead>
             <tr>
                 <React.Fragment>
-                    <th><tit3>CONTRACTS</tit3></th>
-                    <th><tit1>{names.nameData[0]}</tit1></th>
-                    <th><tit1>{names.nameData[1]}</tit1></th>
-                    <th><tit1>{names.nameData[2]}</tit1></th>
-                    <th><tit1>{names.nameData[3]}</tit1></th>
+                    <th><span className="tit3">CONTRACTS</span></th>
+                    <th><span className="tit1">{names.nameData[0]}</span></th>
+                    <th><span className="tit1">{names.nameData[1]}</span></th>
+                    <th><span className="tit1">{names.nameData[2]}</span></th>
+                    <th><span className="tit1">{names.nameData[3]}</span></th>
                 </React.Fragment>
             </tr>
             </thead>
@@ -55,11 +55,13 @@ const TableFooter = totals => {
     return(
         <thead>
         <tr>
-            <th><tit2>TOTAL</tit2></th>
+        <React.Fragment>
+            <th><span className="tit2">TOTAL</span></th>
             <th>{totals.totalData[0] > 0 ? "+"+totals.totalData[0] : totals.totalData[0] }</th>
             <th>{totals.totalData[1] > 0 ? "+"+totals.totalData[1] : totals.totalData[1] }</th>
             <th>{totals.totalData[2] > 0 ? "+"+totals.totalData[2] : totals.totalData[2] }</th>
             <th>{totals.totalData[3] > 0 ? "+"+totals.totalData[3] : totals.totalData[3] }</th>
+        </React.Fragment>
         </tr>
         </thead>
     )
@@ -78,12 +80,13 @@ class ScoreSheet extends Component {
 
         scores: [
             {
-                contrat: '',
-                score1: '',
-                score2: '',
-                score3: '',
-                score4: '',
+                contrat: 'X',
+                score1: '0',
+                score2: '0',
+                score3: '0',
+                score4: '0',
             },
+
         ],
 
         totals: [
@@ -107,7 +110,7 @@ class ScoreSheet extends Component {
     };
 
     handleBody = () => {
-        this.setState({ scores: [this.props.scores]})
+        this.setState({ scores: [...this.props.scores]})
     };
 
     handleTotal = () => {
@@ -120,7 +123,7 @@ class ScoreSheet extends Component {
         console.log('O5 - SCORESHEET - PROPS.TOTALS : ', this.props.totals);
 
         const { names } = this.state;
-        // const { scores } = this.props;
+        // const { scores } = this.state;
         // const { totals } = this.state;
 
         return(

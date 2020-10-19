@@ -38,6 +38,15 @@ const customStylesR = {
 const customStylesS = {
     content : {
         top                   : '5%',
+        left                  : '5%',
+        bottom                : 'auto',
+        right                 : 'auto',
+    }
+};
+
+/*
+content : {
+        top                   : '5%',
         left                  : '38%',
         bottom                : 'auto',
         right                 : 'auto',
@@ -45,7 +54,7 @@ const customStylesS = {
         overflow              : 'scroll',
         transform             : 'translate(-50%, -10%)'
     }
-};
+*/
 
 // TODO : CANNOT READ PROPS
 
@@ -55,12 +64,12 @@ const Rules = () => {
 
         <div>
 
-            <h1 align="center"> <tit1>Les Règles du Barbu</tit1> </h1>
+            <h1 align="center"> <span className="tit1">Les Règles du Barbu</span> </h1>
 
                 <table>Chaque joueur doit effectuer <b>7 contrats</b>.</table>
                 <table>Celui qui démarre est désigné par le tirage au sort.</table>
                 <table>La carte la plus forte commence à faire ses contrats.</table>
-                <table>Celui qui effectue ses contrats apparaît en <b><crr>ROUGE</crr></b>.</table>
+                <table>Celui qui effectue ses contrats apparaît en <b><span className="crr">ROUGE</span></b>.</table>
 
             <br></br>
 
@@ -80,7 +89,7 @@ const Rules = () => {
             <tr>Celui qui récupère <b>TOUS LES COEURS</b> gagne <b><cg>+40 points</cg></b>.</tr>
             <br></br>
 
-            <tr><b><contrat>DAMES</contrat></b></tr>
+            <b></b>
             <tr>Vous perdrez <b><cr>10 points</cr></b> par dame contenue dans vos plis.</tr>
             <tr>Celui qui récupère <b>TOUTES LES DAMES</b> gagne <b><cg>+40 points</cg></b>.</tr>
             <br></br>
@@ -2793,7 +2802,7 @@ class Barbu extends Component {
                                 <Rules />
 
                                 <div align="center">
-                                    <button className="btn btn-dark" onClick={() => this.setModalRIsOpen(false)}>Fermer</button>
+                                    <button className="btn btn-dark" onClick={() => this.setModalRIsOpen(false)}>Close</button>
                                 </div>
 
                             </Modal>
@@ -2802,12 +2811,10 @@ class Barbu extends Component {
 
                             <Modal
                                 centered
-                                size="sm"
-                                animation={true}
-                                aria-labelledby="contained-modal-title-vcenter"
-                                isOpen={this.state.modalSCIsOpen}
+                                scrollable={true}
                                 style={customStylesS}
-                                ariaHideApp={false}>
+                                isOpen={this.state.modalSCIsOpen}
+                                >
 
                                 <ScoreSheet
                                     names={this.playersName}
@@ -2818,7 +2825,7 @@ class Barbu extends Component {
                                 <br></br>
 
                                 <div align="center">
-                                    <button className="btn btn-dark" onClick={() => this.setModalSCIsOpen(false)}>Fermer</button>
+                                    <button className="btn btn-dark" onClick={() => this.setModalSCIsOpen(false)}>Close</button>
                                 </div>
 
                             </Modal>
