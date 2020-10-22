@@ -94,7 +94,7 @@ class Gameplay extends Component {
 
     render() {
 
-        console.log('O1 - GAMEPLAY - render() - SOCKET : ', this.state.ws);
+        // console.log('O1 - GAMEPLAY - render() - SOCKET : ', this.state.ws);
 
         return (
 

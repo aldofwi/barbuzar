@@ -21,7 +21,7 @@ const TableBody = scores => {
 
     const rows = scores.scoreData.map((row, index) => {
 
-        console.log("05 - SCORESHEET: TABLE BODY = \nrow : ", row, "\nindex = ", index);
+        // console.log("05 - SCORESHEET: TABLE BODY = \nrow : ", row, "\nindex = ", index);
 
         if (index === 7 || index === 15 || index === 23) { // 7 15 23
 
@@ -119,8 +119,8 @@ class ScoreSheet extends Component {
 
     render() {
 
-        console.log('O5 - SCORESHEET - PROPS.SCORES : ', this.props.scores);
-        console.log('O5 - SCORESHEET - PROPS.TOTALS : ', this.props.totals);
+        // console.log('O5 - SCORESHEET - PROPS.SCORES : ', this.props.scores);
+        // console.log('O5 - SCORESHEET - PROPS.TOTALS : ', this.props.totals);
 
         const { names } = this.state;
         // const { scores } = this.state;
