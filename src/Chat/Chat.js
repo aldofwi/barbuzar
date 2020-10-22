@@ -23,7 +23,7 @@ const Chat = props => {
         barbuWS.on("messagetxt", message => { setMessages( messages => [...messages, message]) });
 
         barbuWS.on("connected", user => {
-            barbuWS.emit("sendtxt", ["--- USER IN ---", user.name]);
+            //barbuWS.emit("sendtxt", ["--- USER IN ---", user.name]);
             setUsers(users => [...users, user]);
         });
 
