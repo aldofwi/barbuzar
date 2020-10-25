@@ -4,8 +4,8 @@ import Barbu from "./Barbu";
 //import SocketIO from 'socket.io-client';
 import barbuWS from './socketConfig';
 
-// const username = prompt("What is your username");
-const username = "Player" + Math.floor(Math.random() * (101));
+const username = prompt("What is your username");
+// const username = "Player" + Math.floor(Math.random() * (101));
 
 const port = 3000;
 
@@ -93,7 +93,6 @@ class Gameplay extends Component {
     };
 
     render() {
-
         // console.log('O1 - GAMEPLAY - render() - SOCKET : ', this.state.ws);
 
         return (
