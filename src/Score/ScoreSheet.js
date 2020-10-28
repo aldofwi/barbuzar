@@ -23,20 +23,20 @@ const TableBody = scores => {
 
         // console.log("05 - SCORESHEET: TABLE BODY = \nrow : ", row, "\nindex = ", index);
 
-        if (index === 7 || index === 15 || index === 23) { // 7 15 23
+        if (index === 7 || index === 15 || index === 23) { // 7 15 23 --> 8 16 24
 
             return (
-                <tr key={index} className="splitLine">
-                    <th className="splitLine"> - </th>
-                    <td className="splitLine"> ------------------</td>
-                    <td className="splitLine"> ------------------</td>
-                    <td className="splitLine"> ------------------</td>
-                    <td className="splitLine"> ------------------</td>
-                </tr>
+                    <tr className="splitLine">
+                        <th className="splitLine"> - </th>
+                        <td className="splitLine"> ------------------</td>
+                        <td className="splitLine"> ------------------</td>
+                        <td className="splitLine"> ------------------</td>
+                        <td className="splitLine"> ------------------</td>
+                    </tr>
             )
-        }
+        } else {
 
-        return (
+            return (
                 <tr key={index}>
                     <th>{row.contrat}</th>
                     <td>{row.score1 > 0 ? "+" + row.score1 : row.score1}</td>
@@ -45,10 +45,31 @@ const TableBody = scores => {
                     <td>{row.score4 > 0 ? "+" + row.score4 : row.score4}</td>
                 </tr>
             )
+        }
     });
 
-    return <tbody>{rows}</tbody>
+    return (
+
+        <tbody>
+            {rows}
+        </tbody>
+    )
 };
+
+const TableLine = () => {
+
+        return (
+            <tr className="splitLine">
+                <th className="splitLine"> - </th>
+                <td className="splitLine"> ------------------</td>
+                <td className="splitLine"> ------------------</td>
+                <td className="splitLine"> ------------------</td>
+                <td className="splitLine"> ------------------</td>
+            </tr> 
+        )
+
+};
+
 
 const TableFooter = totals => {
 
@@ -86,7 +107,6 @@ class ScoreSheet extends Component {
                 score3: '0',
                 score4: '0',
             },
-
         ],
 
         totals: [
@@ -130,7 +150,9 @@ class ScoreSheet extends Component {
 
             <table>
                 <TableHeader nameData={names} />
-                <TableBody scoreData={this.props.scores}/>
+                <TableLine />
+                <TableBody scoreData={this.props.scores} />
+                <TableLine />
                 <TableFooter totalData={this.props.totals} />
             </table>
             

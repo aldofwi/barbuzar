@@ -94,18 +94,19 @@ class Gameplay extends Component {
 
     render() {
         // console.log('O1 - GAMEPLAY - render() - SOCKET : ', this.state.ws);
+        // <button className="btn btn-danger" type="submit">Play</button>
 
         return (
 
         <div>
 
-            <Barbu
-                cardSize={Math.min(window.innerHeight / 5.5, window.innerWidth / 5.5, 70)}
-                style={{'height':window.innerHeight-62+'px'}} // FULL PAGE -54
-                barbuser={this.barbuser}
-                websocket={this.state.ws}
-                port={port}
-            />
+                <Barbu
+                    cardSize={Math.min(window.innerHeight / 5.5, window.innerWidth / 5.5, 70)}
+                    style={{'height':window.innerHeight-62+'px'}} // FULL PAGE -54
+                    barbuser={this.barbuser}
+                    websocket={this.state.ws}
+                    port={port}
+                />
 
         </div>
 

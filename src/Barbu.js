@@ -41,12 +41,15 @@ const customStylesS = {
     content : {
         top                   : '5%',
         left                  : '5%',
-        bottom                : 'auto',
         right                 : 'auto',
     }
 };
 
 /*
+
+        overflow              : 'scroll',
+        bottom                : 'auto',
+
 content : {
         top                   : '5%',
         left                  : '38%',
@@ -1285,6 +1288,10 @@ class Barbu extends Component {
 
             console.log('01 - BARBU - checkEndOfContract() ----- END OF ', this.currentChoice);
 
+            if(this.currentChoice === "Domino") {
+                this.boardDominoVisible = false;
+            }
+
             this.inProgress = false;
             this.currentChoice = "";
             this.nbContracts++;
@@ -1299,10 +1306,6 @@ class Barbu extends Component {
             this.plisW = [] ;
             this.plisN = [] ;
             this.plisE = [] ;
-
-            if(this.currentChoice === "Domino") {
-                this.boardDominoVisible = false;
-            }
 
             this.displayLoadingBasic = true;
             this.hidePlayersCards = true;
@@ -1370,22 +1373,22 @@ class Barbu extends Component {
                  if(this.pointsN === 185) { 
                      console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("NORTH"),' A FAIT LA RATA !'); 
                     // Message Général délivré par JARVIS.                      
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' FAIT LA FUCK!NG RATA ! 🔥', "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' fait la FUCK!NG RATA 🔥', "J@rvis"]);
                     }
             else if(this.pointsS === 185) { 
-                console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("SOUTH"),' A FAIT LA RATA !'); 
+                console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("SOUTH"),' A fait la RATA !'); 
                 // Message Général délivré par JARVIS.
-                barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' FAIT LA FUCK!NG RATA ! 🔥', "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' fait la FUCK!NG RATA 🔥', "J@rvis"]);
              }
             else if(this.pointsE === 185) { 
-                console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("EAST"),' A FAIT LA RATA !'); 
+                console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("EAST"),' A fait la RATA !'); 
                 // Message Général délivré par JARVIS.
-                barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+ ' FAIT LA FUCK!NG RATA ! 🔥', "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+ ' fait la FUCK!NG RATA 🔥', "J@rvis"]);
             }
             else if(this.pointsW === 185) { 
-                console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("WEST"),' A FAIT LA RATA !'); 
+                console.log('O1 - BARBU - handleRATA() - ', this.getNameByCardinal("WEST"),' A fait la RATA !'); 
                 // Message Général délivré par JARVIS.
-                barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+ ' FAIT LA FUCK!NG RATA ! 🔥', "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+ ' fait la FUCK!NG RATA 🔥', "J@rvis"]);
             }
             else {
                 // QUI A PRIS CHER ?
@@ -1598,44 +1601,54 @@ class Barbu extends Component {
             if( this.plisW[d].charAt(0) === 'q') { nbQueensW++; }
         }
 
-        if(nbQueensN === 4) { this.pointsN += 40; this.nbClic = 32; this.queensDone = true;
+        if(nbQueensN === 4) { 
+            if(this.currentChoice === "RATA") { this.pointsN += 0; }
+            else this.pointsN += 40; 
+            this.nbClic = 32; this.queensDone = true;
             console.log('O1 - BARBU - handleQueens() - ', this.getNameByCardinal("NORTH"),' FAIT LES DAMES !');
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' FAIT LES 👸🏽👸🏽👸🏽👸🏽 !', "J@rvis"]);
+            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' FAIT LES DAMES 👸🏽', "J@rvis"]);
         }
-        else if(nbQueensS === 4) { this.pointsS += 40; this.nbClic = 32; this.queensDone = true;
+        else if(nbQueensS === 4) { 
+            if(this.currentChoice === "RATA") { this.pointsN += 0; }
+            else this.pointsN += 40; 
+            this.nbClic = 32; this.queensDone = true;
             console.log('O1 - BARBU - handleQueens() - ', this.getNameByCardinal("SOUTH"),' FAIT LES DAMES !');
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' FAIT LES 👸🏽👸🏽👸🏽👸🏽 !', "J@rvis"]);
+            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' FAIT LES DAMES 👸🏽', "J@rvis"]);
         }
-        else if(nbQueensE === 4) { this.pointsE += 40; this.nbClic = 32; this.queensDone = true;
+        else if(nbQueensE === 4) { 
+            if(this.currentChoice === "RATA") { this.pointsN += 0; }
+            else this.pointsN += 40; 
+            this.nbClic = 32; this.queensDone = true;
             console.log('O1 - BARBU - handleQueens() - ', this.getNameByCardinal("EAST"),' FAIT LES DAMES !');
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+ ' FAIT LES 👸🏽👸🏽👸🏽👸🏽 !', "J@rvis"]);
+            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+ ' FAIT LES DAMES 👸🏽', "J@rvis"]);
         }
-        else if(nbQueensW === 4) { this.pointsW += 40; this.nbClic = 32; this.queensDone = true;
+        else if(nbQueensW === 4) { 
+            if(this.currentChoice === "RATA") { this.pointsN += 0; }
+            else this.pointsN += 40; 
+            this.nbClic = 32; this.queensDone = true;
             console.log('O1 - BARBU - handleQueens() - ', this.getNameByCardinal("WEST"),' FAIT LES DAMES !');
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+ ' FAIT LES 👸🏽👸🏽👸🏽👸🏽 !', "J@rvis"]);
+            barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+ ' FAIT LES DAMES 👸🏽', "J@rvis"]);
         }
         else if(nbQueensN + nbQueensS + nbQueensE + nbQueensW === 4) {
 
             this.pointsN += nbQueensN * -10; console.log('O1 - BARBU - handleQueens() - ', nbQueensN, ' DAMES pour ', this.getNameByCardinal("NORTH"),' !');
-            // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ nbQueensN + ' 👸🏽 pour '+ this.getNameByCardinal("NORTH")+ ' !', "J@rvis"]);
-
             this.pointsS += nbQueensS * -10; console.log('O1 - BARBU - handleQueens() - ', nbQueensS, ' DAMES pour ', this.getNameByCardinal("SOUTH"),'!');
-            // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ nbQueensS + ' 👸🏽 pour '+ this.getNameByCardinal("SOUTH")+ ' !', "J@rvis"]);
-
             this.pointsE += nbQueensE * -10; console.log('O1 - BARBU - handleQueens() - ', nbQueensE, ' DAMES pour ', this.getNameByCardinal("EAST"),'!');
-            // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ nbQueensE + ' 👸🏽 pour '+ this.getNameByCardinal("EAST")+ ' !', "J@rvis"]);
-
             this.pointsW += nbQueensW * -10; console.log('O1 - BARBU - handleQueens() - ', nbQueensW, ' DAMES pour ', this.getNameByCardinal("WEST"),'!');
+            
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ nbQueensW + ' 👸🏽 pour '+ this.getNameByCardinal("WEST")+ ' !', "J@rvis"]);
+            if(this.currentChoice !== "RATA") {
 
+                barbuWS.emit("sendtxt", [   '\n🃏 '+ nbQueensS + ' dames pour '+ this.getNameByCardinal("SOUTH")+' 👸🏽'+
+                                            '\n🃏 '+ nbQueensW + ' dames pour '+ this.getNameByCardinal("WEST")+ ' 👸🏽'+
+                                            '\n🃏 '+ nbQueensN + ' dames pour '+ this.getNameByCardinal("NORTH")+' 👸🏽'+
+                                            '\n🃏 '+ nbQueensE + ' dames pour '+ this.getNameByCardinal("EAST")+ ' 👸🏽', "J@rvis"]);
+            }
+                
             this.nbClic = 32;
         }
 
@@ -1710,16 +1723,16 @@ class Barbu extends Component {
         else if(nbHeartsN + nbHeartsS + nbHeartsE + nbHeartsW === 8) {
 
             this.pointsN += nbHeartsN * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsN ,' ♥ pour ', this.getNameByCardinal("NORTH"),' !'); 
-            barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsN +' ♥ pour '+ this.getNameByCardinal("NORTH")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
+            // barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsN +' ♥ pour '+ this.getNameByCardinal("NORTH")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
 
             this.pointsS += nbHeartsS * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsS ,' ♥ pour ', this.getNameByCardinal("SOUTH"),' !');
-            barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsS +' ♥ pour '+ this.getNameByCardinal("SOUTH")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
+            // barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsS +' ♥ pour '+ this.getNameByCardinal("SOUTH")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
 
             this.pointsE += nbHeartsE * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsE ,' ♥ pour ', this.getNameByCardinal("EAST"),' !');
-            barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsE +' ♥ pour '+ this.getNameByCardinal("EAST")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
+            // barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsE +' ♥ pour '+ this.getNameByCardinal("EAST")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
 
             this.pointsW += nbHeartsW * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsW ,' ♥ pour ', this.getNameByCardinal("WEST"),' !');
-            barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsW +' ♥ pour '+ this.getNameByCardinal("WEST")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
+            // barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsW +' ♥ pour '+ this.getNameByCardinal("WEST")+' !', "J@rvis"]); // Message Général délivré par JARVIS.
 
             this.nbClic = 32;
         }
@@ -1752,10 +1765,17 @@ class Barbu extends Component {
                 else this.pointsW += 40 ; console.log('O1 - BARBU - handlePli() - ', this.getNameByCardinal("WEST"),' FAIT LES PLIS !'); barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' FAIT LES PLIS ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
             }
             else {
-                this.pointsN += (this.plisN.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisN.length / 4),' plis pour ', this.getNameByCardinal("NORTH"),' !'); barbuWS.emit("sendtxt", ['🃏 '+ (this.plisN.length / 4)+' plis pour '+ this.getNameByCardinal("NORTH")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
-                this.pointsS += (this.plisS.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisS.length / 4),' plis pour ', this.getNameByCardinal("SOUTH"),' !'); barbuWS.emit("sendtxt", ['🃏 '+ (this.plisS.length / 4)+' plis pour '+ this.getNameByCardinal("SOUTH")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
-                this.pointsE += (this.plisE.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisE.length / 4),' plis pour ', this.getNameByCardinal("EAST"),' !');  barbuWS.emit("sendtxt", ['🃏 '+ (this.plisE.length / 4)+' plis pour '+ this.getNameByCardinal("EAST")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
-                this.pointsW += (this.plisW.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisW.length / 4),' plis pour ', this.getNameByCardinal("WEST"),' !');  barbuWS.emit("sendtxt", ['🃏 '+ (this.plisW.length / 4)+' plis pour '+ this.getNameByCardinal("WEST")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
+                this.pointsN += (this.plisN.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisN.length / 4),' plis pour ', this.getNameByCardinal("NORTH"),' !'); 
+                // if(this.currentChoice !== "RATA") barbuWS.emit("sendtxt", ['🃏 '+ (this.plisN.length / 4)+' plis pour '+ this.getNameByCardinal("NORTH")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
+                
+                this.pointsS += (this.plisS.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisS.length / 4),' plis pour ', this.getNameByCardinal("SOUTH"),' !'); 
+                // if(this.currentChoice !== "RATA") barbuWS.emit("sendtxt", ['🃏 '+ (this.plisS.length / 4)+' plis pour '+ this.getNameByCardinal("SOUTH")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
+                
+                this.pointsE += (this.plisE.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisE.length / 4),' plis pour ', this.getNameByCardinal("EAST"),' !');  
+                // if(this.currentChoice !== "RATA") barbuWS.emit("sendtxt", ['🃏 '+ (this.plisE.length / 4)+' plis pour '+ this.getNameByCardinal("EAST")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
+                
+                this.pointsW += (this.plisW.length / 4) * -5; console.log('O1 - BARBU - handlePli() - ', (this.plisW.length / 4),' plis pour ', this.getNameByCardinal("WEST"),' !');  
+                // if(this.currentChoice !== "RATA") barbuWS.emit("sendtxt", ['🃏 '+ (this.plisW.length / 4)+' plis pour '+ this.getNameByCardinal("WEST")+' ! 🀄️', "J@rvis"]); // Message Général délivré par JARVIS.
             }
         }
     };
@@ -1779,7 +1799,7 @@ class Barbu extends Component {
             }
 
             console.log('O1 - BARBU - handleDernierPli() - ', this.getNameByCardinal(this.isMaster),' se mange le dernier pli !');
-            barbuWS.emit("sendtxt", ['🃏 Le DERNIER PLI pour '+ this.getNameByCardinal(this.isMaster)+' 🎖', "J@rvis"]); 
+            if(this.currentChoice !== "RATA") barbuWS.emit("sendtxt", ['🃏 Le DERNIER PLI pour '+ this.getNameByCardinal(this.isMaster)+' 🎖', "J@rvis"]); 
             // Message Général délivré par JARVIS.
         }
     };
@@ -2739,6 +2759,8 @@ class Barbu extends Component {
     };
 
     checkContractChoice = (key, contractor) => {
+        console.log('01 - BARBU - checkContractChoice() - this.currentChoice : ', key);
+        console.log('01 - BARBU - checkContractChoice() - this.boardDominoVisible : ', this.boardDominoVisible);
 
         this.currentChoice = key;
         this.inProgress = true;
@@ -2809,8 +2831,6 @@ class Barbu extends Component {
 
     render() {
 
-        // console.log("0001 - BARBU - THIS.PROPS.WEBSOCKET : ", this.props.websocket);
-
         if(this.nbClic === 32) {
 
             console.log('01 - BARBU - Render() - this.isMaster : ', this.isMaster);
@@ -2854,9 +2874,9 @@ class Barbu extends Component {
 
         return (
 
-        <div className="whole">
+    <div className="whole">
 
-            <div className="game">
+        <div className="game">
 
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
 
@@ -2897,7 +2917,7 @@ class Barbu extends Component {
 
                             <Modal
                                 centered
-                                scrollable={true}
+                                closeButton={true}
                                 style={customStylesS}
                                 isOpen={this.state.modalSCIsOpen}
                                 ariaHideApp={false}
@@ -3135,7 +3155,7 @@ class Barbu extends Component {
 
         }
 
-         </div>
+        </div>
 
         <div className="chat">
 
@@ -3145,8 +3165,6 @@ class Barbu extends Component {
             />
 
         </div>
-
-
 
     </div>
 
