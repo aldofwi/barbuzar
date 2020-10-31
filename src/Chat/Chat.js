@@ -62,9 +62,55 @@ const Chat = props => {
 
                                     {moment(date).format("h:mma")}
 
-                                    <b className="col-"> [{[user]}] </b>
+                                    {
+                                        user === props.players[0]
+                                              ?
+                                              <b className="col-"><span className="dg"> [{[user]}] </span></b>
+                                              :
+                                              user === props.players[1]
+                                                    ?
+                                                    <b className="col-"><span className="db"> [{[user]}] </span></b>
+                                                    :
+                                                    user === props.players[2]
+                                                          ?
+                                                          <b className="col-"><span className="dr"> [{[user]}] </span></b>
+                                                          :
+                                                            user === props.players[3]
+                                                                  ?
+                                                                <b className="col-"><span className="dc"> [{[user]}] </span></b>
+                                                                    :
+                                                                    user === "J@rvis"
+                                                                        ?
+                                                                    <b className="col-"> [{[user]}] </b>
+                                                                        :
+                                                                    <em>[{[user]}]</em>
+                                    }
 
-                                    <abbr className="col-"> {text} </abbr>
+                                    
+
+                                    {
+                                        user === "J@rvis"
+                                              ?
+                                        <strong><abbr className="col-"> {text} </abbr></strong>
+                                              :
+                                            user === props.players[0]
+                                                ?
+                                            <span className="dg"><abbr className="col-"> {text} </abbr></span>
+                                                    :
+                                                user === props.players[1]
+                                                        ?
+                                                    <span className="db"><abbr className="col-"> {text} </abbr></span>
+                                                        :
+                                                        user === props.players[2]
+                                                            ?
+                                                        <span className="dr"><abbr className="col-"> {text} </abbr></span>
+                                                                  :
+                                                            user === props.players[3]
+                                                                  ?
+                                                            <span className="dc"><abbr className="col-"> {text} </abbr></span>
+                                                                  :
+                                                                  <em>[{[user]}]</em>
+                                    }
 
                                 </div>
 

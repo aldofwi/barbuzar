@@ -152,6 +152,22 @@ tit3 {
   color: red;
 }
 
+.dr {
+  color: orangered;
+}
+
+.dg {
+  color: darkgreen;
+}
+
+.db {
+  color: royalblue;
+}
+
+.dc {
+  color: slategrey;
+}
+
 tr b contrat {
     font-family: Nasalization ;
     font-size: large;
@@ -431,7 +447,8 @@ ul.topnav li.right a {float: right;}
   font-family: Nasalization;
   font-size: large;
   top: -5vh;
-  right: -5vh;
+  right: -3vh;
+  left: 1.5vh;
   color: red;
   transform: rotate(-180deg);
 }
@@ -441,7 +458,8 @@ ul.topnav li.right a {float: right;}
   font-family: Nasalization;
   font-size: large;
   top: -5vh;
-  right: -5vh;
+  right: -3vh;
+  left: -3vh;
   color: black;
   transform: rotate(-180deg);
 }
@@ -452,6 +470,7 @@ ul.topnav li.right a {float: right;}
   font-size: large;
   bottom: 28vh;
   right: -9vh;
+  left: -3.5vh;
   color: red;
   transform: rotate(0deg);
 
@@ -463,6 +482,7 @@ ul.topnav li.right a {float: right;}
   font-size: large;
   bottom: 28vh;
   right: -9vh;
+  left: -3vh;
   color: black;
   transform: rotate(0deg);
 }
@@ -560,7 +580,8 @@ ul.topnav li.right a {float: right;}
     text-align: center;
     position: relative;
     top: -3vh;
-    right: -2vh;
+    right: 2vh;
+    left: -0.5vh;
 }
 
 .PanelChoice {
