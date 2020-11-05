@@ -4,8 +4,8 @@ import Barbu from "./Barbu";
 //import SocketIO from 'socket.io-client';
 import barbuWS from './socketConfig';
 
-const username = prompt("What is your username");
-// const username = "Player" + Math.floor(Math.random() * (101));
+// const username = prompt("What is your username");
+const username = "Dog" + Math.floor(Math.random() * (101));
 
 const port = 3000;
 

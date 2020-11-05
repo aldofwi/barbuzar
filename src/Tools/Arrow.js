@@ -16,13 +16,17 @@ class Arrow extends Component {
 
     render() {
 
-        console.log('06 - ARROW || this.props.nameofclass : ', this.props.nameofclass);
+        // console.log('06 - ARROW || this.props.nameofclass : ', this.props.nameofclass);
 
         return (
             <div className={this.props.nameofclass}>
-                
-                    <span role="img" aria-label="Reveil">⏰</span>
-            
+
+                    {
+                        this.props.nameofclass !== ""
+                                    ?
+                        <span role="img" aria-label="Reveil">⏰</span>
+                                    : null
+                    }
             </div>
         );  
     }

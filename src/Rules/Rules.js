@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Emoji from '../Tools/Emoji';
 
 const Intro = () => {
 
@@ -28,25 +29,26 @@ const Seven = () => {
         <tbody>
         <tr>
             <React.Fragment>
+
             <th>
-                <span className="tit4"><h5>DERNIER PLI</h5></span>
+                <span className="tit4"><h5>DERNIER PLI <Emoji symbol="🎖" label="medal"/></h5></span>
                 <span className="textrules">
                 Celui qui récupère le <b>DERNIER PLI</b> perd <b><span className="crr">25 points</span></b>.<br></br><br></br>
                 </span>
 
-                <span className="tit4"><h5>PLIS</h5></span>
+                <span className="tit4"><h5>PLIS <Emoji symbol="🀄️" label="cardx"/></h5></span>
                 <span className="textrules">
                 Vous perdrez <b><span className="crr">5 points</span></b> pour chaque pli récupéré.<br></br>
                 Celui qui récupère <b>TOUS LES PLIS</b> gagne <b><span className="cg">+40 points</span></b>.<br></br><br></br>
                 </span>
 
-                <span className="tit4"><h5>COEURS</h5></span>
+                <span className="tit4"><h5>COEURS <Emoji symbol="♥️" label="heart"/></h5></span>
                 <span className="textrules">
-                Vous perdrez <b><span className="crr">5 points</span></b> pour chaque ♥ contenu dans vos plis.<br></br>
+                Vous perdrez <b><span className="crr">5 points</span></b> pour chaque <Emoji symbol="♥️" label="heart"/> contenu dans vos plis.<br></br>
                 Celui qui récupère <b>TOUS LES COEURS</b> gagne <b><span className="cg">+40 points</span></b>.<br></br><br></br>
                 </span>
 
-                <span className="tit4"><h5>DAMES</h5></span>
+                <span className="tit4"><h5>DAMES <Emoji symbol="👸🏽" label="queen"/></h5></span>
 
                 <span className="textrules">
                 Vous perdrez <b><span className="crr">10 points</span></b> par dame contenue dans vos plis.<br></br>
@@ -57,10 +59,10 @@ const Seven = () => {
 
             <th>
 
-                <span className="tit4"><h5>BARBU</h5></span>
-                <span className="textrules">Celui qui récupère le Barbu (<b>Roi de ♥</b>) perd <b><span className="crr">40 points</span></b>.<br></br><br></br></span>
+                <span className="tit4"><h5>BARBU <Emoji symbol="🎅🏾" label="santa"/></h5></span>
+                <span className="textrules">Celui qui récupère le Barbu (<b>Roi de <Emoji symbol="♥️" label="heart"/></b>) perd <b><span className="crr">40 points</span></b>.<br></br><br></br></span>
                 
-                <span className="tit4"><h5>DOMINO</h5></span>
+                <span className="tit4"><h5>DOMINO <Emoji symbol="🎲" label="dice"/></h5></span>
                 <span className="textrules">
 
                 C'est le même principe que le jeu du Domino classic.<br></br>
@@ -72,7 +74,7 @@ const Seven = () => {
                 
                 </span>
                 
-                <span className="tit4"><h5>RATA</h5></span>
+                <span className="tit4"><h5>RATA <Emoji symbol="🔥" label="fire"/></h5></span>
                 <span className="textrules">
 
                 La RATA rassemble <b>TOUS LES CONTRATS</b> sauf le Domino.<br></br>

@@ -7,10 +7,10 @@ const TableHeader = names => {
             <tr>
                 <React.Fragment>
                     <th><span className="tit3">CONTRACTS</span></th>
-                    <th><span className="tit1">{names.nameData[0]}</span></th>
-                    <th><span className="tit1">{names.nameData[1]}</span></th>
-                    <th><span className="tit1">{names.nameData[2]}</span></th>
-                    <th><span className="tit1">{names.nameData[3]}</span></th>
+                    <th><span className="tit1"><h4>{names.nameData[0]}</h4></span></th>
+                    <th><span className="tit1"><h4>{names.nameData[1]}</h4></span></th>
+                    <th><span className="tit1"><h4>{names.nameData[2]}</h4></span></th>
+                    <th><span className="tit1"><h4>{names.nameData[3]}</h4></span></th>
                 </React.Fragment>
             </tr>
             </thead>
@@ -26,7 +26,7 @@ const TableBody = scores => {
         if (index === 7 || index === 15 || index === 23) { // 7 15 23 --> 8 16 24
 
             return (
-                    <tr className="splitLine">
+                    <tr key={index} className="splitLine">
                         <th className="splitLine"> - </th>
                         <td className="splitLine"> ------------------</td>
                         <td className="splitLine"> ------------------</td>
@@ -37,12 +37,13 @@ const TableBody = scores => {
         } else {
 
             return (
+
                 <tr key={index}>
-                    <th>{row.contrat}</th>
-                    <td>{row.score1 > 0 ? "+" + row.score1 : row.score1}</td>
-                    <td>{row.score2 > 0 ? "+" + row.score2 : row.score2}</td>
-                    <td>{row.score3 > 0 ? "+" + row.score3 : row.score3}</td>
-                    <td>{row.score4 > 0 ? "+" + row.score4 : row.score4}</td>
+                    <th>{row.contrat === "Barbu" ? row.contrat+' 🎅🏾' : row.contrat === "RATA" ? row.contrat+' 🔥' : row.contrat === "Domino" ? row.contrat+' 🎲' : row.contrat === "Dames" ? row.contrat+' 👸🏽' : row.contrat === "Coeur" ? 'Cœurs 🧡' : row.contrat === "Pli" ? row.contrat+' 🀄️' : row.contrat+' 🎖'}</th>
+                    <td>{row.score1 > 0 ? <span className="cg"> {"+" + row.score1} </span> : (row.contrat === "Dernier Pli" || "Barbu" || "Domino") && (row.score1 < 0) ? <span className="crr"> {row.score1} </span> : row.score1}</td>
+                    <td>{row.score2 > 0 ? <span className="cg"> {"+" + row.score2} </span> : (row.contrat === "Dernier Pli" || "Barbu" || "Domino") && (row.score2 < 0) ? <span className="crr"> {row.score2} </span> : row.score2}</td>
+                    <td>{row.score3 > 0 ? <span className="cg"> {"+" + row.score3} </span> : (row.contrat === "Dernier Pli" || "Barbu" || "Domino") && (row.score3 < 0) ? <span className="crr"> {row.score3} </span> : row.score3}</td>
+                    <td>{row.score4 > 0 ? <span className="cg"> {"+" + row.score4} </span> : (row.contrat === "Dernier Pli" || "Barbu" || "Domino") && (row.score4 < 0) ? <span className="crr"> {row.score4} </span> : row.score4}</td>
                 </tr>
             )
         }
@@ -59,13 +60,15 @@ const TableBody = scores => {
 const TableLine = () => {
 
         return (
+            <thead>
             <tr className="splitLine">
                 <th className="splitLine"> - </th>
                 <td className="splitLine"> ------------------</td>
                 <td className="splitLine"> ------------------</td>
                 <td className="splitLine"> ------------------</td>
                 <td className="splitLine"> ------------------</td>
-            </tr> 
+            </tr>
+            </thead>
         )
 
 };
@@ -77,7 +80,7 @@ const TableFooter = totals => {
         <thead>
         <tr>
         <React.Fragment>
-            <th><span className="tit2">TOTAL</span></th>
+            <th><span className="tit2"><h6>TOTAL</h6></span></th>
             <th>{totals.totalData[0] > 0 ? "+"+totals.totalData[0] : totals.totalData[0] }</th>
             <th>{totals.totalData[1] > 0 ? "+"+totals.totalData[1] : totals.totalData[1] }</th>
             <th>{totals.totalData[2] > 0 ? "+"+totals.totalData[2] : totals.totalData[2] }</th>

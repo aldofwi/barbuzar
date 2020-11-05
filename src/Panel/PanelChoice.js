@@ -71,7 +71,6 @@ class PanelChoice extends Component {
         // console.log('04 - PANELCHOICE - render() - this.props.contracts[1] : ', this.props.contracts[1]);
         // console.log('04 - PANELCHOICE - render() - this.contractsStates() : ', this.contractsStates);
 
-
         const PanelContracts = () => {
 
             return(
@@ -86,6 +85,7 @@ class PanelChoice extends Component {
 
         const { onClickHandies } = this.props;
 
+        // <Emoji symbol="♥️" label="heart"/> {this.props.gameContracts[3]+ ' ♥️'}
         // console.log('04 - PANELCHOICE - checkState() - posPicked : ', this.props.posPicked);
         // , {this.props.username} console.log('04 - PANELCHOICE - checkState() - panelVisible : ', this.props.panelVis);
 
@@ -94,6 +94,7 @@ class PanelChoice extends Component {
             <div className="PanelPosition">
 
                 {
+                    
 
                             this.state.panelVis && this.props.posPicked
                             ?
@@ -101,13 +102,13 @@ class PanelChoice extends Component {
                             : null
                 }
 
-                <input className="btn btn-danger" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[0]} onClick={() => onClickHandies(this.props.gameContracts[0])} disabled={this.contractsStates[0]}/><br/>
-                <input className="btn btn-dark" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[2]} onClick={() => onClickHandies(this.props.gameContracts[2])} disabled={this.contractsStates[2]}/><br/>
-                <input className="btn btn-danger" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[1]} onClick={() => onClickHandies(this.props.gameContracts[1])} disabled={this.contractsStates[1]}/><br/>
-                <input className="btn btn-light my-2 my-sm-0" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[3]} onClick={() => onClickHandies(this.props.gameContracts[3])} disabled={this.contractsStates[3]}/><br/>
-                <input className="btn btn-light my-2 my-sm-0" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[4]} onClick={() => onClickHandies(this.props.gameContracts[4])} disabled={this.contractsStates[4]}/><br/>
-                <input className="btn btn-light my-2 my-sm-0" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[5]} onClick={() => onClickHandies(this.props.gameContracts[5])} disabled={this.contractsStates[5]}/><br/>
-                <input className="btn btn-secondary my-2 my-sm-0" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[6]} onClick={() => onClickHandies(this.props.gameContracts[6])} disabled={this.contractsStates[6]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[0]+' 🎅🏾'} onClick={() => onClickHandies(this.props.gameContracts[0])} disabled={this.contractsStates[0]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={'🎲 '+this.props.gameContracts[2]} onClick={() => onClickHandies(this.props.gameContracts[2])} disabled={this.contractsStates[2]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[1]+' 🔥'} onClick={() => onClickHandies(this.props.gameContracts[1])} disabled={this.contractsStates[1]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={'🧡 Cœurs'} onClick={() => onClickHandies(this.props.gameContracts[3])} disabled={this.contractsStates[3]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[4]+' 👸🏽'} onClick={() => onClickHandies(this.props.gameContracts[4])} disabled={this.contractsStates[4]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={'🀄️ '+this.props.gameContracts[5]} onClick={() => onClickHandies(this.props.gameContracts[5])} disabled={this.contractsStates[5]}/><br/>
+                <input className="btn btn-light" type={this.checkButton(this.state.panelVis && this.props.posPicked)} size={10} value={this.props.gameContracts[6]+' 🎖'} onClick={() => onClickHandies(this.props.gameContracts[6])} disabled={this.contractsStates[6]}/><br/>
 
             </div>
 

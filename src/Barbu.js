@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Modal from "react-modal";
 // import SocketIO from "socket.io-client";
 import barbuWS from './socketConfig';
+// import audio from './Sounds/ting.mp3';
 
 import './PlayingCard/Table/Table.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -112,8 +113,10 @@ class Barbu extends Component {
             this.gamePointsN, this.gamePointsS,
             this.gamePointsE, this.gamePointsW];
 
-        this.contractsN = []; this.contractsS = [];
-        this.contractsE = []; this.contractsW = [];
+        this.contractsN = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
+        this.contractsS = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
+        this.contractsE = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
+        this.contractsW = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
 
         this.allContracts = [
             this.contractsN, this.contractsS,
@@ -128,7 +131,7 @@ class Barbu extends Component {
         this.currentChoice = "";
         this.currentScore = [];
 
-        this.nbContracts = 0 ; // DUR - this.nbContracts = 6;
+        this.nbContracts = 24 ; // DUR - this.nbContracts = 6;
         this.lastContract = false;
         this.displayLoadingBasic = false;
         this.displayLoadingPosition = true;
@@ -202,7 +205,7 @@ class Barbu extends Component {
                         'east': '0',
                         'right': '-65%',
                         'position': 'absolute',
-                        // FULLSCREEN 'transform' : 'translateY(-80%) translateX(-80%) rotate(90deg)',
+                        // FULLSCR33N 'transform' : 'translateY(-80%) translateX(-80%) rotate(90deg)',
                         'transform' : 'translateY(10%) translateX(-80%) rotate(90deg)',
                         'transformOrigin' : ' 0px -' + window.innerWidth / 2 + 'px'
                     },
@@ -291,8 +294,9 @@ class Barbu extends Component {
     };
 
     whichArrow = () => {
-        // console.log('O1 - BARBU - whichArrow() - this.currentChoice : ', this.currentChoice);
         // console.log('O1 - BARBU - whichArrow() - this.hasToPlayDomino : ', this.hasToPlayDomino);
+
+        // audio = new Audio('./Sounds/ting.mp3'); audio.play();
 
         if(this.currentChoice === "Domino") {
 
@@ -309,6 +313,7 @@ class Barbu extends Component {
 
         }
         else if ((this.boardHand.length === 0) || (this.boardHand.length === 4)) {
+            // SI LE BOARD EST VIDE ou LES 4 CARTES SONT JOUEES.
 
             switch (this.isMaster) {
                 case "NORTH" : this.arrow = "App-arrow-north" ; break;
@@ -320,6 +325,7 @@ class Barbu extends Component {
             }
         }
         else if (this.boardHand.length === 1) {
+            // SI LE BOARD NE CONTIENT QU'UNE CARTE.
 
             switch (this.hasStarted) {
                 case "NORTH" : this.arrow = "App-arrow-east" ; break;
@@ -331,6 +337,7 @@ class Barbu extends Component {
             }
         }
         else if (this.boardHand.length === 2) {
+            // SI LE BOARD CONTIENT 2 CARTES.
 
             switch (this.hasStarted) {
                 case "NORTH" : this.arrow = "App-arrow-south" ; break;
@@ -342,6 +349,7 @@ class Barbu extends Component {
             }
         }
         else if (this.boardHand.length === 3) {
+            // SI LE BOARD CONTIENT 3 CARTES.
 
             switch (this.hasStarted) {
                 case "NORTH" : this.arrow = "App-arrow-west" ; break;
@@ -393,9 +401,9 @@ class Barbu extends Component {
 
                 if(this.contractor === "SOUTH") {
 
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(3) + ' SERA LE 4️⃣E ', "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(3) + ' SERA EN 4️⃣', "J@rvis"]);
                     barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(2) + ' JOUERA EN 3️⃣', "J@rvis"]);
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(1) + ' ENCHAINERA EN 2️⃣ ', "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(1) + ' ENCHAINERA EN 2️⃣', "J@rvis"]);
                     barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(0) + ' COMMENCE EN 1️⃣', "J@rvis"]);
                     
                 }
@@ -474,7 +482,7 @@ class Barbu extends Component {
     }
 
     getBadgeCC(choice) {
-        console.log('01 - BARBU - getBadgeCC() - check during choice');
+        //console.log('01 - BARBU - getBadgeCC() - check during choice');
 
         switch(choice) {
 
@@ -970,7 +978,7 @@ class Barbu extends Component {
         this.displayLoadingBasic = true;
         this.displayLoadingPosition = false;
 
-        // TODO : GESTION DU JSON
+        // TODO ::: GESTION DU JSON
 
         this.setState({ contractor: this.contractor });
 
@@ -993,7 +1001,8 @@ class Barbu extends Component {
             this.fullHandE = [...this.state.handE];
             this.fullHandW = [...this.state.handW];
 
-            this.sendHands();
+            // PLAYERS CARDS STARTING
+            setTimeout(() => this.sendHands(), 1000);
         }
 
         setTimeout(() => this.cleanBoardEnd(), 1500);
@@ -1093,21 +1102,20 @@ class Barbu extends Component {
     calculateWinner() {
         console.log('O1 - BARBU - calculateWinner()');
 
-        // let barbuWS = this.websocket;
-        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
-
-        let winner, winner2;
+        let winner = 0;
+        let winner2;
         let draw = false;
-        
-        // CHECK WINNER
-        for (let h = 0; h < this.gamePoints.length - 1; h++) {
+                            
+        // CHECK WINNER [-40, 0, -80, -40]
+        for (let h = 1; h < this.gamePoints.length; h++) {
 
-            if (this.gamePoints[h] > this.gamePoints[h + 1]) winner = h;
-            else winner = h + 1;
+            if (this.gamePoints[winner] < this.gamePoints[h]) {
 
+                winner = h;
+            }
         }
 
-        // VERIFY DRAW
+        // VERIFY DRAW.
         for(let k=0; k < this.gamePoints.length; k++) {
 
             if(winner !== k && this.gamePoints[winner] === this.gamePoints[k]) {
@@ -1117,14 +1125,14 @@ class Barbu extends Component {
 
         if(draw) {
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", [this.getNamePosition(winner), ' & ', this.getNamePosition(winner2), ' REMPORTENT LA PARTIE ! 🏆🏆', "J@rvis"]);
-            console.log('O1 - BARBU - calculateWinner() : DRAW | ', this.getNamePosition(winner), ' & ', this.getNamePosition(winner2), ' REMPORTENT LA PARTIE !!!');
+            setTimeout(() => barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(winner) + ' & '+ this.getNamePosition(winner2) +' GAGNENT 🏆🏆', "J@rvis"]), 2000);
+            console.log('O1 - BARBU - calculateWinner() : DRAW | ', this.getNamePosition(winner), ' & ', this.getNamePosition(winner2), ' GAGNENT LA PARTIE !!!');
             this.winner = this.getNamePosition(winner) + " & " + this.getNamePosition(winner2) ;
 
         } else {
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(winner) + ' REMPORTE LA PARTIE ! 🏆', "J@rvis"]);
-            console.log('O1 - BARBU - calculateWinner() : ', this.getNamePosition(winner), ' REMPORTE LA PARTIE !!!');
+            setTimeout(() => barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(winner) + ' GAGNE LA PARTIE 🏆', "J@rvis"]), 2000);
+            console.log('O1 - BARBU - calculateWinner() : ', this.getNamePosition(winner), ' GAGNE LA PARTIE !!!');
             this.winner = this.getNamePosition(winner) ;
         }
 
@@ -1142,8 +1150,9 @@ class Barbu extends Component {
 
             console.log('O1 - BARBU - checkEndof28() : END OF GAME !');
             // Message Général délivré par JARVIS.
-            barbuWS.emit("sendtxt", ['🃏 FIN DE PARTIE !!! 🔚', "J@rvis"]);
-                        
+            if(this.contractor === "SOUTH") {
+                setTimeout(() => barbuWS.emit("sendtxt", ['🃏 FIN DE PARTIE !!! 🔚', "J@rvis"]), 1000);
+            }
 
             console.log('O1 - BARBU - checkEndof28() : joueur1 - ', this.getNamePosition(0), ' : ', this.gamePoints[0],' points.');
             console.log('O1 - BARBU - checkEndof28() : joueur2 - ', this.getNamePosition(1), ' : ', this.gamePoints[1],' points.');
@@ -1167,35 +1176,32 @@ class Barbu extends Component {
 
             case "SOUTH"    : if(this.contractsS.length === 7 && this.gameStarted !== 4)
                                 { this.contractor = this.isMaster = "WEST"; this.gameStarted++;
-                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster), ' FAIT SES CONTRATS !');
-                                    // Message Général délivré par JARVIS.
-                                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(this.isMaster)+ ' FAIT SES CONTRATS ! 🆕', "J@rvis"]);
+                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster), ' FAIT SES CONTRATS');
                                 } break;
 
             case "WEST"     : if(this.contractsW.length === 7 && this.gameStarted !== 4)
-                                 { this.contractor = this.isMaster = "NORTH" ; this.gameStarted++;
-                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster), ' FAIT SES CONTRATS !');
-                                    // Message Général délivré par JARVIS.
-                                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(this.isMaster)+ ' FAIT SES CONTRATS ! 🆕', "J@rvis"]);
-                                 } break;
+                                { this.contractor = this.isMaster = "NORTH" ; this.gameStarted++;
+                                console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster), ' FAIT SES CONTRATS');
+                                } break;
 
             case "NORTH"    : if(this.contractsN.length === 7 && this.gameStarted !== 4)
                                 { this.contractor = this.isMaster = "EAST"; this.gameStarted++;
-                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster) ,' FAIT SES CONTRATS !');
-                                    // Message Général délivré par JARVIS.
-                                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(this.isMaster)+ ' FAIT SES CONTRATS ! 🆕', "J@rvis"]);
+                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster) ,' FAIT SES CONTRATS');
                                 } break;
 
             case "EAST"     : if(this.contractsE.length === 7 && this.gameStarted !== 4)
-                                { this.contractor = this.isMaster = "SOUTH" ; this.gameStarted++;
-                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster), ' FAIT SES CONTRATS !');
+                                { 
+                                    this.contractor = this.isMaster = "SOUTH" ; this.gameStarted++;
+                                    console.log('O1 - BARBU - checkEndof7() : ', this.getNameByCardinal(this.isMaster), ' FAIT SES CONTRATS');
                                     // Message Général délivré par JARVIS.
-                                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(this.isMaster)+ ' FAIT SES CONTRATS ! 🆕', "J@rvis"]);
+                                    setTimeout(() => barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(this.contractor)+ ' FAIT SES CONTRATS 🆕', "J@rvis"]), 1500);
+                                    //barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(this.contractor)+ ' FAIT SES CONTRATS 🆕', "J@rvis"]);
+      
                                 } break;
 
             default: break;
         }
-
+                          
     };
 
     checkEndOfContract = () => {
@@ -1206,6 +1212,7 @@ class Barbu extends Component {
 
             if(this.currentChoice === "Domino") {
                 this.boardDominoVisible = false;
+                this.ranksDomino = [] ;
             }
 
             this.inProgress = false;
@@ -1229,7 +1236,7 @@ class Barbu extends Component {
             this.cleanBoardEnd();
 
             // IF IM CONTRACTOR, I SHUFFLE 1 DEAL NU DECK
-            if(this.myPosition === this.gameStarted && !this.partyIsOver) {
+            if(this.myPosition === this.gameStarted) {
 
                 this.deck = new Deck();
                 this.deck.shuffle();
@@ -1336,10 +1343,10 @@ class Barbu extends Component {
                 if(this.contractor === "SOUTH") {
 
                     // Message Général délivré par JARVIS.
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+ ' : '+ this.pointsE, "J@rvis"]);
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' : '+ this.pointsN, "J@rvis"]);
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+ ' : '+ this.pointsW, "J@rvis"]);
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' : '+ this.pointsS, "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+  ' ▷ '+ this.pointsE, "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' ▷ '+ this.pointsN, "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+  ' ▷ '+ this.pointsW, "J@rvis"]);
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' ▷ '+ this.pointsS, "J@rvis"]);
 
                 }
 
@@ -1356,28 +1363,28 @@ class Barbu extends Component {
             if( this.plisN[a] === 'kh') { this.pointsN += -40; this.nbClic = 32;
                 console.log('O1 - BARBU - handleBarbu() - ', this.getNameByCardinal("NORTH"),' MANGE LE BARBU !');
                 // Message Général délivré par JARVIS.
-                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH") + ' MANGE LE BARBU ! 🎅🏾', "J@rvis"]);
+                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH") + ' MANGE LE BARBU 🎅🏾', "J@rvis"]);
             }
         }
         for(let b=0; b<this.plisS.length; b++) {
             if( this.plisS[b] === 'kh') { this.pointsS += -40; this.nbClic = 32;
                 console.log('O1 - BARBU - handleBarbu() - ', this.getNameByCardinal("SOUTH"),' MANGE LE BARBU !');
                 // Message Général délivré par JARVIS.
-                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH") + ' MANGE LE BARBU ! 🎅🏾', "J@rvis"]);
+                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH") + ' MANGE LE BARBU 🎅🏾', "J@rvis"]);
             }
         }
         for(let c=0; c<this.plisE.length; c++) {
             if( this.plisE[c] === 'kh') { this.pointsE += -40; this.nbClic = 32;
                 console.log('O1 - BARBU - handleBarbu() - ', this.getNameByCardinal("EAST"),' MANGE LE BARBU !');
                 // Message Général délivré par JARVIS.
-                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST") + ' MANGE LE BARBU ! 🎅🏾', "J@rvis"]);
+                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST") + ' MANGE LE BARBU 🎅🏾', "J@rvis"]);
             }
         }
         for(let d=0; d<this.plisW.length; d++) {
             if( this.plisW[d] === 'kh') { this.pointsW += -40; this.nbClic = 32;
                 console.log('O1 - BARBU - handleBarbu() - ', this.getNameByCardinal("WEST"),' MANGE LE BARBU !');
                 // Message Général délivré par JARVIS.
-                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' MANGE LE BARBU ! 🎅🏾', "J@rvis"]);
+                if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' MANGE LE BARBU 🎅🏾', "J@rvis"]);
             }
         }
 
@@ -1399,97 +1406,82 @@ class Barbu extends Component {
     };
 
     handleDomino = () => {
-        console.log('O1 - BARBU - handleDomino()');
+        console.log('O1 - BARBU - handleDomino()- W.IN - ', this.ranksDomino);
 
+        // TODO : NSEW --> NESW this.ranksDomino
+
+        // SI NORTH EST TOUJOURS SUR LA TABLE.
         if ( this.ranksDomino.indexOf("NORTH") === -1 ) {
-
+            // SI CE N'EST PAS LE DERNIER & QUE SA MAIN EST VIDE :
             if (this.ranksDomino.length < 3 && this.state.handN.length === 0) {
-                //this.pointsN += this.checkDominoRank();
-                this.ranksDomino.push("NORTH");
-                console.log('O1 - BARBU - handleDomino() - ranksDomino : ', this.ranksDomino);
+
+                this.ranksDomino.push("NORTH"); console.log('O1 - BARBU - handleDomino() - ranksDomino : ', this.ranksDomino);
 
                 if (this.ranksDomino.length === 3) this.handleDomino();
             }
+            
+            if (this.ranksDomino.length === 3) { // SI C'EST LE DERNIER : ON LE PUSH.
 
-            else if (this.ranksDomino.length === 3 ) {
-                //this.pointsN = this.checkDominoRank();
-                this.ranksDomino.push("NORTH");
-                this.nbClic = 32;
-
-                this.handSpides = []; this.handHearts = [];
-                this.handClubs = []; this.handDiamonds = [];
+                this.ranksDomino.push("NORTH"); 
+                this.handSpides = []; this.handHearts = []; this.handClubs = []; this.handDiamonds = [];
                 console.log('O1 - BARBU - handleDomino() - ', this.getNameByCardinal("NORTH"),' EST DERNIER DU DOMINO !');
-                // Message Général délivré par JARVIS.
-                //if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH")+ ' EST DERNIER ! 🎲', "J@rvis"]);
             }
         }
 
-        if ( this.ranksDomino.indexOf("SOUTH") === -1 ) {
-
-            if (this.ranksDomino.length < 3 && this.state.handS.length === 0) {
-                //this.pointsS += this.checkDominoRank();
-                this.ranksDomino.push("SOUTH");
-                console.log('O1 - BARBU - handleDomino() - ranksDomino : ', this.ranksDomino);
-
-                if (this.ranksDomino.length === 3) this.handleDomino();
-            }
-
-            else if (this.ranksDomino.length === 3 ) {
-                //this.pointsS = this.checkDominoRank();
-                this.ranksDomino.push("SOUTH");
-                this.nbClic = 32;
-
-                this.handSpides = []; this.handHearts = [];
-                this.handClubs = []; this.handDiamonds = [];
-                console.log('O1 - BARBU - handleDomino() - JE SUIS DERNIER DU DOMINO !!!');
-                // Message Général délivré par JARVIS.
-                //if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH")+ ' EST DERNIER ! 🎲', "J@rvis"]);
-            }
-        }
-
+        // SI EAST EST TOUJOURS SUR LA TABLE.
         if ( this.ranksDomino.indexOf("EAST") === -1 ) {
-
+            // SI CE N'EST PAS LE DERNIER & QUE SA MAIN EST VIDE :
             if (this.ranksDomino.length < 3 && this.state.handE.length === 0) {
-                //this.pointsE += this.checkDominoRank();
+                        // 1                                // 2
+
                 this.ranksDomino.push("EAST");
                 console.log('O1 - BARBU - handleDomino() - ranksDomino : ', this.ranksDomino);
 
                 if (this.ranksDomino.length === 3) this.handleDomino();
             }
+            
+            if (this.ranksDomino.length === 3) { // SI C'EST LE DERNIER : ON LE PUSH.
 
-            else if (this.ranksDomino.length === 3 ) {
-                //this.pointsE = this.checkDominoRank();
-                this.ranksDomino.push("EAST");
-                this.nbClic = 32;
-
-                this.handSpides = []; this.handHearts = [];
-                this.handClubs = []; this.handDiamonds = [];
-                console.log('O1 - BARBU - handleDomino() - ', this.getNameByCardinal("EAST"),' EST DERNIER DU DOMINO !');
-                // Message Général délivré par JARVIS.
-                //if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST")+ ' EST DERNIER ! 🎲', "J@rvis"]);
+                this.ranksDomino.push("EAST"); // this.nbClic = 32;
+                this.handSpides = []; this.handHearts = []; this.handClubs = []; this.handDiamonds = [];
+                console.log('O1 - BARBU - handleDomino() - ', this.getNameByCardinal("EAST"),' EST DERNIER DU DOMINO !'); // LUDO 
             }
         }
 
-        if ( this.ranksDomino.indexOf("WEST") === -1 ) {
+        // SI SOUTH EST TOUJOURS SUR LA TABLE.
+        if ( this.ranksDomino.indexOf("SOUTH") === -1 ) {
+            // SI CE N'EST PAS LE DERNIER & QUE SA MAIN EST VIDE :
+            if (this.ranksDomino.length < 3 && this.state.handS.length === 0) {
 
-            if (this.ranksDomino.length < 3 && this.state.handW.length === 0) {
-                //this.pointsW += this.checkDominoRank();
-                this.ranksDomino.push("WEST");
+                this.ranksDomino.push("SOUTH");
                 console.log('O1 - BARBU - handleDomino() - ranksDomino : ', this.ranksDomino);
 
                 if (this.ranksDomino.length === 3) this.handleDomino();
             }
+            
+            if (this.ranksDomino.length === 3) { // SI C'EST LE DERNIER : ON LE PUSH.
 
-            else if (this.ranksDomino.length === 3) {
-                //this.pointsW = this.checkDominoRank();
-                this.ranksDomino.push("WEST");
-                this.nbClic = 32;
+                this.ranksDomino.push("SOUTH"); // this.nbClic = 32;
+                this.handSpides = []; this.handHearts = []; this.handClubs = []; this.handDiamonds = [];
+                console.log('O1 - BARBU - handleDomino() - JE SUIS DERNIER DU DOMINO !!!');
+            }
+        }
 
-                this.handSpides = []; this.handHearts = [];
-                this.handClubs = []; this.handDiamonds = [];
+        // SI WEST EST TOUJOURS SUR LA TABLE.
+        if ( this.ranksDomino.indexOf("WEST") === -1 ) {
+            // SI CE N'EST PAS LE DERNIER & QUE SA MAIN EST VIDE :
+            if (this.ranksDomino.length < 3 && this.state.handW.length === 0) {
+                
+                this.ranksDomino.push("WEST"); console.log('O1 - BARBU - handleDomino() - ranksDomino : ', this.ranksDomino);
+
+                if (this.ranksDomino.length === 3) this.handleDomino();
+            }
+            
+            if (this.ranksDomino.length === 3) { // SI C'EST LE DERNIER : ON LE PUSH.
+
+                this.ranksDomino.push("WEST"); // this.nbClic = 32;
+                this.handSpides = []; this.handHearts = []; this.handClubs = []; this.handDiamonds = [];
                 console.log('O1 - BARBU - handleDomino() - ', this.getNameByCardinal("WEST"),' EST DERNIER DU DOMINO !');
-                // Message Général délivré par JARVIS.
-                //if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST")+ ' EST DERNIER 🎲', "J@rvis"]);
             }
         }
 
@@ -1497,7 +1489,7 @@ class Barbu extends Component {
 
         if (this.ranksDomino.length === 4) {
 
-            // TODO : Indiquer par Jarvis qui est 1er 2e 3e.
+            // TODO : Indiquer BY J@rvis qui est 1er 2e 3e 4e.
             this.pointsN = this.checkDominoRank(this.ranksDomino.indexOf("NORTH"));
             this.pointsS = this.checkDominoRank(this.ranksDomino.indexOf("SOUTH"));
             this.pointsE = this.checkDominoRank(this.ranksDomino.indexOf("EAST"));
@@ -1506,16 +1498,17 @@ class Barbu extends Component {
             // Message Général délivré par JARVIS.
             if(this.contractor === "SOUTH") {
 
-                barbuWS.emit("sendtxt", ['🃏 4E 🎲'  + this.getNameByCardinal(this.ranksDomino[3]) + ' 💩', "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 4E 🎲 '  + this.getNameByCardinal(this.ranksDomino[3]) + ' 💩', "J@rvis"]);
                 barbuWS.emit("sendtxt", ['🃏 3E 🎲 ' + this.getNameByCardinal(this.ranksDomino[2]) + ' 🥉', "J@rvis"]);
                 barbuWS.emit("sendtxt", ['🃏 2E 🎲 ' + this.getNameByCardinal(this.ranksDomino[1]) + ' 🥈', "J@rvis"]);
                 barbuWS.emit("sendtxt", ['🃏 1E 🎲 '+ this.getNameByCardinal(this.ranksDomino[0]) + ' 🥇', "J@rvis"]);
   
             }
             
-
             this.ranksDomino = [] ;
+            this.nbClic = 32;
 
+            // this.ranksDomino.length = 0 ;
         }
     };
 
@@ -1624,8 +1617,8 @@ class Barbu extends Component {
             else this.pointsN += 40;
 
             this.nbClic = 32; this.heartsDone = true;
-            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("NORTH"),' FAIT LES ♥ !');
-            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH") + ' FAIT LES ♥ !', "J@rvis"]);
+            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("NORTH"),' FAIT LES 🧡 !');
+            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH") + ' FAIT LES 🧡', "J@rvis"]);
             // Message Général délivré par JARVIS.
         }
 
@@ -1634,8 +1627,8 @@ class Barbu extends Component {
             else this.pointsS += 40;
 
             this.nbClic = 32; this.heartsDone = true;
-            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("SOUTH"),' FAIT LES ♥ !');
-            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH") + ' FAIT LES ♥ !', "J@rvis"]);
+            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("SOUTH"),' FAIT LES 🧡 !');
+            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH") + ' FAIT LES 🧡', "J@rvis"]);
             // Message Général délivré par JARVIS.
             }
 
@@ -1644,8 +1637,8 @@ class Barbu extends Component {
             else this.pointsE += 40;
 
             this.nbClic = 32; this.heartsDone = true;
-            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("EAST"),' FAIT LES ♥ !');
-            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST") + ' FAIT LES ♥ !', "J@rvis"]);
+            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("EAST"),' FAIT LES 🧡 !');
+            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST") + ' FAIT LES 🧡', "J@rvis"]);
             // Message Général délivré par JARVIS.
             }
 
@@ -1654,25 +1647,25 @@ class Barbu extends Component {
             else this.pointsW += 40;
 
             this.nbClic = 32; this.heartsDone = true;
-            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("WEST"),' FAIT LES ♥ !');
-            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' FAIT LES ♥ !', "J@rvis"]);
+            console.log('O1 - BARBU - handleHearts() - ', this.getNameByCardinal("WEST"),' FAIT LES 🧡 !');
+            if(this.contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' FAIT LES 🧡', "J@rvis"]);
             // Message Général délivré par JARVIS.
             }
 
         else if(nbHeartsN + nbHeartsS + nbHeartsE + nbHeartsW === 8) {
 
-            this.pointsN += nbHeartsN * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsN ,' ♥ pour ', this.getNameByCardinal("NORTH"),' !'); 
-            this.pointsS += nbHeartsS * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsS ,' ♥ pour ', this.getNameByCardinal("SOUTH"),' !');
-            this.pointsE += nbHeartsE * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsE ,' ♥ pour ', this.getNameByCardinal("EAST"),' !');
-            this.pointsW += nbHeartsW * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsW ,' ♥ pour ', this.getNameByCardinal("WEST"),' !');
+            this.pointsN += nbHeartsN * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsN ,' 🧡 pour ', this.getNameByCardinal("NORTH"),' !'); 
+            this.pointsS += nbHeartsS * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsS ,' 🧡 pour ', this.getNameByCardinal("SOUTH"),' !');
+            this.pointsE += nbHeartsE * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsE ,' 🧡 pour ', this.getNameByCardinal("EAST"),' !');
+            this.pointsW += nbHeartsW * -5; console.log('O1 - BARBU - handleHearts() - ', nbHeartsW ,' 🧡 pour ', this.getNameByCardinal("WEST"),' !');
 
             if(this.currentChoice !== "RATA" && this.contractor === "SOUTH") {
 
                 // Message Général délivré par JARVIS.
-                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsE +' ♥ pour '+ this.getNameByCardinal("EAST")+'.',  "J@rvis"]);
-                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsN +' ♥ pour '+ this.getNameByCardinal("NORTH")+'.', "J@rvis"]);
-                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsW +' ♥ pour '+ this.getNameByCardinal("WEST")+'.',  "J@rvis"]);
-                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsS +' ♥ pour '+ this.getNameByCardinal("SOUTH")+'.', "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsE +' 🧡 pour '+ this.getNameByCardinal("EAST")+'.',  "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsN +' 🧡 pour '+ this.getNameByCardinal("NORTH")+'.', "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsW +' 🧡 pour '+ this.getNameByCardinal("WEST")+'.',  "J@rvis"]);
+                barbuWS.emit("sendtxt", ['🃏 '+ nbHeartsS +' 🧡 pour '+ this.getNameByCardinal("SOUTH")+'.', "J@rvis"]);
 
             }
 
@@ -1696,7 +1689,7 @@ class Barbu extends Component {
                     this.pointsN += 40 ; console.log('O1 - BARBU - handlePli() - ', this.getNameByCardinal("NORTH"),' FAIT LES PLIS !'); 
                     
                     if(this.contractor === "SOUTH") { // Message Général délivré par JARVIS.
-                        barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH") + ' FAIT LES PLIS ! 🀄️', "J@rvis"]); 
+                        barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("NORTH") + ' FAIT LES PLIS 🀄️', "J@rvis"]); 
                     }
                 }
             }
@@ -1706,7 +1699,7 @@ class Barbu extends Component {
                     this.pointsS += 40 ; console.log('O1 - BARBU - handlePli() - ', this.getNameByCardinal("SOUTH"),' FAIT LES PLIS !'); 
                     
                     if(this.contractor === "SOUTH") { // Message Général délivré par JARVIS.    
-                        barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH") + ' FAIT LES PLIS ! 🀄️', "J@rvis"]); 
+                        barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("SOUTH") + ' FAIT LES PLIS 🀄️', "J@rvis"]); 
                     }
                 }
             }
@@ -1716,7 +1709,7 @@ class Barbu extends Component {
                     this.pointsE += 40 ; console.log('O1 - BARBU - handlePli() - ', this.getNameByCardinal("EAST"),' FAIT LES PLIS !'); 
                     
                     if(this.contractor === "SOUTH") { // Message Général délivré par JARVIS.
-                        barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST") + ' FAIT LES PLIS ! 🀄️', "J@rvis"]);
+                        barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("EAST") + ' FAIT LES PLIS 🀄️', "J@rvis"]);
                     }
                 }
             }
@@ -1726,7 +1719,7 @@ class Barbu extends Component {
                     this.pointsW += 40 ; console.log('O1 - BARBU - handlePli() - ', this.getNameByCardinal("WEST"),' FAIT LES PLIS !'); 
                     
                     if(this.contractor === "SOUTH") { // Message Général délivré par JARVIS.
-                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' FAIT LES PLIS ! 🀄️', "J@rvis"]); 
+                    barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal("WEST") + ' FAIT LES PLIS 🀄️', "J@rvis"]); 
                     }
                 }
             }
@@ -1774,7 +1767,7 @@ class Barbu extends Component {
     };
 
     addGamePoints = () => {
-        console.log('O1 - BARBU - addGamePoints()');
+        // console.log('O1 - BARBU - addGamePoints()');
 
         if(this.nbClic === 32) {
 
@@ -1871,10 +1864,10 @@ class Barbu extends Component {
                 this.currentScore.push(score);
             }
 
-            console.log('O1 - BARBU - addGamePoints() | currentScore : ', this.currentScore);
+            // console.log('O1 - BARBU - addGamePoints() | currentScore : ', this.currentScore);
         }
 
-        console.log('01 - BARBU - addGamePoints() - this.gamePoints : ', this.gamePoints);
+        // console.log('01 - BARBU - addGamePoints() - this.gamePoints : ', this.gamePoints);
     };
 
     handleContract = () => {
@@ -2634,11 +2627,14 @@ class Barbu extends Component {
             this.state.handW.indexOf(key),
         ];
 
-        if(this.state.positionPicked && this.inProgress) {
+        if(this.state.positionPicked) {
 
             this.checkWhoClicked(indexC);
-            //console.log('01 - BARBU - onClickHand() - this.hasClicked : ', this.hasClicked);
-            if(this.hasClicked === "SOUTH") { this.click(key); }
+
+            if(this.inProgress && this.hasClicked === "SOUTH") {
+
+                this.click(key);
+            }
         }
 
         if(!this.state.positionPicked) {
@@ -2713,7 +2709,6 @@ class Barbu extends Component {
 
                 this.nbClic++;
 
-                //console.log('01 - BARBU - onClickHand() Domino - this.nbClic : ', this.nbClic);
             }
             else if (this.hasClicked === "SOUTH") { alert('|| DOMINOPE ||'); }
         }
@@ -2722,7 +2717,7 @@ class Barbu extends Component {
 
             this.handleContract();
 
-            // Inside : checkEndof7 & checkEndof28
+            // Inside ::: checkEndof7 & checkEndof28
             this.checkEndOfContract();
         }
     };
@@ -2742,7 +2737,7 @@ class Barbu extends Component {
             default: break;
         }
 
-        if(contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(contractor)+" choisit : "+key, "J@rvis"]);
+        if(contractor === "SOUTH") barbuWS.emit("sendtxt", ['🃏 '+ this.getNameByCardinal(contractor)+" choisit "+key+" 🚨", "J@rvis"]);
 
         this.lastContract = (this.contractsN.length === 7) ;
         this.lastContract = (this.contractsS.length === 7) ;
@@ -2761,6 +2756,7 @@ class Barbu extends Component {
         if(key === "Domino") {
             this.hasToPlayDomino = this.isMaster ;
             this.boardDominoVisible = true ;
+            this.ranksDomino = [] ;
 
             switch(this.isMaster) {
 
@@ -2787,17 +2783,69 @@ class Barbu extends Component {
     };
 
     onClickReplay() {
-        
+
         if(this.partyIsOver) {
 
+            this.winner = "Tartenpion" ;
+            this.contractor = "Px";
+            this.gameStarted = 0;
+            this.myPosition = 0;
+            this.arrow = "";
+
+            this.ranks = [];
+            this.ranking = [];
+            this.tempoPli = [];
+            this.rankPosition = [];
+
+            this.panelVisible = false;
+            this.boardPosition = true;
+            this.hidePlayersCards = true;
+
+            this.displayLoadingPosition = true; 
             this.displayLoadingPlayers = true;
+
+            this.displayLoadingBasic = false;
+            this.positionPicked = false;
             this.partyIsOver = false;
-        } 
 
-        this.setState(this.state);
+            this.pointsN = 0; this.pointsS = 0;
+            this.pointsE = 0; this.pointsW = 0;
+
+            this.gamePointsN = 0; this.gamePointsS = 0;
+            this.gamePointsE = 0; this.gamePointsW = 0;
+
+            this.contractsN = []; this.contractsN.length = 0; 
+            this.contractsS = []; this.contractsS.length = 0; 
+            this.contractsE = []; this.contractsE.length = 0; 
+            this.contractsW = []; this.contractsW.length = 0; 
+
+            this.setState({ 
+                contractsN: this.contractsN,
+                contractsS: this.contractsS,
+                contractsE: this.contractsE,
+                contractsW: this.contractsW });
+ 
+        }
+        // this.setState(this.state);
         
-        console.log('0101 - BARBU - onClickReplay()');
+        console.log('0101 - BARBU - onClickReplay() ----------------------');
+        console.log('0101 - BARBU - onClickReplay() - this.state.handN : ', this.state.handN);
+        console.log('0101 - BARBU - onClickReplay() - this.state.handS : ', this.state.handS);
+        console.log('0101 - BARBU - onClickReplay() - this.state.handE : ', this.state.handE);
+        console.log('0101 - BARBU - onClickReplay() - this.state.handW : ', this.state.handW);
 
+        this.setState({ positionPicked: false });
+        
+        console.log('0101 - BARBU - onClickReplay() - this.state.positionPicked = ', this.state.positionPicked);
+        console.log('0101 - BARBU - onClickReplay() - this.state.panelVisible = ', this.state.panelVisible);
+        console.log('0101 - BARBU - onClickReplay() - this.boardPosition = ', this.boardPosition );
+        
+    }
+
+    onClickWrongHand() {
+        console.log('O1 - BARBU - onClickWrongHand()');
+
+        alert('|| MOLI ||');
     }
 
     render() {
@@ -2835,11 +2883,6 @@ class Barbu extends Component {
             console.log('01 - BARBU - Render() - this.state.positionPicked : ', this.state.positionPicked);
             console.log('01 - BARBU - Render() - this.state.allContracts : ', this.state.allContracts);
             console.log('01 - BARBU - Render() - this.state.contractor : ', this.state.contractor);
-
-            // console.log('01 - BARBU - Render() - this.state.contractsN : ', this.state.contractsN);
-            // console.log('01 - BARBU - Render() - this.state.contractsS : ', this.state.contractsS);
-            // console.log('01 - BARBU - Render() - this.state.contractsE : ', this.state.contractsE);
-            // console.log('01 - BARBU - Render() - this.state.contractsW : ', this.state.contractsW);
 
         }
 
@@ -2935,7 +2978,7 @@ class Barbu extends Component {
         {
             this.state.nbPeopleConnected !== 4 && this.displayLoadingPlayers
             ?
-                // Switch between Loading & PanelVictory.
+                // Switch betw33n Loading & PanelVictory.
                 <Loading
                     nameofclass={"Card-table"}
                     width={100}
@@ -2970,7 +3013,8 @@ class Barbu extends Component {
                         cards={this.state.handN}
                         flipCard={this.flipped}
                         flopCard={this.flopped}
-                        onClickHandies={!this.state.positionPicked ? this.onClickHand.bind(this) : null}
+                        onClickHandies={!this.state.positionPicked ? this.onClickHand.bind(this) : this.onClickWrongHand.bind(this)}
+
                     />
 
                 <PanelDisplay
@@ -2993,7 +3037,8 @@ class Barbu extends Component {
                         cards={this.state.handE}
                         flipCard={this.flipped}
                         flopCard={this.flopped}
-                        onClickHandies={!this.state.positionPicked ? this.onClickHand.bind(this) : null}
+                        onClickHandies={!this.state.positionPicked ? this.onClickHand.bind(this) : this.onClickWrongHand.bind(this)}
+
                     />
 
                     <PanelDisplay
@@ -3016,7 +3061,8 @@ class Barbu extends Component {
                         cards={this.state.handW}
                         flipCard={this.flipped}
                         flopCard={this.flopped}
-                        onClickHandies={!this.state.positionPicked ? this.onClickHand.bind(this) : null}
+                        onClickHandies={!this.state.positionPicked ? this.onClickHand.bind(this) : this.onClickWrongHand.bind(this)}
+
                     />
 
                     <PanelDisplay
