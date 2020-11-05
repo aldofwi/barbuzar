@@ -5,12 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { useEffect, useState } from "react";
-// import SocketIO from "socket.io-client";
 import barbuWS from '../socketConfig';
 
 const Chat = props => {
-
-    //const socket = SocketIO("http://localhost:"+props.port, { transports: ["websocket"] }); // , "polling"
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
@@ -83,10 +80,10 @@ const Chat = props => {
                                                                         ?
                                                                     <b className="col-"> [{[user]}] </b>
                                                                         :
-                                                                    <em>[{[user]}]</em>
+                                                                    <em> [{[user]}] </em>
                                     }
 
-                                    
+                                
 
                                     {
                                         user === "J@rvis"
@@ -109,7 +106,7 @@ const Chat = props => {
                                                                   ?
                                                             <span className="dc"><abbr className="col-"> {text} </abbr></span>
                                                                   :
-                                                                  <em>[{[user]}]</em>
+                                                                  <em><abbr className="col-"> {text} </abbr></em>
                                     }
 
                                 </div>

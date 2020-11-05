@@ -295,7 +295,6 @@ class Barbu extends Component {
 
     whichArrow = () => {
         // console.log('O1 - BARBU - whichArrow() - this.hasToPlayDomino : ', this.hasToPlayDomino);
-
         // audio = new Audio('./Sounds/ting.mp3'); audio.play();
 
         if(this.currentChoice === "Domino") {
@@ -2835,7 +2834,7 @@ class Barbu extends Component {
         console.log('0101 - BARBU - onClickReplay() - this.state.handW : ', this.state.handW);
 
         this.setState({ positionPicked: false });
-        
+
         console.log('0101 - BARBU - onClickReplay() - this.state.positionPicked = ', this.state.positionPicked);
         console.log('0101 - BARBU - onClickReplay() - this.state.panelVisible = ', this.state.panelVisible);
         console.log('0101 - BARBU - onClickReplay() - this.boardPosition = ', this.boardPosition );
@@ -3179,7 +3178,6 @@ class Barbu extends Component {
             <Chat
                 barbuser={this.props.barbuser.name}
                 players={this.playersName}
-                port={this.props.port}
             />
 
         </div>
