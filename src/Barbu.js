@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
 import Modal from "react-modal";
-// import SocketIO from "socket.io-client";
 import barbuWS from './socketConfig';
-// import audio from './Sounds/ting.mp3';
-// import useSound from 'use-sound';
 import tingMP3 from './Sounds/ting.mp3';
 import dingMP3 from './Sounds/twice.mp3';
 
@@ -54,9 +51,6 @@ class Barbu extends Component {
     constructor(props) {
         super(props);
 
-        // this.music = new Howl({ src: './Sounds/ting.mp3' });
-        // this.music.src = './Sounds/ting.mp3';
-            
         this.players = {};
         this.deck = new Deck();
         this.deck.shuffle();
@@ -784,16 +778,12 @@ class Barbu extends Component {
         console.log('O1 - BARBU - sendHands()');
 
         // WEBSOCKET DEFINITION
-        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
         
         let cardinalFirst = this.getCardinalByPos(1);
 
         let deck = {};
 
         console.log('O1 - BARBU - sendHands() | positionFirst : ', cardinalFirst);
-
-        // Ranger les cartes des joueurs.
-        // this.sortHands();
 
         switch(cardinalFirst) {
 
@@ -842,10 +832,6 @@ class Barbu extends Component {
     click = (cle) => {
         console.log('O1 - BARBU - click() on ', cle);
 
-        // WEBSOCKET DEFINITION
-        // let barbuWS = SocketIO("http://localhost:"+this.props.port, { transports: ["websocket"] });
-        // let barbuWS = this.websocket;
-
         let valeur = {
             key  : cle,
             name : this.props.barbuser.name,
@@ -855,7 +841,6 @@ class Barbu extends Component {
 
         // WEBSOCKET TO SERVER
         barbuWS.emit("click", valeur);
-
     };
 
     /**

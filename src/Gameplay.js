@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Barbu from "./Barbu";
-
 import barbuWS from './socketConfig';
-// import useSound from 'use-sound';
-// import ting from './Sounds/ting.mp3';
-// import SocketIO from 'socket.io-client';
-
-//import {Howl} from 'howler';
 
 // const username = prompt("What is your username");
 const username = "Dog" + Math.floor(Math.random() * (101));
