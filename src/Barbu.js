@@ -4,6 +4,9 @@ import Modal from "react-modal";
 // import SocketIO from "socket.io-client";
 import barbuWS from './socketConfig';
 // import audio from './Sounds/ting.mp3';
+// import useSound from 'use-sound';
+import tingMP3 from './Sounds/ting.mp3';
+import dingMP3 from './Sounds/twice.mp3';
 
 import './PlayingCard/Table/Table.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -51,6 +54,9 @@ class Barbu extends Component {
     constructor(props) {
         super(props);
 
+        // this.music = new Howl({ src: './Sounds/ting.mp3' });
+        // this.music.src = './Sounds/ting.mp3';
+            
         this.players = {};
         this.deck = new Deck();
         this.deck.shuffle();
@@ -113,10 +119,10 @@ class Barbu extends Component {
             this.gamePointsN, this.gamePointsS,
             this.gamePointsE, this.gamePointsW];
 
-        this.contractsN = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
-        this.contractsS = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
-        this.contractsE = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
-        this.contractsW = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
+        this.contractsN = []; 
+        this.contractsS = [];
+        this.contractsE = []; 
+        this.contractsW = [];
 
         this.allContracts = [
             this.contractsN, this.contractsS,
@@ -131,7 +137,7 @@ class Barbu extends Component {
         this.currentChoice = "";
         this.currentScore = [];
 
-        this.nbContracts = 24 ; // DUR - this.nbContracts = 6;
+        this.nbContracts = 0 ; // DUR - this.nbContracts = 6;
         this.lastContract = false;
         this.displayLoadingBasic = false;
         this.displayLoadingPosition = true;
@@ -281,7 +287,6 @@ class Barbu extends Component {
 
     componentDidMount() {
         console.log('O1 - BARBU - componentDidMount()');
-
         this.check();
     }
 
@@ -294,15 +299,15 @@ class Barbu extends Component {
     };
 
     whichArrow = () => {
-        // console.log('O1 - BARBU - whichArrow() - this.hasToPlayDomino : ', this.hasToPlayDomino);
-        // audio = new Audio('./Sounds/ting.mp3'); audio.play();
 
+        var ting = new Audio(tingMP3);
+        
         if(this.currentChoice === "Domino") {
 
             switch(this.hasToPlayDomino) {
 
                 case "NORTH" : this.arrow = "App-arrow-north" ; break;
-                case "SOUTH" : this.arrow = "App-arrow-south" ; break;
+                case "SOUTH" : this.arrow = "App-arrow-south" ; ting.play(); break;
                 case "EAST"  : this.arrow = "App-arrow-east" ; break;
                 case "WEST"  : this.arrow = "App-arrow-west" ; break;
 
@@ -316,12 +321,14 @@ class Barbu extends Component {
 
             switch (this.isMaster) {
                 case "NORTH" : this.arrow = "App-arrow-north" ; break;
-                case "SOUTH" : this.arrow = "App-arrow-south" ; break;
+                case "SOUTH" : this.arrow = "App-arrow-south" ; if(this.boardHand.length === 4) ting.play(); break;
                 case "EAST"  : this.arrow = "App-arrow-east" ; break;
                 case "WEST"  : this.arrow = "App-arrow-west" ; break;
 
                 default: break;
             }
+
+
         }
         else if (this.boardHand.length === 1) {
             // SI LE BOARD NE CONTIENT QU'UNE CARTE.
@@ -329,7 +336,7 @@ class Barbu extends Component {
             switch (this.hasStarted) {
                 case "NORTH" : this.arrow = "App-arrow-east" ; break;
                 case "SOUTH" : this.arrow = "App-arrow-west" ; break;
-                case "EAST"  : this.arrow = "App-arrow-south" ; break;
+                case "EAST"  : this.arrow = "App-arrow-south" ; ting.play(); break;
                 case "WEST"  : this.arrow = "App-arrow-north" ; break;
 
                 default: break;
@@ -339,7 +346,7 @@ class Barbu extends Component {
             // SI LE BOARD CONTIENT 2 CARTES.
 
             switch (this.hasStarted) {
-                case "NORTH" : this.arrow = "App-arrow-south" ; break;
+                case "NORTH" : this.arrow = "App-arrow-south" ; ting.play(); break;
                 case "SOUTH" : this.arrow = "App-arrow-north" ; break;
                 case "EAST"  : this.arrow = "App-arrow-west" ; break;
                 case "WEST"  : this.arrow = "App-arrow-east" ; break;
@@ -354,7 +361,7 @@ class Barbu extends Component {
                 case "NORTH" : this.arrow = "App-arrow-west" ; break;
                 case "SOUTH" : this.arrow = "App-arrow-east" ; break;
                 case "EAST"  : this.arrow = "App-arrow-north" ; break;
-                case "WEST"  : this.arrow = "App-arrow-south" ; break;
+                case "WEST"  : this.arrow = "App-arrow-south" ; ting.play(); break;
 
                 default: break;
             }
@@ -977,7 +984,9 @@ class Barbu extends Component {
         this.displayLoadingBasic = true;
         this.displayLoadingPosition = false;
 
-        // TODO ::: GESTION DU JSON
+        // TODO ::: GESTION DU SON
+        var ding = new Audio(dingMP3);
+        ding.play();
 
         this.setState({ contractor: this.contractor });
 
