@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "63dce05a4605d2e5cbaf1b5de5caf2e1",
+    "revision": "4ce43328512f8a68a5d87fe286d88b3d",
     "url": "/barbuzar/index.html"
   },
   {
-    "revision": "1838f90d8513674a41e0",
+    "revision": "3e870046abba91eee4f2",
     "url": "/barbuzar/static/css/2.8aa5a7f8.chunk.css"
   },
   {
-    "revision": "ef74c3e9565c93705419",
+    "revision": "655306a1b13c7d9a63e9",
     "url": "/barbuzar/static/css/main.4503aecf.chunk.css"
   },
   {
-    "revision": "1838f90d8513674a41e0",
-    "url": "/barbuzar/static/js/2.dfa18719.chunk.js"
+    "revision": "3e870046abba91eee4f2",
+    "url": "/barbuzar/static/js/2.7ee7eb25.chunk.js"
   },
   {
     "revision": "5107501d061b1feaecc223bb13342528",
-    "url": "/barbuzar/static/js/2.dfa18719.chunk.js.LICENSE.txt"
+    "url": "/barbuzar/static/js/2.7ee7eb25.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ef74c3e9565c93705419",
-    "url": "/barbuzar/static/js/main.ef2daba2.chunk.js"
+    "revision": "655306a1b13c7d9a63e9",
+    "url": "/barbuzar/static/js/main.1cebee72.chunk.js"
   },
   {
     "revision": "946e3bcd56deb20742c3",
