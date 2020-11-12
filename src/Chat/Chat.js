@@ -9,6 +9,7 @@ import barbuWS from '../socketConfig';
 
 const Chat = props => {
 
+// eslint-disable-next-line
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
@@ -35,7 +36,7 @@ const Chat = props => {
 
     const submit = event => {
         event.preventDefault();
-        console.log("CHAT --- USERS : ", users);
+        // console.log("CHAT --- USERS : ", users);
         barbuWS.emit("sendtxt", [message, props.barbuser]);
         setMessage("");
     };

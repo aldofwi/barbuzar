@@ -1,4 +1,4 @@
-const port = 3000 ;
+const port = 3000 || process.env.PORT ; // process.env.PORT
 const barbuUsers = {};
 
 // Initialisation du Server.
@@ -10,8 +10,10 @@ const bio = require('socket.io')(barbuServer, {
 });
 
 bio.on("connection", function(socket) {
+// bio.on("connection", (socket) => {
 
     // There one can start emitting events to the client.
+    console.log('::: A new user just connected. :::');
 
     socket.on("username", username => {
 

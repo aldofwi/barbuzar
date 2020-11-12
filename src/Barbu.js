@@ -7,21 +7,20 @@ import dingMP3 from './Sounds/twice.mp3';
 
 import './PlayingCard/Table/Table.css';
 import "bootstrap/dist/css/bootstrap.css";
-import gitLogo from "./Pictures/gitLogo.png";
-
-import Rules from "./Rules/Rules";
-import ScoreSheet from "./Score/ScoreSheet";
 
 import Chat from "./Chat/Chat";
 import Arrow from "./Tools/Arrow";
+import Rules from "./Rules/Rules";
 import Loading from "./Tools/Loading";
 import Deck from './PlayingCard/Deck';
 import Board from "./PlayingCard/Board";
+import ScoreSheet from "./Score/ScoreSheet";
 import PanelChoice from "./Panel/PanelChoice";
+import PanelVictory from './Panel/PanelVictory';
 import PanelDisplay from "./Panel/PanelDisplay";
+import gitLogo from "./Pictures/gitLogo.png";
 import HandBarbu from "./PlayingCard/Hand/HandBarbu";
 import BoardDomino from "./PlayingCard/BoardDomino";
-import PanelVictory from './Panel/PanelVictory';
 
 const { Map } = require('immutable');
 
@@ -50,6 +49,7 @@ class Barbu extends Component {
 
     constructor(props) {
         super(props);
+
 
         this.players = {};
         this.deck = new Deck();
@@ -2411,7 +2411,7 @@ class Barbu extends Component {
     };
 
     flipCardPosition = (key) => {
-        // console.log('01 - BARBU - flipCardPosition() | key : ', key);
+        // console.log('01 - BARBU - flipCard() | key : ', key);
 
         if(this.tempoPli.indexOf(key) === -1) {
             this.flipped = key;
@@ -2422,7 +2422,6 @@ class Barbu extends Component {
         }
 
         if(this.tempoPli.length<4) {
-            
             this.tempoPli.push(key);
         }
 

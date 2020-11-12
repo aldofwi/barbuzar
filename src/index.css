@@ -3,7 +3,7 @@ body {
 }
 
 nav {
-  display: flex;
+  display: block;
   justify-content: space-around;
   align-items: center;
   min-height: 10vh;
