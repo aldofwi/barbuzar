@@ -1,19 +1,21 @@
-const port = 3000 || process.env.PORT ; // process.env.PORT
 const barbuUsers = {};
 
-// Initialisation du Server.
-const barbuServer = require("http").createServer();
+const port = 3000 ; // process.env.PORT || 3000 
 
-// Import & Construction du socket.
-const bio = require('socket.io')(barbuServer, {
-    transports: ["websocket"]
-});
+var app = require('express')();
+
+// Initialisation du Server via Express.
+const barbuServer = require('http').Server(app);
+
+// Import & Construction de la socket.
+const bio = require('socket.io')(barbuServer);
+
+// app.get("/", function(req, res){ res.sendFile(__dirname + '/index.html'); });
 
 bio.on("connection", function(socket) {
-// bio.on("connection", (socket) => {
 
     // There one can start emitting events to the client.
-    console.log('::: A new user just connected. :::');
+    console.log('... A new user just arrived ...');
 
     socket.on("username", username => {
 
@@ -64,10 +66,6 @@ bio.on("connection", function(socket) {
         console.log('Server.js ---> Error :', err);
     });
 
-    socket.on("port", nb => {
-        // const port = nb ; // Delete first line on TOP.
-    });
-
     socket.on("disconnect", reason => {
 
         if( barbuUsers[socket.id] !== undefined ){
@@ -83,3 +81,6 @@ bio.on("connection", function(socket) {
 });
 
 barbuServer.listen(port, () => { console.log('| server.js ---> Server started & Listening on port', port); });
+
+// const barbuServer = require("http").createServer(function(req, res){
+// console.log('::: Connected to Server :::'); });

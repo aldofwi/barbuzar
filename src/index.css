@@ -6,14 +6,70 @@ nav {
   display: block;
   justify-content: space-around;
   align-items: center;
-  min-height: 10vh;
   background: #282c34;
   color: white;
 }
 
-button {
-  margin: 23%;
+.navbar {
+  max-height: 56px;
 }
+
+
+.nav-links {
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
+ul.topnav {
+  margin: 5px;
+  overflow: auto;
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+ul.topnav li {
+  color: white;
+  display: block;
+}
+
+ul.topnav li b {
+  color: whitesmoke;
+  text-align: left;
+}
+
+ul.topnav li button {
+  position: relative;
+  align-items: right;
+  left: 90vh;
+  margin-left: 3vh;
+}
+
+ul.topnav li a {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  right: 12vh;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #58709b;}
+
+ul.topnav li a.active {background-color: #4CAF50;}
+
+ul.topnav li.right a {float: right;}
+
+.Card-table table {
+  color: black;
+  position: absolute;
+  background-color: ivory;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  width: 35rem;
+}
+
 
 input {
   
@@ -185,9 +241,6 @@ tr b cg {
     color: green;
 }
 
-.navbar {
-  min-height: 10px;
-}
 
 .App {
   position: absolute;
@@ -366,52 +419,6 @@ tr b cg {
 .marge {
     margin-left: 5em;
 }
-
-.nav-links {
-  display: flex;
-  width: 40%;
-  justify-content: space-around;
-  align-items: center;
-  list-style: none;
-}
-
-ul.topnav {
-  margin: 5px;
-  overflow: auto;
-  background-color: #000000;
-  border-radius: 10px;
-}
-
-ul.topnav li {
-  color: white;
-  display: block;
-}
-
-ul.topnav li b {
-  color: whitesmoke;
-  text-align: left;
-}
-
-ul.topnav li button {
-  position: relative;
-  align-items: right;
-  left: 90vh;
-  margin-left: 3vh;
-}
-
-ul.topnav li a {
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  right: 12vh;
-}
-
-ul.topnav li a:hover:not(.active) {background-color: #58709b;}
-
-ul.topnav li a.active {background-color: #4CAF50;}
-
-ul.topnav li.right a {float: right;}
-
 
 .splitLine {
     background-color: black;
@@ -604,14 +611,4 @@ ul.topnav li.right a {float: right;}
   width: 8%;
   top: 65vh;
   left: 68vh;
-}
-
-.Card-table table {
-  color: black;
-  position: absolute;
-  background-color: ivory;
-  justify-content: center;
-  text-align: center;
-  align-content: center;
-  width: 35rem;
 }

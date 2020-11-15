@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
+import "bootstrap/dist/css/bootstrap.css";
+import './PlayingCard/Table/Table.css';
+
 import Modal from "react-modal";
+
 import barbuWS from './socketConfig';
 import tingMP3 from './Sounds/ting.mp3';
 import dingMP3 from './Sounds/twice.mp3';
-
-import './PlayingCard/Table/Table.css';
-import "bootstrap/dist/css/bootstrap.css";
 
 import Chat from "./Chat/Chat";
 import Arrow from "./Tools/Arrow";

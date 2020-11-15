@@ -6,8 +6,6 @@ import barbuWS from './socketConfig';
 // const username = prompt("What is your username");
 const username = "Dog" + Math.floor(Math.random() * (101));
 
-const port = 3000;
-
 class Gameplay extends Component {
 
     constructor(props){
@@ -105,7 +103,6 @@ class Gameplay extends Component {
                     style={{'height':window.innerHeight-62+'px'}} // FULL PAGE -54
                     barbuser={this.barbuser}
                     websocket={this.state.ws}
-                    port={port}
                 />
 
         </div>
