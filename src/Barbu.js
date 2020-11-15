@@ -42,6 +42,7 @@ const customStylesS = {
         top                   : '5%',
         left                  : '5%',
         right                 : 'auto',
+        bottom                : 'auto'
     }
 };
 
@@ -2969,6 +2970,8 @@ class Barbu extends Component {
                 </nav>
 
         {
+            // TODO : Integrate nbReplay each time someone clicks on "REPLAY"
+
             this.state.nbPeopleConnected !== 4 && this.displayLoadingPlayers
             ?
                 // Switch betw33n Loading & PanelVictory.
