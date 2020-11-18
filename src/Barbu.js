@@ -52,11 +52,12 @@ class Barbu extends Component {
     constructor(props) {
         super(props);
 
-
         this.players = {};
         this.deck = new Deck();
         this.deck.shuffle();
 
+        this.nbReplay = 0;
+        this.iReplay = false;
         this.gameStarted = 0;
         this.partyIsOver = false;
         this.playersName = ["P1","P2","P3","P4"];
@@ -115,10 +116,10 @@ class Barbu extends Component {
             this.gamePointsN, this.gamePointsS,
             this.gamePointsE, this.gamePointsW];
 
-        this.contractsN = []; 
-        this.contractsS = [];
-        this.contractsE = []; 
-        this.contractsW = [];
+        this.contractsN = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
+        this.contractsS = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
+        this.contractsE = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
+        this.contractsW = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
 
         this.allContracts = [
             this.contractsN, this.contractsS,
@@ -369,7 +370,9 @@ class Barbu extends Component {
 
     setPosition(cle) {
 
-        if (!this.state.positionPicked) {
+        console.log('O1 - BARBU - setPosition() -------- cle : ', cle);
+
+        if (!this.state.positionPicked && cle !== "Replay") {
 
             // REMPLIR LE BOARD.
             this.flipCardPosition(cle);
@@ -839,7 +842,7 @@ class Barbu extends Component {
             name : this.props.barbuser.name,
         };
 
-        if(!this.state.positionPicked) this.ranks.push(valeur);
+        if(!this.state.positionPicked && cle !== "Replay") this.ranks.push(valeur);
 
         // WEBSOCKET TO SERVER
         barbuWS.emit("click", valeur);
@@ -869,13 +872,16 @@ class Barbu extends Component {
         barbuWS.on("onclick", value => {
             console.log('01 - BARBU - check() - onClick() - ', value);
 
-            if(!this.state.positionPicked) {
+            // Si les autres cliquent sur Replay, On incrémente.
+            if(value.name !== this.props.barbuser.name && value.key === "Replay") this.nbReplay++;
+
+            if(!this.state.positionPicked && value.key !== "Replay") {
                 // Message Général délivré par JARVIS. if(this.props.barbuser.name === value.name) 
                 if(this.props.barbuser.name === value.name) barbuWS.emit("sendtxt", ['🃏 '+ value.name+" retourne : "+this.getCardName(value.key), "J@rvis"]);
             }
         
             // Si on tire les positions, Retourne les cartes des autres joueurs.
-            if(!this.state.positionPicked && value.name !== this.props.barbuser.name) {
+            if(!this.state.positionPicked && value.name !== this.props.barbuser.name && value.key !== "Replay") {
 
                 this.ranks.push(value);
                 this.setPosition(value.key);
@@ -889,7 +895,7 @@ class Barbu extends Component {
                     this.onClickBoard(value.key);
                     console.log('01 - BARBU - check() "onclick" - contract : ', value);
                 }
-                else if(this.gameContracts.indexOf(value.key) === -1) {
+                else if(this.gameContracts.indexOf(value.key) === -1 && value.key !== "Replay") {
                     // CONDITION CLICK ON CARD, NOT ON CONTRACT
                     this.displayLoadingBasic = false;
                     this.onClickHand(value.key);
@@ -957,6 +963,7 @@ class Barbu extends Component {
     startGame() {
 
         this.gameStarted = 1;
+        this.iReplay = false;
 
         console.log('01 - BARBU - startGame() | this.myPosition', this.myPosition);
         console.log('01 - BARBU - startGame() | this.gameStarted', this.gameStarted);
@@ -2413,7 +2420,7 @@ class Barbu extends Component {
     };
 
     flipCardPosition = (key) => {
-        // console.log('01 - BARBU - flipCard() | key : ', key);
+        console.log('01 - BARBU - flipCard() | key : ', key);
 
         if(this.tempoPli.indexOf(key) === -1) {
             this.flipped = key;
@@ -2500,6 +2507,8 @@ class Barbu extends Component {
         this.ranking.push(rank4);
 
         console.log('O1 - BARBU - sortPlayersPosition() - ranking : ', this.ranking);
+        console.log('O1 - BARBU - sortPlayersPosition() - ranks : ', this.ranks);
+
     }
 
     getHigher = (list, board) => {
@@ -2676,7 +2685,7 @@ class Barbu extends Component {
 
                 console.log('01 - BARBU - onClickHand() - this.nbClic : ', this.nbClic);
             }
-            else if(this.nbContracts >= 0 && this.hasClicked === "SOUTH") {
+            else if(this.nbContracts >= 0 && this.hasClicked === "SOUTH" && key !== "Replay") {
                 console.log('01 - BARBU - onClickHand() - alert MOLI : ');
 
                 alert('|| MOLI ||');
@@ -2778,62 +2787,87 @@ class Barbu extends Component {
 
     onClickReplay() {
 
-        if(this.partyIsOver) {
+        this.winner = "Tartenpion" ;
+        this.contractor = "Px";
+        this.gameStarted = 0;
+        this.myPosition = 0;
+        this.arrow = "";
 
-            this.winner = "Tartenpion" ;
-            this.contractor = "Px";
-            this.gameStarted = 0;
-            this.myPosition = 0;
-            this.arrow = "";
+        this.tempoPli = [];
+        this.ranks = [];
+        this.ranking = [];
+        this.rankPosition = [];
 
-            this.ranks = [];
-            this.ranking = [];
-            this.tempoPli = [];
-            this.rankPosition = [];
+        this.panelVisible = false;
+        this.boardPosition = true;
+        this.hidePlayersCards = true;
 
-            this.panelVisible = false;
-            this.boardPosition = true;
-            this.hidePlayersCards = true;
+        this.displayLoadingPosition = true; 
+        this.displayLoadingPlayers = true;
 
-            this.displayLoadingPosition = true; 
-            this.displayLoadingPlayers = true;
+        this.displayLoadingBasic = false;
+        this.positionPicked = false;
 
-            this.displayLoadingBasic = false;
-            this.positionPicked = false;
-            this.partyIsOver = false;
+        this.currentChoice = "";
+        this.currentScore = [];
 
-            this.pointsN = 0; this.pointsS = 0;
-            this.pointsE = 0; this.pointsW = 0;
+        this.pointsN = 0; this.pointsS = 0;
+        this.pointsE = 0; this.pointsW = 0;
 
-            this.gamePointsN = 0; this.gamePointsS = 0;
-            this.gamePointsE = 0; this.gamePointsW = 0;
+        this.gamePointsN = 0; this.gamePointsS = 0;
+        this.gamePointsE = 0; this.gamePointsW = 0;
 
-            this.contractsN = []; this.contractsN.length = 0; 
-            this.contractsS = []; this.contractsS.length = 0; 
-            this.contractsE = []; this.contractsE.length = 0; 
-            this.contractsW = []; this.contractsW.length = 0; 
+        this.gamePoints = [
+            this.gamePointsN, this.gamePointsS,
+            this.gamePointsE, this.gamePointsW];
 
-            this.setState({ 
-                contractsN: this.contractsN,
-                contractsS: this.contractsS,
-                contractsE: this.contractsE,
-                contractsW: this.contractsW });
- 
-        }
-        // this.setState(this.state);
-        
+        this.contractsN = []; this.contractsN.length = 0; 
+        this.contractsS = []; this.contractsS.length = 0; 
+        this.contractsE = []; this.contractsE.length = 0; 
+        this.contractsW = []; this.contractsW.length = 0; 
+
+        this.allContracts = [
+            this.contractsN, this.contractsS,
+            this.contractsE, this.contractsW];
+
+        this.setState({ 
+            contractsN: this.contractsN,
+            contractsS: this.contractsS,
+            contractsE: this.contractsE,
+            contractsW: this.contractsW });
+
+        this.nbReplay++; 
+        this.iReplay = true; 
+        this.partyIsOver = false;
+    
         console.log('0101 - BARBU - onClickReplay() ----------------------');
-        console.log('0101 - BARBU - onClickReplay() - this.state.handN : ', this.state.handN);
-        console.log('0101 - BARBU - onClickReplay() - this.state.handS : ', this.state.handS);
-        console.log('0101 - BARBU - onClickReplay() - this.state.handE : ', this.state.handE);
-        console.log('0101 - BARBU - onClickReplay() - this.state.handW : ', this.state.handW);
+        console.log('0101 - BARBU - onClickReplay() - nbReplay : ', this.nbReplay);
+        console.log('0101 - BARBU - onClickReplay() - this.ranks : ', this.ranks);
+        console.log('0101 - BARBU - onClickReplay() - this.ranking : ', this.ranking);
+
+        console.log('0101 - BARBU - onClickReplay() ----------------------');
+        console.log('0101 - BARBU - onClickReplay() - this.pointsN : ', this.pointsN);
+        console.log('0101 - BARBU - onClickReplay() - this.pointsS : ', this.pointsS);
+        console.log('0101 - BARBU - onClickReplay() - this.pointsE : ', this.pointsE);
+        console.log('0101 - BARBU - onClickReplay() - this.pointsW : ', this.pointsW);
+        console.log('0101 - BARBU - onClickReplay() ----------------------');
+        console.log('0101 - BARBU - onClickReplay() - this.gamePointsN : ', this.gamePointsN);
+        console.log('0101 - BARBU - onClickReplay() - this.gamePointsS : ', this.gamePointsS);
+        console.log('0101 - BARBU - onClickReplay() - this.gamePointsE : ', this.gamePointsE);
+        console.log('0101 - BARBU - onClickReplay() - this.gamePointsW : ', this.gamePointsW);
+        console.log('0101 - BARBU - onClickReplay() ----------------------');
 
         this.setState({ positionPicked: false });
 
-        console.log('0101 - BARBU - onClickReplay() - this.state.positionPicked = ', this.state.positionPicked);
-        console.log('0101 - BARBU - onClickReplay() - this.state.panelVisible = ', this.state.panelVisible);
-        console.log('0101 - BARBU - onClickReplay() - this.boardPosition = ', this.boardPosition );
+        console.log('0101 - BARBU - onClickReplay() - positionPicked = ', this.state.positionPicked);
+        console.log('0101 - BARBU - onClickReplay() - panelVisible = ', this.state.panelVisible);
+        console.log('0101 - BARBU - onClickReplay() - boardPosition = ', this.boardPosition );
+        console.log('0101 - BARBU - onClickReplay() ----------------------');
+
+        this.click("Replay");
+
         
+
     }
 
     onClickWrongHand() {
@@ -2970,9 +3004,9 @@ class Barbu extends Component {
                 </nav>
 
         {
-            // TODO : Integrate nbReplay each time someone clicks on "REPLAY"
+            // TODO : Increments nbReplay each time someone clicks on "REPLAY"
 
-            this.state.nbPeopleConnected !== 4 && this.displayLoadingPlayers
+            (this.state.nbPeopleConnected !== 4 && this.displayLoadingPlayers) || (this.state.nbPeopleConnected === 4  && (this.nbReplay%4 !== 0) && this.iReplay )
             ?
                 // Switch betw33n Loading & PanelVictory.
                 <Loading
