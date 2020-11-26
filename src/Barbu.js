@@ -47,6 +47,15 @@ const customStylesS = {
     }
 };
 
+const customStylesI = {
+    content : {
+        top                   : '5%',
+        left                  : '5%',
+        right                 : 'auto',
+        bottom                : 'auto'
+    }
+};
+
 
 class Barbu extends Component {
 
@@ -3060,6 +3069,12 @@ class Barbu extends Component {
                                     scores={this.currentScore}
                                     totals={this.gamePoints}
                                 />
+
+                                <br></br>
+
+                                <div align="center">
+                                    <button className="btn btn-dark" onClick={() => this.setModalSCIsOpen(false)}>Close</button>
+                                </div>
                         
                             </Modal>
 
@@ -3068,7 +3083,7 @@ class Barbu extends Component {
                                 <Modal
                                     centered
                                     closeButton={true}
-                                    style={customStylesS}
+                                    style={customStylesI}
                                     isOpen={this.state.modalIIsOpen}
                                     ariaHideApp={false}
                                     >
