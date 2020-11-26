@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import Barbu from "./Barbu";
 import barbuWS from './socketConfig';
 
-const username = prompt("What is your username");
-// const username = "Dog" + Math.floor(Math.random() * (101));
+// const username = prompt("What is your username");
+const username = "Dog" + Math.floor(Math.random() * (101));
 
 class Gameplay extends Component {
 

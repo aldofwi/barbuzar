@@ -61,6 +61,11 @@ bio.on("connection", function(socket) {
         console.log('Server.js --- New Deck shuffle : ', value);
     });
 
+    socket.on("info", value => {
+        bio.emit("newinfo", value);
+        console.log('Server.js --- New Info from Players : ', value);
+    });
+
     socket.on("error", err => {
         socket.emit("onerror", err);
         console.log('Server.js ---> Error :', err);

@@ -10,6 +10,7 @@ import tingMP3 from './Sounds/ting.mp3';
 import dingMP3 from './Sounds/twice.mp3';
 
 import Chat from "./Chat/Chat";
+import Info from "./Info/Info";
 import Arrow from "./Tools/Arrow";
 import Rules from "./Rules/Rules";
 import Loading from "./Tools/Loading";
@@ -60,6 +61,7 @@ class Barbu extends Component {
         this.iReplay = false;
         this.gameStarted = 0;
         this.partyIsOver = false;
+        this.infoPlayers = [];
         this.playersName = ["P1","P2","P3","P4"];
 
         // POSITION
@@ -151,6 +153,7 @@ class Barbu extends Component {
         this.state = {
             modalSCIsOpen: false,
             modalRIsOpen: false,
+            modalIIsOpen: false,
 
             nbPeopleConnected: 0,
 
@@ -285,6 +288,12 @@ class Barbu extends Component {
     componentDidMount() {
         console.log('O1 - BARBU - componentDidMount()');
         this.check();
+
+        this.setLocalPlayer();
+
+        console.log('01 - BARBU - componentDidMount() | this.setLocalPlayer()');
+
+        // this.incrementVictory();
     }
 
     setModalSCIsOpen = (value) => {
@@ -293,6 +302,10 @@ class Barbu extends Component {
 
     setModalRIsOpen = (value) => {
         this.setState({ modalRIsOpen: value });
+    };
+
+    setModalIIsOpen = (value) => {
+        this.setState({ modalIIsOpen: value });
     };
 
     whichArrow = () => {
@@ -865,6 +878,9 @@ class Barbu extends Component {
                 console.log('01 - BARBU - check() - USERS : ', users);
             }
 
+            // Set Modal Info
+            this.sendInfo();
+
             this.setState(this.state);            
         });
 
@@ -956,6 +972,14 @@ class Barbu extends Component {
 
             // console.log('01 - BARBU - check() - fullHandS : ', this.fullHandS);
             // console.log('01 - BARBU - check() - NU DECK : ', nudeck);
+        });
+
+        // WEBSOCKET ON NEW INFOS EVENT LISTENER
+        barbuWS.on("newinfo", nuinfo => {
+
+            if(nuinfo.name !== this.props.barbuser.name) this.infoPlayers.push(nuinfo);
+            console.log("01 - BARBU - newinfo() - nuinfo : ", nuinfo);
+
         });
 
     };
@@ -1099,6 +1123,70 @@ class Barbu extends Component {
         console.log('01 - BARBU - cleanBoard() || this.cardS : ', this.cardS);
 
 
+    }
+
+    sendInfo() {
+        console.log('O1 - BARBU - sendInfo()');
+
+        let info = {} ;
+
+        info = {
+            name : this.props.barbuser.name,
+            nbVictory : this.getMyNbVictory()
+        }
+
+        this.infoPlayers.push(info);
+        console.log("01 - BARBU - newinfo() - this.infoPlayers : ", this.infoPlayers);
+
+        // I send my intel to server.
+        barbuWS.emit("info", info);
+    }
+
+    verifyLocalPlayer() {
+        console.log('O1 - BARBU - verifyLocalPlayer()');
+
+        let data = localStorage.getItem('myDataPlayer');
+        data = JSON.parse(data);
+
+        if(data.name === this.props.barbuser.name) return true
+        else return false;
+    }
+
+    setLocalPlayer() {
+        console.log('O1 - BARBU - setLocalPlayer()');
+
+        if(!this.verifyLocalPlayer()) {
+            // Record NEW Player in Local Storage.
+            let obj = { name : this.props.barbuser.name, nbVictory : 0 };
+            localStorage.setItem('myDataPlayer', JSON.stringify(obj));
+        }
+
+        let data = localStorage.getItem('myDataPlayer');
+        data = JSON.parse(data);
+
+        console.log('O1 - BARBU - setLocalPlayer() - data : ', data);
+    }
+
+    incrementVictory() {
+        console.log('O1 - BARBU - incrementVictory()');
+
+        let data = localStorage.getItem('myDataPlayer');
+        data = JSON.parse(data);
+
+        // Increment NB Victory for Player in Local Storage.
+        let obj = { name : this.props.barbuser.name, nbVictory : data.nbVictory++ };
+        localStorage.setItem('myDataPlayer', JSON.stringify(obj));
+
+        console.log(data);
+    }
+
+    getMyNbVictory() {
+        console.log('O1 - BARBU - getMyNbVictory()');
+
+        let data = localStorage.getItem('myDataPlayer');
+        data = JSON.parse(data);
+
+        return data.nbVictory;
     }
 
     calculateWinner() {
@@ -2877,6 +2965,8 @@ class Barbu extends Component {
     }
 
     render() {
+        
+        console.log("01 - BARBU - Render() - this.infoPlayers : ", this.infoPlayers);
 
         if(this.nbClic === 32) {
 
@@ -2970,14 +3060,30 @@ class Barbu extends Component {
                                     scores={this.currentScore}
                                     totals={this.gamePoints}
                                 />
+                        
+                            </Modal>
 
+                        <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setModalIIsOpen(true)}>Stats</button>
+
+                                <Modal
+                                    centered
+                                    closeButton={true}
+                                    style={customStylesS}
+                                    isOpen={this.state.modalIIsOpen}
+                                    ariaHideApp={false}
+                                    >
+    
+                                    <Info
+                                        infos={this.infoPlayers}
+                                    />
+    
                                 <br></br>
 
                                 <div align="center">
-                                    <button className="btn btn-dark" onClick={() => this.setModalSCIsOpen(false)}>Close</button>
+                                    <button className="btn btn-dark" onClick={() => this.setModalIIsOpen(false)}>Close</button>
                                 </div>
 
-                            </Modal>
+                                </Modal>
 
                             {
                                 this.displayLoadingPlayers ?
