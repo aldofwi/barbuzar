@@ -9,7 +9,7 @@ const username = "Dog" + Math.floor(Math.random() * (101));
 let data = localStorage.getItem('myDataPlayer');
 data = JSON.parse(data);
 
-const nbVic = data.nbVictory;
+const nbVic = data.nbVictory || 0 ;
 
 class Gameplay extends Component {
 
@@ -26,7 +26,7 @@ class Gameplay extends Component {
         this.barbuser = {
             name : username,
             id : "",
-            nbVictory : nbVic
+            nbVictory : 0
         };
     }
 
@@ -79,6 +79,7 @@ class Gameplay extends Component {
 
             this.setState({ws: barbuWS});
             this.barbuser.id = barbuWS.id;
+            this.barbuser.nbVictory = nbVic;
 
             console.log('00 - GAMEPLAY - connect() | barbuser : ', this.barbuser);
         });

@@ -1,5 +1,21 @@
 import React, { Component } from  'react';
 
+const TitleInfos = () => {
+
+    return(
+
+        <thead>
+        <tr>
+                <React.Fragment>
+                    <th><span align="right" className="tit3"><h5>Historique</h5><br></br></span></th>
+                </React.Fragment>
+            </tr>
+        </thead>
+    )
+
+};
+
+
 const TableData = data => {
 
     const rows = data.dataInfos.map((row, index) => {
@@ -43,8 +59,7 @@ class Info extends Component {
         return(
 
             <table>
-            <span align="right" className="tit4"><h5>Historique</h5></span>
-
+                <TitleInfos />
                 <TableData dataInfos={this.props.infos} />
             </table>
 

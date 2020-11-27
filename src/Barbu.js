@@ -295,7 +295,7 @@ class Barbu extends Component {
     }
 
     componentDidMount() {
-        console.log('O1 - BARBU - componentDidMount()');
+        console.log('O1 - BARBU --- componentDidMount()');
 
         this.check();
     }
@@ -879,10 +879,9 @@ class Barbu extends Component {
             if( users.length > 3) {
                 // Ne plus afficher le Loader Players.
                 this.displayLoadingPlayers = false;
-                // console.log('01 - BARBU - check() - USERS : ', users);
             }
 
-            console.log('01 - BARBU - check() - LES PLAYERS : ', this.players);
+            console.log('01 - BARBU - check() ::: PLAYERS ::: ', this.players);
 
             this.setState(this.state);            
         });
