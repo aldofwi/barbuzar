@@ -10,9 +10,9 @@ const TableData = data => {
 
             <th><strong>{row.name} :</strong> {row.nbVictory} Victoires</th>
             
-                <div class="progress">
+                <div className="progress">
                     <div 
-                        class="progress-bar progress-bar-striped progress-bar-animated" 
+                        className="progress-bar progress-bar-striped progress-bar-animated" 
                         role="progressbar"
                         style={{width: row.nbVictory+"%", align: 'left'}}
                         aria-valuenow={row.nbVictory}
@@ -38,9 +38,13 @@ class Info extends Component {
 
     render() {
 
+        console.log('08 - INFO - this.props.infos : ', this.props.infos);
+
         return(
 
             <table>
+            <span align="right" className="tit4"><h5>Historique</h5></span>
+
                 <TableData dataInfos={this.props.infos} />
             </table>
 

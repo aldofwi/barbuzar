@@ -17,19 +17,21 @@ bio.on("connection", function(socket) {
     // There one can start emitting events to the client.
     console.log('... A new user just arrived ...');
 
-    socket.on("username", username => {
+    socket.on("username", all => {
 
         const user = {
-            name: username,
+            name: all[0],
             id: socket.id,
+            nbVictory: all[1]
         };
         barbuUsers[socket.id] = user ;
 
-        bio.emit("connected", user);
+        bio.emit("connected", user); // FOR THE CHAT
         bio.emit("users", Object.values(barbuUsers));
 
-        console.log('Server.js --- Client Connecté : ', username);
-        console.log('Server.js | barbuUsers =\n', barbuUsers);
+        console.log('Server.js --- Client Connecté : ', all[0]);
+        console.log('Server.js --- NB V Client : ', all[1]);
+        console.log('Server.js || barbuUsers ||\n', barbuUsers);
     });
 
     socket.on("send", message => {

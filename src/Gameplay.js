@@ -6,6 +6,11 @@ import barbuWS from './socketConfig';
 // const username = prompt("What is your username");
 const username = "Dog" + Math.floor(Math.random() * (101));
 
+let data = localStorage.getItem('myDataPlayer');
+data = JSON.parse(data);
+
+const nbVic = data.nbVictory;
+
 class Gameplay extends Component {
 
     constructor(props){
@@ -21,16 +26,41 @@ class Gameplay extends Component {
         this.barbuser = {
             name : username,
             id : "",
+            nbVictory : nbVic
         };
     }
 
     componentDidMount() {
-        console.log('O1 - GAMEPLAY - componentDidMount()');
+        console.log('00 - GAMEPLAY - componentDidMount()');
+
+        this.setLocalPlayer();
 
         this.connect();
     }
 
     timeout = 250; // Initial timeout duration
+
+    setLocalPlayer() {
+        console.log('00 - GAMEPLAY - setLocalPlayer()');
+
+        if(!this.verifyLocalPlayer()) {
+            // Record NEW Player in Local Storage.
+            let obj = { name : username, nbVictory : 0 };
+            localStorage.setItem('myDataPlayer', JSON.stringify(obj));
+            console.log('00 - GAMEPLAY - setLocalPlayer() - JUST RECORDED : ', obj);
+        }
+        else console.log('00 - GAMEPLAY - setLocalPlayer() - ALREADY THERE !');
+    }
+
+    verifyLocalPlayer() {
+        console.log('00 - GAMEPLAY - verifyLocalPlayer()');
+
+        let data = localStorage.getItem('myDataPlayer');
+        data = JSON.parse(data);
+
+        if(data.name === username) return true
+        else return false;
+    }
 
     /**
      * @function connect
@@ -45,35 +75,35 @@ class Gameplay extends Component {
         // WEBSOCKET ON CONNECT EVENT LISTENER
         barbuWS.on("connect", () => {
 
-            barbuWS.emit("username",    username);
+            barbuWS.emit("username",    [username, nbVic] );
 
             this.setState({ws: barbuWS});
             this.barbuser.id = barbuWS.id;
 
-            console.log('O1 - GAMEPLAY - connect() | barbuser : ', this.barbuser);
+            console.log('00 - GAMEPLAY - connect() | barbuser : ', this.barbuser);
         });
 
         // WEBSOCKET ON MESSAGE EVENT LISTENER
         barbuWS.on("send", message => {
 
             barbuWS.emit("message", message);
-            console.log('O1 - GAMEPLAY - send() | barbuWS msg : ', message);
+            console.log('00 - GAMEPLAY - send() | barbuWS msg : ', message);
         });
 
         // WEBSOCKET ON CLICK EVENT LISTENER
         barbuWS.on("click", value => {
             barbuWS.emit("onclick", value);
 
-            console.log('O1 - GAMEPLAY - click() | name : ', this.props.websocket.username);
-            console.log('O1 - GAMEPLAY - click() | barbuWS.ID : ', barbuWS.id);
-            console.log('O1 - GAMEPLAY - click() | value : ', value);
+            console.log('00 - GAMEPLAY - click() | name : ', this.props.websocket.username);
+            console.log('00 - GAMEPLAY - click() | barbuWS.ID : ', barbuWS.id);
+            console.log('00 - GAMEPLAY - click() | value : ', value);
         });
 
         // WEBSOCKET ON DISCONNECT EVENT LISTENER
         barbuWS.on("disconnect", reason => {
 
             if ( reason !== 'transport close ') { barbuWS.connect(); }
-            console.log('O1 - GAMEPLAY - Disconnect() | barbuzer : ', username);
+            console.log('00 - GAMEPLAY - Disconnect() | barbuzer : ', username);
         });
 
     };
@@ -87,7 +117,7 @@ class Gameplay extends Component {
     check = () => {
 
         const { ws } = this.state ;
-        console.log('O1 - GAMEPLAY - check() - readyState : ', ws.readyState);
+        console.log('00 - GAMEPLAY - check() - readyState : ', ws.readyState);
     };
 
     render() {

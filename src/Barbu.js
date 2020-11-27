@@ -296,13 +296,8 @@ class Barbu extends Component {
 
     componentDidMount() {
         console.log('O1 - BARBU - componentDidMount()');
+
         this.check();
-
-        this.setLocalPlayer();
-
-        console.log('01 - BARBU - componentDidMount() | this.setLocalPlayer()');
-
-        // this.incrementVictory();
     }
 
     setModalSCIsOpen = (value) => {
@@ -884,11 +879,10 @@ class Barbu extends Component {
             if( users.length > 3) {
                 // Ne plus afficher le Loader Players.
                 this.displayLoadingPlayers = false;
-                console.log('01 - BARBU - check() - USERS : ', users);
+                // console.log('01 - BARBU - check() - USERS : ', users);
             }
 
-            // Set Modal Info
-            this.sendInfo();
+            console.log('01 - BARBU - check() - LES PLAYERS : ', this.players);
 
             this.setState(this.state);            
         });
@@ -981,14 +975,6 @@ class Barbu extends Component {
 
             // console.log('01 - BARBU - check() - fullHandS : ', this.fullHandS);
             // console.log('01 - BARBU - check() - NU DECK : ', nudeck);
-        });
-
-        // WEBSOCKET ON NEW INFOS EVENT LISTENER
-        barbuWS.on("newinfo", nuinfo => {
-
-            if(nuinfo.name !== this.props.barbuser.name) this.infoPlayers.push(nuinfo);
-            console.log("01 - BARBU - newinfo() - nuinfo : ", nuinfo);
-
         });
 
     };
@@ -1134,72 +1120,27 @@ class Barbu extends Component {
 
     }
 
-    sendInfo() {
-        console.log('O1 - BARBU - sendInfo()');
-
-        let info = {} ;
-
-        info = {
-            name : this.props.barbuser.name,
-            nbVictory : this.getMyNbVictory()
-        }
-
-        this.infoPlayers.push(info);
-        console.log("01 - BARBU - newinfo() - this.infoPlayers : ", this.infoPlayers);
-
-        // I send my intel to server.
-        barbuWS.emit("info", info);
-    }
-
-    verifyLocalPlayer() {
-        console.log('O1 - BARBU - verifyLocalPlayer()');
-
-        let data = localStorage.getItem('myDataPlayer');
-        data = JSON.parse(data);
-
-        if(data.name === this.props.barbuser.name) return true
-        else return false;
-    }
-
-    setLocalPlayer() {
-        console.log('O1 - BARBU - setLocalPlayer()');
-
-        if(!this.verifyLocalPlayer()) {
-            // Record NEW Player in Local Storage.
-            let obj = { name : this.props.barbuser.name, nbVictory : 0 };
-            localStorage.setItem('myDataPlayer', JSON.stringify(obj));
-        }
-
-        let data = localStorage.getItem('myDataPlayer');
-        data = JSON.parse(data);
-
-        console.log('O1 - BARBU - setLocalPlayer() - data : ', data);
-    }
-
     incrementVictory() {
-        console.log('O1 - BARBU - incrementVictory()');
-
-        let data = localStorage.getItem('myDataPlayer');
-        data = JSON.parse(data);
+        console.log('O1 - BARBU +++ incrementVictory()');
 
         // Increment NB Victory for Player in Local Storage.
-        let obj = { name : this.props.barbuser.name, nbVictory : data.nbVictory++ };
+        let obj = { 
+            name :          this.props.barbuser.name, 
+            nbVictory :     this.props.barbuser.nbVictory+1 
+        };
+
         localStorage.setItem('myDataPlayer', JSON.stringify(obj));
-
-        console.log(data);
-    }
-
-    getMyNbVictory() {
-        console.log('O1 - BARBU - getMyNbVictory()');
 
         let data = localStorage.getItem('myDataPlayer');
         data = JSON.parse(data);
 
-        return data.nbVictory;
+        barbuWS.emit("username",    [data.name, data.nbVictory] );
+
+        console.log('O1 - BARBU +++ incrementVictory() - data : ', data);
     }
 
     calculateWinner() {
-        console.log('O1 - BARBU - calculateWinner()');
+        console.log('O1 - BARBU --- calculateWinner()');
 
         let winner = 0;
         let winner2;
@@ -1228,11 +1169,14 @@ class Barbu extends Component {
             console.log('O1 - BARBU - calculateWinner() : DRAW | ', this.getNamePosition(winner), ' & ', this.getNamePosition(winner2), ' GAGNENT LA PARTIE !!!');
             this.winner = this.getNamePosition(winner) + " & " + this.getNamePosition(winner2) ;
 
+            if(this.winner || this.winner2 === this.props.barbuser.name) this.incrementVictory();
+
         } else {
             // Message Général délivré par JARVIS.
             setTimeout(() => barbuWS.emit("sendtxt", ['🃏 '+ this.getNamePosition(winner) + ' GAGNE LA PARTIE 🏆', "J@rvis"]), 2000);
             console.log('O1 - BARBU - calculateWinner() : ', this.getNamePosition(winner), ' GAGNE LA PARTIE !!!');
             this.winner = this.getNamePosition(winner) ;
+            if(this.winner === this.props.barbuser.name) this.incrementVictory();
         }
 
         this.setState(this.state);
@@ -1972,7 +1916,7 @@ class Barbu extends Component {
     handleContract = () => {
 
         // TODO : Vérifier le currentChoice & dispatch.
-        console.log('O1 - BARBU || handleContract()');
+        console.log('O1 - BARBU || handleContract() ||');
 
         this.clearPoints();
 
@@ -2974,8 +2918,6 @@ class Barbu extends Component {
     }
 
     render() {
-        
-        console.log("01 - BARBU - Render() - this.infoPlayers : ", this.infoPlayers);
 
         if(this.nbClic === 32) {
 
@@ -3089,7 +3031,7 @@ class Barbu extends Component {
                                     >
     
                                     <Info
-                                        infos={this.infoPlayers}
+                                        infos={this.players}
                                     />
     
                                 <br></br>
