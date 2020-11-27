@@ -1121,7 +1121,7 @@ class Barbu extends Component {
     }
 
     incrementVictory() {
-        console.log('O1 - BARBU +++ incrementVictory()');
+        // console.log('O1 - BARBU +++ incrementVictory()');
 
         // Increment NB Victory for Player in Local Storage.
         let obj = { 
@@ -2974,6 +2974,28 @@ class Barbu extends Component {
            
                     <div className="collapse navbar-collapse" id="navbarColor02">
 
+                    <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setModalIIsOpen(true)}>Counting</button>
+
+                            <Modal
+                                    centered
+                                    closeButton={true}
+                                    style={customStylesI}
+                                    isOpen={this.state.modalIIsOpen}
+                                    ariaHideApp={false}
+                                    >
+    
+                                    <Info
+                                        infos={this.players}
+                                    />
+    
+                                <br></br>
+
+                                <div align="center">
+                                    <button className="btn btn-dark" onClick={() => this.setModalIIsOpen(false)}>Close</button>
+                                </div>
+
+                                </Modal>
+
                         <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setModalRIsOpen(true)}>Rules</button>
 
                             <Modal
@@ -3020,27 +3042,6 @@ class Barbu extends Component {
                         
                             </Modal>
 
-                        <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setModalIIsOpen(true)}>Stats</button>
-
-                                <Modal
-                                    centered
-                                    closeButton={true}
-                                    style={customStylesI}
-                                    isOpen={this.state.modalIIsOpen}
-                                    ariaHideApp={false}
-                                    >
-    
-                                    <Info
-                                        infos={this.players}
-                                    />
-    
-                                <br></br>
-
-                                <div align="center">
-                                    <button className="btn btn-dark" onClick={() => this.setModalIIsOpen(false)}>Close</button>
-                                </div>
-
-                                </Modal>
 
                             {
                                 this.displayLoadingPlayers ?
