@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1adc83fc7581816d11f2fcfc9b0de13c",
+    "revision": "665bce3088a4bf9bc9721c5fd63302c1",
     "url": "/barbuzar/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/barbuzar/static/css/2.8aa5a7f8.chunk.css"
   },
   {
-    "revision": "82cfbd9a0c865f623adb",
+    "revision": "c3adf32559ccd70e55ad",
     "url": "/barbuzar/static/css/main.8e9c81fa.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/barbuzar/static/js/2.7ec528e8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "82cfbd9a0c865f623adb",
-    "url": "/barbuzar/static/js/main.7d0719c7.chunk.js"
+    "revision": "c3adf32559ccd70e55ad",
+    "url": "/barbuzar/static/js/main.8f36b87c.chunk.js"
   },
   {
     "revision": "946e3bcd56deb20742c3",
