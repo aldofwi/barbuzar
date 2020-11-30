@@ -1135,7 +1135,7 @@ class Barbu extends Component {
 
         barbuWS.emit("username",    [data.name, data.nbVictory] );
 
-        console.log('O1 - BARBU +++ incrementVictory() - data : ', data);
+        console.log('O1 +++ BARBU --- incrementVictory() - new data : ', data);
     }
 
     calculateWinner() {

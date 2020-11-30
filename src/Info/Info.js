@@ -5,9 +5,9 @@ const TitleInfos = () => {
     return(
 
         <thead>
-        <tr>
+            <tr>
                 <React.Fragment>
-                    <th><span align="right" className="tit3"><h5>Historique</h5><br></br></span></th>
+                    <th><span align="center" className="tit3"><h5>Historique</h5><br></br></span></th>
                 </React.Fragment>
             </tr>
         </thead>
@@ -24,7 +24,12 @@ const TableData = data => {
 
             <tr key={index}>
 
-            <th><strong>{row.name} :</strong> {row.nbVictory} Victoires</th>
+            <th>
+                <strong> {row.name} : 
+                    <span className="cb"> {row.nbVictory} </span>
+                </strong> 
+                Victoires
+            </th>
             
                 <div className="progress">
                     <div 
@@ -38,7 +43,6 @@ const TableData = data => {
 
             </tr>
         )
-
     });
 
     return (
@@ -47,14 +51,12 @@ const TableData = data => {
             {rows}
         </tbody>
     )
-
 };
 
 class Info extends Component {
 
     render() {
-
-        console.log('08 - INFO - this.props.infos : ', this.props.infos);
+        console.log('08 °°° INFO --- this.props.infos : ', this.props.infos);
 
         return(
 
@@ -64,9 +66,7 @@ class Info extends Component {
             </table>
 
         );
-
     }
-
 }
 
 export default Info;

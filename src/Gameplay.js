@@ -3,13 +3,8 @@ import ReactDOM from 'react-dom';
 import Barbu from "./Barbu";
 import barbuWS from './socketConfig';
 
-// const username = prompt("What is your username");
-const username = "Dog" + Math.floor(Math.random() * (101));
-
-let data = localStorage.getItem('myDataPlayer');
-data = JSON.parse(data);
-
-const nbVic = data.nbVictory || 0 ;
+const username = prompt("What is your username");
+// const username = "Dog" + Math.floor(Math.random() * (101));
 
 class Gameplay extends Component {
 
@@ -55,11 +50,29 @@ class Gameplay extends Component {
     verifyLocalPlayer() {
         console.log('00 - GAMEPLAY - verifyLocalPlayer()');
 
+        // UNDEFINED ?
         let data = localStorage.getItem('myDataPlayer');
-        data = JSON.parse(data);
 
-        if(data.name === username) return true
+        if(data !== undefined) {
+
+            data = JSON.parse(data);    
+            if(data.name === username) return true
+        }
         else return false;
+    }
+
+    getNbVictory = () => {
+        console.log('00 - GAMEPLAY --- getNbVictory()');
+
+        if(this.verifyLocalPlayer()) {
+
+            let data = localStorage.getItem('myDataPlayer');
+            data = JSON.parse(data);
+            return data.nbVictory;
+
+        }
+        else return 0;
+
     }
 
     /**
@@ -74,6 +87,10 @@ class Gameplay extends Component {
 
         // WEBSOCKET ON CONNECT EVENT LISTENER
         barbuWS.on("connect", () => {
+        
+            let nbVic = this.getNbVictory();
+
+            if(nbVic === undefined) nbVic = this.barbuser.nbVictory;
 
             barbuWS.emit("username",    [username, nbVic] );
 

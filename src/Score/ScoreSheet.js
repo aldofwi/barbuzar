@@ -121,7 +121,7 @@ class ScoreSheet extends Component {
     };
 
     componentDidMount() {
-        console.log('O5 - SCORESHEET - componentDidMount()');
+        console.log('O5 °°° SCORESHEET --- componentDidMount()');
 
         this.handleHeader();
         this.handleBody();
