@@ -5,6 +5,7 @@ import barbuWS from './socketConfig';
 
 // const username = prompt("What is your username");
 const username = "Dog" + Math.floor(Math.random() * (101));
+// const username = "Dog2";
 
 class Gameplay extends Component {
 
@@ -36,28 +37,24 @@ class Gameplay extends Component {
     timeout = 250; // Initial timeout duration
 
     setLocalPlayer() {
-        console.log('00 - GAMEPLAY - setLocalPlayer()');
+        console.log('00 - GAMEPLAY - setLocalPlayer() --- exists ? ', this.verifyLocalPlayer());
 
         if(!this.verifyLocalPlayer()) {
             // Record NEW Player in Local Storage.
-            let obj = { name : username, nbVictory : 0 };
-            localStorage.setItem('myDataPlayer', JSON.stringify(obj));
-            console.log('00 - GAMEPLAY - setLocalPlayer() - JUST RECORDED : ', obj);
+            localStorage.setItem('name', username);
+            localStorage.setItem('nb', 0);
+
+            console.log('00 - GAMEPLAY - setLocalPlayer() --> JUST RECORDED ! ');
         }
-        else console.log('00 - GAMEPLAY - setLocalPlayer() - ALREADY THERE !');
+        else console.log('00 - GAMEPLAY - setLocalPlayer() <<< ALREADY THERE !');
     }
 
     verifyLocalPlayer() {
-        console.log('00 - GAMEPLAY - verifyLocalPlayer()');
-
         // UNDEFINED ?
-        let data = localStorage.getItem('myDataPlayer');
+        let name = localStorage.getItem('name');
+        console.log('00 - GAMEPLAY - verifyLocalPlayer() ::: NAME ::: ', name);
 
-        if(data !== undefined) {
-
-            data = JSON.parse(data);    
-            if(data.name === username) return true
-        }
+        if('name' in localStorage) return true;
         else return false;
     }
 
@@ -66,13 +63,12 @@ class Gameplay extends Component {
 
         if(this.verifyLocalPlayer()) {
 
-            let data = localStorage.getItem('myDataPlayer');
-            data = JSON.parse(data);
-            return data.nbVictory;
-
+            // let data = localStorage.getItem('nb');
+            // data = JSON.parse(data);
+            // return data.nbVictory;
+            return localStorage.getItem('nb');
         }
         else return 0;
-
     }
 
     /**

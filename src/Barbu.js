@@ -1120,22 +1120,20 @@ class Barbu extends Component {
     }
 
     incrementVictory() {
-        // console.log('O1 - BARBU +++ incrementVictory()');
-
         // Increment NB Victory for Player in Local Storage.
-        let obj = { 
-            name :          this.props.barbuser.name, 
-            nbVictory :     this.props.barbuser.nbVictory+1 
-        };
 
-        localStorage.setItem('myDataPlayer', JSON.stringify(obj));
+        let nbV = localStorage.getItem('nb'); 
+        console.log('O1 +++ BARBU --- incrementVictory() +++ new nb victory : ', nbV);
+        nbV++;
 
-        let data = localStorage.getItem('myDataPlayer');
-        data = JSON.parse(data);
+        localStorage.setItem('name', this.props.barbuser.name);
+        localStorage.setItem('nb', nbV);
 
-        barbuWS.emit("username",    [data.name, data.nbVictory] );
+        let name = localStorage.getItem('name');
+        // data = JSON.parse(data);
 
-        console.log('O1 +++ BARBU --- incrementVictory() - new data : ', data);
+        barbuWS.emit("username",    [name, nbV] );
+
     }
 
     calculateWinner() {
