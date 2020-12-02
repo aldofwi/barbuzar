@@ -10,7 +10,7 @@ const Intro = () => {
                 <span className="tit1" align="center"><h1>Les Règles du Barbu</h1></span>
                 
                 <span align="center" className="textrules"><dd>
-                Chaque joueur doit effectuer <b>7 contrats</b>.<br></br>
+                Chacun des 4 joueurs doit effectuer <b>7 contrats</b>.<br></br>
                 Celui qui démarre est désigné par le tirage au sort.<br></br>
                 La carte la plus forte commence à faire ses contrats.<br></br>
                 Celui qui effectue ses contrats apparaît en <span className="crr">ROUGE</span>.<br></br>

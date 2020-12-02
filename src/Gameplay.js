@@ -66,7 +66,7 @@ class Gameplay extends Component {
             // let data = localStorage.getItem('nb');
             // data = JSON.parse(data);
             // return data.nbVictory;
-            return localStorage.getItem('nb');
+            return JSON.parse(localStorage.getItem('nb'));
         }
         else return 0;
     }

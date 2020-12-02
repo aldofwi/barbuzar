@@ -127,10 +127,10 @@ class Barbu extends Component {
             this.gamePointsN, this.gamePointsS,
             this.gamePointsE, this.gamePointsW];
 
-        this.contractsN = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
-        this.contractsS = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
-        this.contractsE = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"]; 
-        this.contractsW = ["RATA", "Domino", "Coeur", "Dames", "Pli", "Dernier Pli"];
+        this.contractsN = []; 
+        this.contractsS = [];
+        this.contractsE = []; 
+        this.contractsW = [];
 
         this.allContracts = [
             this.contractsN, this.contractsS,
@@ -145,7 +145,7 @@ class Barbu extends Component {
         this.currentChoice = "";
         this.currentScore = [];
 
-        this.nbContracts = 0 ; // DUR - this.nbContracts = 6;
+        this.nbContracts = 0 ;
         this.lastContract = false;
         this.displayLoadingBasic = false;
         this.displayLoadingPosition = true;
@@ -1123,8 +1123,10 @@ class Barbu extends Component {
         // Increment NB Victory for Player in Local Storage.
 
         let nbV = localStorage.getItem('nb'); 
-        console.log('O1 +++ BARBU --- incrementVictory() +++ new nb victory : ', nbV);
+        console.log('O1 +++ BARBU --- incrementVictory() +++ old nb victory : ', nbV);
         nbV++;
+        console.log('O1 +++ BARBU --- incrementVictory() +++ new nb victory : ', nbV);
+
 
         localStorage.setItem('name', this.props.barbuser.name);
         localStorage.setItem('nb', nbV);
