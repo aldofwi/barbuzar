@@ -873,6 +873,8 @@ class Barbu extends Component {
 
         // WEBSOCKET ON USERS EVENT LISTENER
         barbuWS.on("users", users => {
+            console.log('01 - BARBU - check() ::: PLAYERS ::: ', users);
+            
             this.players = users;
             this.setState({nbPeopleConnected: users.length}) ;
 
@@ -880,8 +882,6 @@ class Barbu extends Component {
                 // Ne plus afficher le Loader Players.
                 this.displayLoadingPlayers = false;
             }
-
-            console.log('01 - BARBU - check() ::: PLAYERS ::: ', this.players);
 
             this.setState(this.state);            
         });

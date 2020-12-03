@@ -50,9 +50,7 @@ class Gameplay extends Component {
     }
 
     verifyLocalPlayer() {
-        // UNDEFINED ?
-        let name = localStorage.getItem('name');
-        console.log('00 - GAMEPLAY - verifyLocalPlayer() ::: NAME ::: ', name);
+        console.log('00 - GAMEPLAY - verifyLocalPlayer() ::: NAME ::: ', localStorage.getItem('name'));
 
         if('name' in localStorage) return true;
         else return false;
@@ -84,15 +82,11 @@ class Gameplay extends Component {
         // WEBSOCKET ON CONNECT EVENT LISTENER
         barbuWS.on("connect", () => {
         
-            let nbVic = this.getNbVictory();
-
-            if(nbVic === undefined) nbVic = this.barbuser.nbVictory;
-
-            barbuWS.emit("username",    [username, nbVic] );
+            barbuWS.emit("username",    [username, this.getNbVictory()] );
 
             this.setState({ws: barbuWS});
             this.barbuser.id = barbuWS.id;
-            this.barbuser.nbVictory = nbVic;
+            this.barbuser.nbVictory = this.getNbVictory();
 
             console.log('00 - GAMEPLAY - connect() | barbuser : ', this.barbuser);
         });
