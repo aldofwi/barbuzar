@@ -2,7 +2,7 @@
   "name": "barbuzar",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://aldofwi.github.io/barbuzar/",
+  "homepage": "https://aldofwi.github.io/barbuzar/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -30,7 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d master -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
