@@ -1,13 +1,23 @@
 
 import socketBB from 'socket.io-client';
 
-const ENDPOINT = 'http://localhost:3000'
+const ENDPOINT = 'http://localhost:3000';
 
-const barbuWS = socketBB(ENDPOINT);
-
-export default barbuWS;
+let barbuWS ;
 
 
+if( process.env.NODE_ENV === 'development' ) {
+
+    barbuWS = socketBB(ENDPOINT);
+
+} else {
+
+    barbuWS = socketBB();
+}
+
+export default barbuWS; 
+
+// barbuWS.connect();
 
 // import socketBB from 'socket.io-client';
 

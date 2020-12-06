@@ -9,6 +9,8 @@ import barbuWS from '../socketConfig';
 
 const Chat = props => {
 
+    // barbuWS.connect();
+
 // eslint-disable-next-line
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
