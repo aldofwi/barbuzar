@@ -19,7 +19,7 @@ class Gameplay extends Component {
             // modalIsOpen: false,
         };
 
-        barbuWS.connect();
+        // barbuWS.connect();
 
         this.barbuser = {
             name : username,

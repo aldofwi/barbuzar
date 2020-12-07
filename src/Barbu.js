@@ -207,7 +207,7 @@ class Barbu extends Component {
             })
         };
 
-        barbuWS.connect();
+        // barbuWS.connect();
 
         this.fullHandN = [...this.state.handN];
         this.fullHandS = [...this.state.handS];
