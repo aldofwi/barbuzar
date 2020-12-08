@@ -2,9 +2,10 @@ const barbuUsers = {};
 
 const port = process.env.PORT || 3000 ; // process.env.PORT || 3000 
 
+// var cors = require('cors');
 var express = require('express')();
 
-const app = express();
+// const app = express();
 
 // Initialisation du Server via Express.
 const barbuServer = require('http').Server(express);
@@ -12,7 +13,8 @@ const barbuServer = require('http').Server(express);
 // Import & Construction de la socket.
 const bio = require('socket.io')(barbuServer);
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
+// app.use(cors());
 
 bio.on("connection", function(socket) {
 

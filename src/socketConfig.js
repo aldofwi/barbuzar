@@ -5,7 +5,7 @@ let ENDPOINT = 'http://localhost:3000';
 
     if( process.env.NODE_ENV !== 'development' ) ENDPOINT = '' ;
 
-    const barbuWS = socketBB(ENDPOINT);
+const barbuWS = socketBB(ENDPOINT);
 
 barbuWS.connect();
 
