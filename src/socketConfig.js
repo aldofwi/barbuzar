@@ -3,11 +3,9 @@ import socketBB from 'socket.io-client';
 
 let ENDPOINT = 'http://localhost:3000';
 
-
     if( process.env.NODE_ENV !== 'development' ) ENDPOINT = '' ;
 
     const barbuWS = socketBB(ENDPOINT);
-
 
 barbuWS.connect();
 

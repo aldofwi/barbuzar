@@ -2,15 +2,17 @@ const barbuUsers = {};
 
 const port = process.env.PORT || 3000 ; // process.env.PORT || 3000 
 
-var app = require('express')();
+var express = require('express')();
+
+const app = express();
 
 // Initialisation du Server via Express.
-const barbuServer = require('http').Server(app);
+const barbuServer = require('http').Server(express);
 
 // Import & Construction de la socket.
 const bio = require('socket.io')(barbuServer);
 
-// app.get("/", function(req, res){ res.sendFile(__dirname + '/index.html'); });
+app.use(express.static('public'));
 
 bio.on("connection", function(socket) {
 
