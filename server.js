@@ -16,7 +16,7 @@ const bio = require('socket.io')(barbuServer);
 // app.use(express.static('public'));
 // app.use(cors());
 
-bio.on("connection", function(socket) {
+bio.on("connect", (socket) => {
 
     // There one can start emitting events to the client.
     console.log('... A new user just arrived ...');
