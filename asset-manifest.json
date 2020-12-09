@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/barbuzar/static/css/main.8e9c81fa.chunk.css",
-    "main.js": "/barbuzar/static/js/main.8e5c9cb5.chunk.js",
-    "main.js.map": "/barbuzar/static/js/main.8e5c9cb5.chunk.js.map",
+    "main.js": "/barbuzar/static/js/main.3ba88840.chunk.js",
+    "main.js.map": "/barbuzar/static/js/main.3ba88840.chunk.js.map",
     "runtime-main.js": "/barbuzar/static/js/runtime-main.8a3d299c.js",
     "runtime-main.js.map": "/barbuzar/static/js/runtime-main.8a3d299c.js.map",
     "static/css/2.8aa5a7f8.chunk.css": "/barbuzar/static/css/2.8aa5a7f8.chunk.css",
     "static/js/2.7ec528e8.chunk.js": "/barbuzar/static/js/2.7ec528e8.chunk.js",
     "static/js/2.7ec528e8.chunk.js.map": "/barbuzar/static/js/2.7ec528e8.chunk.js.map",
     "index.html": "/barbuzar/index.html",
-    "precache-manifest.acd1f5f5e28b282c2c05d176a4219cfa.js": "/barbuzar/precache-manifest.acd1f5f5e28b282c2c05d176a4219cfa.js",
+    "precache-manifest.fa0012d6bc804c3ec9174c7a78edb3a1.js": "/barbuzar/precache-manifest.fa0012d6bc804c3ec9174c7a78edb3a1.js",
     "service-worker.js": "/barbuzar/service-worker.js",
     "static/css/2.8aa5a7f8.chunk.css.map": "/barbuzar/static/css/2.8aa5a7f8.chunk.css.map",
     "static/css/main.8e9c81fa.chunk.css.map": "/barbuzar/static/css/main.8e9c81fa.chunk.css.map",
@@ -76,6 +76,6 @@
     "static/css/2.8aa5a7f8.chunk.css",
     "static/js/2.7ec528e8.chunk.js",
     "static/css/main.8e9c81fa.chunk.css",
-    "static/js/main.8e5c9cb5.chunk.js"
+    "static/js/main.3ba88840.chunk.js"
   ]
 }
