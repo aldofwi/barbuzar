@@ -10,7 +10,7 @@ import socketBB from 'socket.io-client';
 let ENDPOINT = 'http://localhost:5000';
 
 
-if(process.env.NODE_ENV !== 'development') ENDPOINT = 'https://aldofwi.github.io/barbuzar';
+if(process.env.NODE_ENV !== 'development') ENDPOINT = 'https://barbuzar.herokuapp.com/';
 
 
 console.log('00 - socketConfig --- Process.env.NODE_ENV = ', process.env.NODE_ENV);
