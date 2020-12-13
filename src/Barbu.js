@@ -3078,7 +3078,7 @@ class Barbu extends Component {
                     nameofclass={"Card-table"}
                     width={100}
                     height={100}
-                    message={" Welcome"}
+                    message={"Hello "}
                     name={this.props.barbuser.name}
                     style={this.props.style}
                 />

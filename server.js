@@ -1,25 +1,33 @@
+
 const barbuUsers = {};
 
-const port = process.env.PORT || 3000 ; // process.env.PORT || 3000 
+const port = process.env.PORT || 5000 ; // process.env.PORT || 3000 
 
-// var cors = require('cors');
-var express = require('express')();
-
-// const app = express();
+// Start the web server Express.
+const express = require('express');
+const path = require('path');
+const http = require('http');
+const cors = require('cors');
+const app = express();
 
 // Initialisation du Server via Express.
-const barbuServer = require('http').Server(express);
+const barbuServer = http.createServer(app);
 
-// Import & Construction de la socket.
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    }
+);
+
+// Construction de la socket via mon Server.
 const bio = require('socket.io')(barbuServer);
-
-// app.use(express.static('public'));
-// app.use(cors());
 
 bio.on("connect", (socket) => {
 
     // There one can start emitting events to the client.
-    console.log('... A new user just arrived ...');
+    console.log('::: New User Connected to Server :::');
 
     socket.on("username", all => {
 
@@ -34,7 +42,7 @@ bio.on("connect", (socket) => {
         bio.emit("users", Object.values(barbuUsers));
 
         console.log('Server.js --- Client Connecté : ', all[0]);
-        console.log('Server.js --- NB V Client : ', all[1]);
+        console.log('Server.js --- NB Victoires : ', all[1]);
         console.log('Server.js || barbuUsers ||\n', barbuUsers);
     });
 
@@ -91,7 +99,6 @@ bio.on("connect", (socket) => {
 
 });
 
-barbuServer.listen(port, () => { console.log('| server.js ---> Server started & Listening on port', port); });
+barbuServer.listen(port, () => { console.log('| Server.js ---> Server started & Listening on port', port); });
 
-// const barbuServer = require("http").createServer(function(req, res){
-// console.log('::: Connected to Server :::'); });
+

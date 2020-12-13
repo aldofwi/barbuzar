@@ -1,24 +1,25 @@
 
+
+
 import socketBB from 'socket.io-client';
 
-let ENDPOINT = 'http://localhost:3000';
 
-    if( process.env.NODE_ENV !== 'development' ) ENDPOINT = '' ;
+
+
+
+let ENDPOINT = 'http://localhost:5000';
+
+
+if(process.env.NODE_ENV !== 'development') ENDPOINT = 'https://aldofwi.github.io/barbuzar';
+
+
+console.log('00 - socketConfig --- Process.env.NODE_ENV = ', process.env.NODE_ENV);
+
 
 const barbuWS = socketBB(ENDPOINT);
 
-barbuWS.connect();
-
-export default barbuWS; 
 
 
 
-// barbuWS.connect();
 
-// import socketBB from 'socket.io-client';
-
-// const barbuWS = socketBB("http://localhost:3000", { transports: ["websocket"] });
-
-// const barbuWS = socketBB("https://aldofwi.github.io/barbuzar");
-
-// export default barbuWS;
+export default barbuWS;

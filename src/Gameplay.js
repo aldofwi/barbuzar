@@ -82,7 +82,7 @@ class Gameplay extends Component {
         // let barbuWS = SocketIO("http://localhost:"+port, { transports: ["websocket"] });
 
         // WEBSOCKET ON CONNECT EVENT LISTENER
-        barbuWS.on("connect", () => {
+        barbuWS.on('connect', () => {
         
             barbuWS.emit("username",    [username, this.getNbVictory()] );
 

@@ -27,15 +27,15 @@
     <title>Barbuzar</title>
   </head>
   <body>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.js"></script>
 
 <!--
     <script src="/socket.io/socket.io.js"></script>
-
+    <script>
+      var socket = io.connect("https://192.168.1.13:3000");
+    </script>
     <script type="text/javascript">
-
-      var socket = io();
-
       socket.on('connect', () => {
         console.log('::: Connected to Server :::');
       });
