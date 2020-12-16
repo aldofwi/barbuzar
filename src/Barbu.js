@@ -300,6 +300,9 @@ class Barbu extends Component {
         console.log('O1 - BARBU --- componentDidMount()');
 
         this.check();
+
+        console.log('O1 - BARBU --- componentDidMount() - this.players : ', this.players);
+        console.log('O1 - BARBU --- componentDidMount() - connected PPL :', this.state.nbPeopleConnected);
     }
 
     setModalSCIsOpen = (value) => {
@@ -569,7 +572,7 @@ class Barbu extends Component {
     };
 
     getCardinalByPos(num) {
-        console.log('01 - BARBU - getCardinalByPos()');
+        // console.log('01 - BARBU - getCardinalByPos()');
 
         switch(this.myPosition) {
 
@@ -615,7 +618,7 @@ class Barbu extends Component {
     };
 
     getPosition(name) {
-        console.log('01 - BARBU - getPosition()');
+        // console.log('01 - BARBU - getPosition()');
 
         if(this.ranks.length === 4){
 
@@ -690,7 +693,7 @@ class Barbu extends Component {
     };
 
     checkNameInRanks(name) {
-        console.log('O1 - BARBU - checkNameInRanks() - this.ranks.length : ', this.ranks.length);
+        // console.log('O1 - BARBU - checkNameInRanks() - this.ranks.length : ', this.ranks.length);
 
         if (this.ranks.length === 0) return false;
 
@@ -722,7 +725,7 @@ class Barbu extends Component {
     };
 
     sortHands(obj) {
-        console.log('O1 - BARBU - sortHands() ------ CARDS ARRAY : ', obj);
+        // console.log('O1 - BARBU - sortHands() ------ CARDS ARRAY : ', obj);
 
         let range = []; // sorted out cards to return. D | C | H | S
         let color = ["d", "c", "h", "s"];
@@ -875,7 +878,7 @@ class Barbu extends Component {
 
         // WEBSOCKET ON USERS EVENT LISTENER
         barbuWS.on("users", users => {
-            console.log('01 - BARBU - check() ::: PLAYERS ::: ', users);
+            console.log('01 - BARBU - check() - on "users" ::: PLAYERS ::: ', users);
             
             this.players = users;
             this.setState({nbPeopleConnected: users.length}) ;
@@ -2020,8 +2023,8 @@ class Barbu extends Component {
 
     controlPlayerActive = () => {
 
-        console.log('O1 - BARBU - controlPlayerActive() - isMaster : ', this.isMaster);
-        console.log('O1 - BARBU - controlPlayerActive() - this.hasClicked : ', this.hasClicked);
+        // console.log('O1 - BARBU - controlPlayerActive() - isMaster : ', this.isMaster);
+        // console.log('O1 - BARBU - controlPlayerActive() - this.hasClicked : ', this.hasClicked);
 
         if( this.boardHand.length === 0 || this.boardHand.length === 4 ) {
 
@@ -2063,7 +2066,7 @@ class Barbu extends Component {
     };
 
     controlDominoHands = (e) => {
-        console.log('O1 - BARBU - controlDominoHands() e : ', e);
+        // console.log('O1 - BARBU - controlDominoHands() e : ', e);
 
         this.northBoude = this.southBoude = false ;
         this.eastBoude = this.westBoude = false ;

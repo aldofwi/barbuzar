@@ -4,8 +4,7 @@ import Barbu from "./Barbu";
 import barbuWS from './socketConfig';
 
 // const username = prompt("What is your username");
-const username = "Dog" + Math.floor(Math.random() * (101));
-// const username = "Dog2";
+const name = "Dog" + Math.floor(Math.random() * (10001));
 
 class Gameplay extends Component {
 
@@ -14,25 +13,22 @@ class Gameplay extends Component {
 
         this.state = {
             ws: null,
-            flipped : 'false',
-
-            // modalIsOpen: false,
+            username: name
         };
-
-        // barbuWS.connect();
 
         this.barbuser = {
-            name : username,
-            id : "",
+            name : '',
+            id : '',
             nbVictory : 0
         };
+
+        this.nameSubmit = false;
     }
 
     componentDidMount() {
         console.log('00 - GAMEPLAY - componentDidMount()');
 
-        this.setLocalPlayer();
-
+        this.setLocalPlayer();  
         this.connect();
     }
 
@@ -43,9 +39,8 @@ class Gameplay extends Component {
 
         if(!this.verifyLocalPlayer()) {
             // Record NEW Player in Local Storage.
-            localStorage.setItem('name', username);
+            localStorage.setItem('name', name);
             localStorage.setItem('nb', 0);
-
             console.log('00 - GAMEPLAY - setLocalPlayer() --> JUST RECORDED ! ');
         }
         else console.log('00 - GAMEPLAY - setLocalPlayer() <<< ALREADY THERE !');
@@ -58,16 +53,17 @@ class Gameplay extends Component {
         else return false;
     }
 
+    getName = () => {
+        console.log('00 - GAMEPLAY -localStorage- getName()');
+
+        if(this.verifyLocalPlayer()) return localStorage.getItem('name');
+        else return name;
+    }
+
     getNbVictory = () => {
-        console.log('00 - GAMEPLAY --- getNbVictory()');
+        console.log('00 - GAMEPLAY -localStorage- getNbVictory()');
 
-        if(this.verifyLocalPlayer()) {
-
-            // let data = localStorage.getItem('nb');
-            // data = JSON.parse(data);
-            // return data.nbVictory;
-            return JSON.parse(localStorage.getItem('nb'));
-        }
+        if(this.verifyLocalPlayer()) return JSON.parse(localStorage.getItem('nb'));
         else return 0;
     }
 
@@ -78,18 +74,16 @@ class Gameplay extends Component {
      */
     connect = () => {
 
-        // WEBSOCKET DEFINITION
-        // let barbuWS = SocketIO("http://localhost:"+port, { transports: ["websocket"] });
-
         // WEBSOCKET ON CONNECT EVENT LISTENER
         barbuWS.on('connect', () => {
         
-            barbuWS.emit("username",    [username, this.getNbVictory()] );
+            // barbuWS.emit("username",    [this.state.username, this.getNbVictory()] );
 
             this.setState({ws: barbuWS});
-            this.barbuser.id = barbuWS.id;
+            this.barbuser.name = this.getName();
             this.barbuser.nbVictory = this.getNbVictory();
-
+            this.barbuser.id = barbuWS.id;
+            
             console.log('00 - GAMEPLAY - connect() | barbuser : ', this.barbuser);
         });
 
@@ -113,11 +107,10 @@ class Gameplay extends Component {
         barbuWS.on("disconnect", reason => {
 
             if ( reason !== 'transport close ') { barbuWS.connect(); }
-            console.log('00 - GAMEPLAY - Disconnect() | barbuzer : ', username);
+            console.log('00 - GAMEPLAY - Disconnect() | barbuzer : ', name);
         });
 
     };
-
 
     /**
      * Utilited by the @function connect to check
@@ -130,23 +123,58 @@ class Gameplay extends Component {
         console.log('00 - GAMEPLAY - check() - readyState : ', ws.readyState);
     };
 
+    handleChange = event => {
+        console.log('00 - GAMEPLAY - handleChange() - event name : ', event.target.value);
+        // event.preventDefault();
+        this.setState({username: event.target.value});
+    };
+
+    handleSubmit = event => {
+        console.log('00 - GAMEPLAY - handleSubmit() - username : ', this.state.username);
+
+        event.preventDefault(); // STOP RELOADING PAGE.
+        localStorage.setItem('name', this.state.username);
+
+        this.barbuser.name = this.state.username;
+        this.nameSubmit = true;
+
+        console.log('this.nameSubmit : ', this.nameSubmit);
+        barbuWS.emit("username",    [this.state.username, this.getNbVictory()] );
+
+        this.setState(this.state);
+    };
+
     render() {
-        // console.log('O1 - GAMEPLAY - render() - SOCKET : ', this.state.ws);
-        // <button className="btn btn-danger" type="submit">Play</button>
 
         return (
+            <div>
+            {
+                !this.nameSubmit
+                    ?
+                <div className="welcome">
+                    <form className="form-inline" onSubmit={this.handleSubmit}>
+                        <div className="nameform">
+                            
+                            <input type="text" className="form-control" placeholder="Username" onChange={this.handleChange} id="nameValue" required />
+                            <button type="submit" className="btn btn-danger">Play</button>
+                            
+                        </div>
+                    </form>
+                </div>    
+                    :
+                <div>
 
-        <div>
+                    <Barbu
+                        cardSize={Math.min(window.innerHeight / 5.5, window.innerWidth / 5.5, 70)}
+                        style={{'height':window.innerHeight-62+'px'}} // FULL PAGE -54
+                        barbuser={this.barbuser}
+                        websocket={this.state.ws}
+                    />
 
-                <Barbu
-                    cardSize={Math.min(window.innerHeight / 5.5, window.innerWidth / 5.5, 70)}
-                    style={{'height':window.innerHeight-62+'px'}} // FULL PAGE -54
-                    barbuser={this.barbuser}
-                    websocket={this.state.ws}
-                />
+                </div>
 
-        </div>
-
+            }
+            </div> 
         )
     }
 }
